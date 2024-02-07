@@ -1,0 +1,28 @@
+.newPost {
+  display: flex;
+  max-width: 700px;
+  max-height: fit-content;
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 20px;
+  background-color: var(--foreground-color);
+  color: var(--primary-text-color);
+
+  .container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+  }
+  .form {
+    display: flex;
+    border: 0px;
+
+  }
+  input {
+    background-color: transparent;
+    color: var(--primary-text-color);
+    border: 0px;
+
+  }
+}
