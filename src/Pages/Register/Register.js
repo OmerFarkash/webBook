@@ -25,9 +25,9 @@ const Register = () => {
       name: "Full name",
       type: "text",
       placeholder: "Full Name",
-      errorMessage: "Full name must be 3-16 characters long, it contains only English letters.",
+      errorMessage: "Full name must be 3-16 characters long, can contain only English letters.",
       label: "Full Name",
-      pattern: "^[a-zA-Z]{3,16}$",
+      pattern: "^[ a-zA-Z]{3,16}$",
       required: true,
     },
     {
@@ -37,7 +37,7 @@ const Register = () => {
       placeholder: "User Name",
       errorMessage: "User name must be 3-16 characters long, it contains only English letters and numbers.",
       label: "User Name",
-      pattern: "^[a-zA-Z0-9]{3,16}$",
+      pattern: "^[ a-zA-Z0-9]{3,16}$",
       required: true,
     },
     {
@@ -57,7 +57,7 @@ const Register = () => {
       errorMessage: "password must be between 8-16 characters long, contain at least one number, " +
        "one uppercase and one lowercase letter and one special character.",
       label: "Password",
-      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,16})",
+      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&*]{8,16})",
       required: true,
     },
     {
