@@ -1,0 +1,9 @@
+.posts {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  padding-left: 500px;
+  padding-top: 100px;
+  background-color: var(--background-color);
+}

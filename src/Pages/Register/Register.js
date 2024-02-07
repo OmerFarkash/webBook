@@ -8,7 +8,7 @@ const Register = () => {
         <div className="right">
           <h1>Web Book.</h1>
           <span>Already have an account?</span>
-          <Link to="/">
+          <Link to="/Login">
             <button>Login</button>
           </Link>
         </div>

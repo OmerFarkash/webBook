@@ -1,0 +1,33 @@
+.leftBar {
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  top: 60px;
+
+  .container {
+    margin-top: 10px;
+    width: 300px;
+    flex-direction: column;
+
+
+    .item {
+      width: 270px;
+      background-color: var(--background-color);
+      justify-content: space-between;
+
+      line-height: 50px;
+      font-size: 18px;
+      padding-left: 20px;
+      color: var(--primary-text-color);
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .item:hover {
+      background-color: var(--foreground-color);
+      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+}
