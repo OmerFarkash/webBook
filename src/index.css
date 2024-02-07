@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root {
+  --background-color: rgb(217, 225, 230);
+  --foreground-color: #f6f6f6;
+  --primary-text-color: rgb(0, 0, 0);
+  --secondary-text-color: rgb(40, 87, 131);
+  --toggle-bg: #f0eb9d;
+  --toggle-fg: #ffd000;
+  --login-bg: rgb(27, 60, 90);
+  --login-card-bg: #ffffff;
+  --login-taxt-color: #ffffff;
+  --login-btn-color: rgb(40, 87, 131);
+  --login-card-img: linear-gradient(
+      rgba(65, 135, 221, 0.5),
+      rgba(0, 17, 92, 0.5)
+    ),
+    url("https://images.pexels.com/photos/4871011/pexels-photo-4871011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+
+[data-theme="dark"] {
+  --background-color: #1a2033;
+  --foreground-color: rgb(59, 67, 93);
+  --primary-text-color: lightgray;
+  --secondary-text-color: rgb(87, 163, 235);
+  --toggle-bg: #283452;
+  --toggle-fg: #00a6ff;
+  --login-bg: rgb(18, 30, 43);
+  --login-card-bg: rgb(50, 63, 77);
+  --login-taxt-color: #000000;
+  --login-btn-color: lightgray;
+  --login-card-img: linear-gradient(
+      rgba(72, 107, 145, 0.8),
+      rgba(0, 0, 0, 0.8)
+    ),
+    url("https://images.pexels.com/photos/4871011/pexels-photo-4871011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
