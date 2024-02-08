@@ -12,53 +12,35 @@ const LeftBar = () => {
           <Profile /> Profile
         </div>
         <div className="item">
-          <span>
-            <Home /> Home
-          </span>
+          <Home /> Home
         </div>
         <div className="item">
           <Friends /> Friends
         </div>
         <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
-          <div className="item">
-          <span>
-            Home
-          </span>
-          </div>
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
+        <div className="item">
+          <Home /> Home
+        </div>
         <Link to="/Login">
           <div className="item">Log out</div>
         </Link>

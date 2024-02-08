@@ -8,11 +8,12 @@
     padding: 5px;
     justify-items: center;
 
-
     .Menu {
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
 
-      span {
+      p {
         margin: 3px;
         cursor: pointer;
       }

@@ -21,8 +21,8 @@ const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
           <div className="userInfo">
             <img src={profilePic} alt="" />
             <div className="details">
-              <span className="userName">{user}</span>
-              <span className="date">{date}</span>
+              <sp className="userName">{user}</sp>
+              <sp className="date">{date}</sp>
             </div>
           </div>
         </div>

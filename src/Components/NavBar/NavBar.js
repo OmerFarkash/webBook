@@ -6,7 +6,7 @@ const NavBar = ({ profilePic, userName }) => {
     <div className="navBar">
       <div className="container">
         <div className="left">
-          <span>Web Book.</span>
+          <p>WEB BOOK</p>
           <div className="search">
             <SearchIcon />
             <input type="text" placeholder="Search..." />
@@ -15,7 +15,7 @@ const NavBar = ({ profilePic, userName }) => {
         <div className="right">
           <div className="user">
             <img src={profilePic} alt="" />
-            <span>{userName}User Name</span>
+            <p>{userName}User Name</p>
           </div>
         </div>
       </div>

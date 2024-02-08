@@ -23,7 +23,7 @@
       gap: 30px;
       padding-top: 30;
 
-      span {
+      p {
         font-weight: bold;
         font-size: 25px;
         color: var(--secondary-text-color);
