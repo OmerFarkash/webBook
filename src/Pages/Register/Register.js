@@ -2,8 +2,13 @@ import { useState } from "react";
 import "./register.css";
 import { Link } from "react-router-dom";
 import RegInput from "../../Components/RegIn/RegInput.js";
+import usersExsist from "../../data/Users.json";
+
+
 
 const Register = () => {
+  const [users, setUsers] = useState(usersExsist); 
+  
   const [values, setValues] = useState({
     name: "",
     username: "",
@@ -14,15 +19,36 @@ const Register = () => {
   
   console.log("re-rendered");
 
+  const addUser = ({name, username, email, password}) => {
+    const newUser = {
+      id: users.length + 1,
+      name: name,
+      username: username,
+      email: email,
+      password: password,
+    };
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === newUser.username) {
+        alert("Username already exists");
+        return;
+      }
+    }
+    setUsers([...users, newUser]);
+    alert("User has been added successfully");
+    // move to login page
+  }
+  
+
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(addUser(values));
     
   }
+
 
   const inputs = [
     {
       id: 1,
-      name: "Full name",
+      name: "name",
       type: "text",
       placeholder: "Full Name",
       errorMessage: "Full name must be 3-16 characters long, can contain only English letters.",
@@ -32,11 +58,11 @@ const Register = () => {
     },
     {
       id: 2,
-      name: "User name",
+      name: "username",
       type: "text",
-      placeholder: "User Name",
-      errorMessage: "User name must be 3-16 characters long, it contains only English letters and numbers.",
-      label: "User Name",
+      placeholder: "userName",
+      errorMessage: "username must be 3-16 characters long, it contains only English letters and numbers.",
+      label: "userName",
       pattern: "^[ a-zA-Z0-9]{3,16}$",
       required: true,
     },
@@ -94,7 +120,9 @@ const Register = () => {
             {inputs.map((input) => (
             <RegInput key={input.id} {...input} value={values[input.name]} onChange={onChange} /> 
             ))}
-            <button id="registerBtn">Register</button>
+            <button id="registerBtn"
+
+            >Register</button>
           </form>
         </div>
       </div>

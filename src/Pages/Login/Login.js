@@ -1,7 +1,22 @@
 import "./login.css";
 import { Link } from "react-router-dom";
+import users from "../../data/Users.json";
 
-const Login = () => {
+const Login = () => { 
+  console.log(users);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const username = e.target[0].value;
+    const password = e.target[1].value;
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === username && users[i].password === password) {
+        alert("Welcome " + users[i].name);
+        return;
+      }
+    }
+    alert("username or password is incorrect");
+  }
+
   return (
     <div className="Login">
       <div className="card">
@@ -14,12 +29,10 @@ const Login = () => {
         </div>
         <div className="right">
           <h1>Login</h1>
-          <form>
-            <input type="text" placeholder="Username" />
+          <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="username" />
             <input type="password" placeholder="Password" />
-            <Link to="/">
             <button id="loginbBtn">Login</button>
-            </Link>
           </form>
         </div>
       </div>
