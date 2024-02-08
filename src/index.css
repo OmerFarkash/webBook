@@ -3,15 +3,16 @@
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 :root {
@@ -23,13 +24,17 @@ code {
   --toggle-fg: #ffd000;
   --login-bg: rgb(27, 60, 90);
   --login-card-bg: #ffffff;
-  --login-taxt-color: #ffffff;
+  --login-text-color: #ffffff;
   --login-btn-color: rgb(40, 87, 131);
   --login-card-img: linear-gradient(
       rgba(65, 135, 221, 0.5),
       rgba(0, 17, 92, 0.5)
     ),
     url("https://images.pexels.com/photos/4871011/pexels-photo-4871011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+
+  --home-bg: linear-gradient(rgba(238, 238, 238, 0.834), rgb(183, 183, 183)),
+    url("https://wallpapercave.com/wp/wp7563429.jpg");
+  --leftBar-bg: rgba(255, 255, 255, 0.241);
 }
 
 [data-theme="dark"] {
@@ -41,11 +46,11 @@ code {
   --toggle-fg: #00a6ff;
   --login-bg: rgb(18, 30, 43);
   --login-card-bg: rgb(50, 63, 77);
-  --login-taxt-color: #000000;
+  --login-text-color: #000000;
   --login-btn-color: lightgray;
-  --login-card-img: linear-gradient(
-      rgba(72, 107, 145, 0.8),
-      rgba(0, 0, 0, 0.8)
-    ),
+  --login-card-img: linear-gradient(rgba(72, 107, 145, 0.8), rgba(0, 0, 0, 0.8)),
     url("https://images.pexels.com/photos/4871011/pexels-photo-4871011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  --home-bg: linear-gradient(rgba(0, 4, 35, 0.838), rgb(0, 3, 31)),
+    url("https://wallpapercave.com/wp/wp7563429.jpg");
+  --leftBar-bg: rgba(59, 67, 93, 0.415);
 }

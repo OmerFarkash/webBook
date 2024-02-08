@@ -5,10 +5,14 @@ import { ReactComponent as Liked } from "./Icons/liked.svg";
 import { ReactComponent as NotLiked } from "./Icons/notLiked.svg";
 import { ReactComponent as ShareIcon } from "./Icons/share.svg";
 import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
+import Comments from "../Comments/Comments";
+import ShareMenu from "../ShareMenu/ShareMenu";
+import posts from "../../data/Posts.json";
 
-const Post = ({ id, user, profilePic, date, desc, img }) => {
+const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
   const [commentOpen, setCommentOpen] = useState(false);
-  const [isLiked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [shareOpen, setSareOpen] = useState(false);
 
   return (
     <div className="post" key={id}>
@@ -27,20 +31,18 @@ const Post = ({ id, user, profilePic, date, desc, img }) => {
           <img src={img} alt="" />
         </div>
         <div className="info">
-          <div className="item" onClick={() => setLiked(!isLiked)}>
+          <div className="item" onClick={() => setIsLiked(!isLiked)}>
             {isLiked ? <Liked /> : <NotLiked />} Like
           </div>
-          <div>
+          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentsIcon /> Comment
-            <div
-              className="item"
-              onClick={() => setCommentOpen(!commentOpen)}
-            ></div>
           </div>
-          <div className="item">
+          <div className="item" onMouseEnter={() => setSareOpen(!shareOpen)}>
             <ShareIcon /> Share
           </div>
+          {shareOpen && <ShareMenu />}
         </div>
+        {commentOpen && <Comments data={id} />}
       </div>
     </div>
   );
