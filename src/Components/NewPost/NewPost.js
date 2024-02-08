@@ -5,6 +5,7 @@ const NewPost = (setPostsList) => {
     return;
   }
 
+
   return (
     <div className="newPost">
       <div className="card">
@@ -14,11 +15,10 @@ const NewPost = (setPostsList) => {
             type="text"
             placeholder="What's on ypur mind?"
           />
-          <input className="photo" type="File" id="postImage" />
+          <div className="addBtn" onClick={() => handleNewPost()}>
+            <button>Add</button>
+          </div>
         </form>
-        <div className="addBtn" onClick={() => handleNewPost()}>
-          <button>add</button>
-        </div>
       </div>
     </div>
   );
