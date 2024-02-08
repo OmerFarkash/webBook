@@ -5,14 +5,14 @@
   top: 60px;
 
   .container {
-    margin-top: 10px;
     width: 300px;
     flex-direction: column;
-
+    background-color: var(--leftBar-bg);
+    padding-top: 10px;
 
     .item {
       width: 270px;
-      background-color: var(--background-color);
+      background-color: var(--leftBar-bg);
       justify-content: space-between;
 
       line-height: 50px;

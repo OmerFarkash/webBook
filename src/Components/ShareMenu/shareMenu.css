@@ -1,0 +1,21 @@
+.ShareMenu {
+  display: flexbox;
+  z-index: 900;
+
+  .card {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 5px;
+    justify-items: center;
+
+
+    .Menu {
+      justify-content: space-between;
+
+      span {
+        margin: 3px;
+        cursor: pointer;
+      }
+    }
+  }
+}

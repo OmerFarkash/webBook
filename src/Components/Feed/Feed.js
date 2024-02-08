@@ -1,7 +1,7 @@
 import "./feed.css";
 import NewPost from "../NewPost/NewPost.js";
 import Post from "../Post/Post.js";
-import posts from "../../data/db.json";
+import posts from "../../data/Posts.json";
 import { useState } from "react";
 
 const Feed = () => {
@@ -9,7 +9,7 @@ const Feed = () => {
 
   return (
     <div className="posts">
-      <NewPost />
+      <NewPost data={setPostsList} />
       {postsList.map((post) => (
         <Post {...post} />
       ))}

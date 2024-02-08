@@ -1,17 +1,24 @@
 import "./newPost.css";
 
-const NewPost = () => {
+const NewPost = (setPostsList) => {
+  function handleNewPost() {
+    return;
+  }
+
   return (
     <div className="newPost">
-      <div className="container">
+      <div className="card">
         <form>
           <input
             className="Post"
             type="text"
             placeholder="What's on ypur mind?"
           />
-          <input type="File" id="postImage" />
+          <input className="photo" type="File" id="postImage" />
         </form>
+        <div className="addBtn" onClick={() => handleNewPost()}>
+          <button>add</button>
+        </div>
       </div>
     </div>
   );
