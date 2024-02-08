@@ -1,11 +1,14 @@
 import "./login.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import UserContext from '../../UserContext.js';
+import { useContext } from "react";
 
 
 const Login = () => { 
   const location = useLocation();
   const users = location.state;
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ const Login = () => {
     const password = e.target[1].value;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === username && users[i].password === password) {
+        setUser(users[i]); 
         alert("Welcome " + users[i].name); 
         navigate("/");
         return;
