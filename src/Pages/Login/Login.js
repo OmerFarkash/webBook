@@ -1,16 +1,20 @@
 import "./login.css";
-import { Link } from "react-router-dom";
-import users from "../../data/Users.json";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 
 const Login = () => { 
-  console.log(users);
+  const location = useLocation();
+  const users = location.state;
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const username = e.target[0].value;
     const password = e.target[1].value;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === username && users[i].password === password) {
-        alert("Welcome " + users[i].name);
+        alert("Welcome " + users[i].name); 
+        navigate("/");
         return;
       }
     }
