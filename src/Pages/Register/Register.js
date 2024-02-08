@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./register.css";
-import { Link } from "react-router-dom";
 import RegInput from "../../Components/RegIn/RegInput.js";
 import usersExsist from "../../data/Users.json";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 const Register = () => {
-  const [users, setUsers] = useState(usersExsist); 
-  
+  const [users, setUsers] = useState([]); 
+
+  useEffect(() => {
+    setUsers(usersExsist);
+  }, []);
+
   const [values, setValues] = useState({
     name: "",
     username: "",
@@ -16,8 +20,6 @@ const Register = () => {
     password: "",
     passwordConfirmation: "",
   });
-  
-  console.log("re-rendered");
 
   const addUser = ({name, username, email, password}) => {
     const newUser = {
@@ -33,17 +35,20 @@ const Register = () => {
         return;
       }
     }
-    setUsers([...users, newUser]);
+    const newUsers = [...users, newUser];
+    setUsers(newUsers);
     alert("User has been added successfully");
-    // move to login page
+    navigate("/Login", {
+      state: newUsers
+    });
   }
   
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(addUser(values));
-    
+    e.preventDefault();
+    addUser(values);
   }
-
 
   const inputs = [
     {
@@ -120,9 +125,8 @@ const Register = () => {
             {inputs.map((input) => (
             <RegInput key={input.id} {...input} value={values[input.name]} onChange={onChange} /> 
             ))}
-            <button id="registerBtn"
-
-            >Register</button>
+            <button id="registerBtn">
+            Register</button>
           </form>
         </div>
       </div>
