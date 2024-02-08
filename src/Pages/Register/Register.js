@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./register.css";
 import { Link } from "react-router-dom";
-import RegInput from "../../Components/UserName/RegInput.js";
+import RegInput from "../../Components/RegIn/RegInput.js";
 
 const Register = () => {
   const [values, setValues] = useState({
