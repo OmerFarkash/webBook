@@ -42,7 +42,7 @@ const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
           </div>
           {shareOpen && <ShareMenu />}
         </div>
-        {commentOpen && <Comments data={id} />}
+        {commentOpen && <Comments id={id} />}
       </div>
     </div>
   );
