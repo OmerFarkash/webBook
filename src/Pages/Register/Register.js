@@ -4,10 +4,8 @@ import RegInput from "../../Components/RegIn/RegInput.js";
 import usersExsist from "../../data/Users.json";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 const Register = () => {
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     setUsers(usersExsist);
@@ -21,7 +19,7 @@ const Register = () => {
     passwordConfirmation: "",
   });
 
-  const addUser = ({name, username, email, password}) => {
+  const addUser = ({ name, username, email, password }) => {
     const newUser = {
       id: users.length + 1,
       name: name,
@@ -29,6 +27,7 @@ const Register = () => {
       email: email,
       password: password,
     };
+
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === newUser.username) {
         alert("Username already exists");
@@ -39,16 +38,16 @@ const Register = () => {
     setUsers(newUsers);
     alert("User has been added successfully");
     navigate("/Login", {
-      state: newUsers
+      state: newUsers,
     });
-  }
-  
+  };
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     addUser(values);
-  }
+  };
 
   const inputs = [
     {
@@ -56,7 +55,8 @@ const Register = () => {
       name: "name",
       type: "text",
       placeholder: "Full Name",
-      errorMessage: "Full name must be 3-16 characters long, can contain only English letters.",
+      errorMessage:
+        "Full name must be 3-16 characters long, can contain only English letters.",
       label: "Full Name",
       pattern: "^[ a-zA-Z]{3,16}$",
       required: true,
@@ -66,7 +66,8 @@ const Register = () => {
       name: "username",
       type: "text",
       placeholder: "userName",
-      errorMessage: "username must be 3-16 characters long, it contains only English letters and numbers.",
+      errorMessage:
+        "username must be 3-16 characters long, it contains only English letters and numbers.",
       label: "userName",
       pattern: "^[ a-zA-Z0-9]{3,16}$",
       required: true,
@@ -85,10 +86,12 @@ const Register = () => {
       name: "password",
       type: "password",
       placeholder: "Password",
-      errorMessage: "password must be between 8-16 characters long, contain at least one number, " +
-       "one uppercase and one lowercase letter and one special character.",
+      errorMessage:
+        "password must be between 8-16 characters long, contain at least one number, " +
+        "one uppercase and one lowercase letter and one special character.",
       label: "Password",
-      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&*]{8,16})",
+      pattern:
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&*]{8,16})",
       required: true,
     },
     {
@@ -101,7 +104,7 @@ const Register = () => {
       pattern: values.password,
       required: true,
     },
-  ]
+  ];
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -123,10 +126,14 @@ const Register = () => {
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
             {inputs.map((input) => (
-            <RegInput key={input.id} {...input} value={values[input.name]} onChange={onChange} /> 
+              <RegInput
+                key={input.id}
+                {...input}
+                value={values[input.name]}
+                onChange={onChange}
+              />
             ))}
-            <button id="registerBtn">
-            Register</button>
+            <button id="registerBtn">Register</button>
           </form>
         </div>
       </div>

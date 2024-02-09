@@ -11,9 +11,9 @@ const Home = () => {
   console.log(user);
   return (
     <div className="Home">
-      <NavBar />
+      <NavBar {...user} />
       <LeftBar />
-       <Feed /> 
+       <Feed {...user} /> 
     </div>
   );
 };

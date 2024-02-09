@@ -11,7 +11,7 @@ const RegInput = (props) => {
 
   return (
     <div class="input-group">
-      <label>{label}</label>
+      {/* <label>{label}</label> */}
         <input
           {...inputProps}
           onChange={onChange} 

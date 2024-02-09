@@ -1,10 +1,9 @@
 import "./login.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import UserContext from '../../UserContext.js';
+import UserContext from "../../UserContext.js";
 import { useContext } from "react";
 
-
-const Login = () => { 
+const Login = () => {
   const location = useLocation();
   const users = location.state;
   const navigate = useNavigate();
@@ -14,16 +13,19 @@ const Login = () => {
     e.preventDefault();
     const username = e.target[0].value;
     const password = e.target[1].value;
+    if (users === null) {
+      return;
+    }
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === username && users[i].password === password) {
-        setUser(users[i]); 
-        alert("Welcome " + users[i].name); 
+        setUser(users[i]);
+        alert("Welcome " + users[i].name);
         navigate("/");
         return;
       }
     }
     alert("username or password is incorrect");
-  }
+  };
 
   return (
     <div className="Login">
