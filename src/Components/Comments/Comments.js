@@ -2,8 +2,8 @@ import "./comments.css";
 import comments from "../../data/Comments.json";
 import Comment from "../Comment/Comment.js";
 
-const Comments = (id) => {
-  const filteredcComments = comments.filter((item) => item.id === id);
+const Comments = ({id}) => {
+  const filteredcComments = comments.filter((item) => item.postId === id);
 
   function handleNewComment() {
     return;
@@ -25,7 +25,7 @@ const Comments = (id) => {
         <input type="text" placeholder="write a comment" />
         <button onClick={handleNewComment}>Send</button>
       </div>
-      {filteredcComments.forEach((comment) => (
+      {filteredcComments.map((comment) => (
         <Comment {...comment} />
       ))}
     </div>
