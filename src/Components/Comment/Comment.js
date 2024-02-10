@@ -1,14 +1,14 @@
 import "./comment.css";
 
-const Comment = ({postId, commentId, desc, userId, profilePicture }) => {
+const Comment = ({ postId, commentId, desc, user, profilePicture, date}) => {
   return (
     <div className="comment" key={commentId}>
-      <img src={profilePicture} alt="" key={userId}/>
+      <img src={profilePicture} alt="" key={user} />
       <div className="info">
-        <span>name</span>
+        <span>{user}</span>
         <p>{desc}</p>
       </div>
-      <span className="date">1 hour ago</span>
+      <span className="date">{date}</span>
     </div>
   );
 };

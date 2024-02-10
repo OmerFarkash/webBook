@@ -1,7 +1,7 @@
 import "./navBar.css";
 import { ReactComponent as SearchIcon } from "./Icons/search.svg";
 
-const NavBar = ({ id, name, username,email,password,profilePic }) => {
+const NavBar = ({ user }) => {
   return (
     <div className="navBar">
       <div className="container">
@@ -14,8 +14,8 @@ const NavBar = ({ id, name, username,email,password,profilePic }) => {
         </div>
         <div className="right">
           <div className="user">
-            <img src={profilePic} alt="" />
-            <p>{name}</p>
+            {/* <img src= {user.profilePic} alt="" /> */}
+            <p>user.name</p>
           </div>
         </div>
       </div>
