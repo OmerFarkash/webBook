@@ -41,7 +41,7 @@ const LeftBar = () => {
         <div className="item">
           <Home /> Home
         </div>
-        <Link to="/Login">
+        <Link to="/">
           <div className="item">Log out</div>
         </Link>
       </div>
