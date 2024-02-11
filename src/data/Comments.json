@@ -3,40 +3,45 @@
     "postId": 1,
     "commentId": 1,
     "desc": "Looks like an incredible adventure! Nature truly has a way of refreshing the spirit. Where was this hike?",
-    "userId": 1,
+    "user": "MountainExplorer123",
     "profilePicture":
-    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
+    "date": "1 hour ago"
 },
 {
     "postId": 1,
     "commentId": 2,
     "desc": "I couldn't agree more! Hiking in the mountains is the perfect way to unwind and connect with the beauty of the outdoors. Any favorite trails or spots you'd recommend?",
-    "userId": 1,
+    "user": "TrailBlazer87",
     "profilePicture":
-    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
+    "date": "1 hour ago"
 },
 {
     "postId": 1,
     "commentId": 3,
     "desc": "The mountains are calling, and you answered! Your photo captures the serenity of nature perfectly. Can't wait for my next hiking trip!",
-    "userId": 1,
+    "user": "WildernessWanderer55",
     "profilePicture":
-    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
+    "date": "1 hour ago"
 },
 {
     "postId": 2,
     "commentId": 4,
     "desc": "I'm drooling just looking at this! Nothing beats the taste of freshly made pizza. Count me in for a slice!",
-    "userId": 2,
+    "user": "FoodieFanatic99",
     "profilePicture":
-    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
+    "date": "1 hour ago"
 },
 {
     "postId": 3,
     "commentId": 5,
     "desc": "Family game nights are the best! It's heartwarming to see how much joy simple moments with loved ones can bring. What games did you play?",
-    "userId": 1,
+    "user": "FamilyFunTimes88",
     "profilePicture":
-    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+    "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
+    "date": "1 hour ago"
 }
 ]

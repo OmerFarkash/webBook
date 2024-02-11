@@ -4,6 +4,7 @@
         "name": "john doe",
         "username": "john",
         "email": "john@gmail.com",
-        "password": "John1234!"
+        "password": "John1234!",
+        "profilePic": ""
     }
 ]

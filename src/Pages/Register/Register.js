@@ -17,15 +17,17 @@ const Register = () => {
     email: "",
     password: "",
     passwordConfirmation: "",
+    profilePic: ""
   });
 
-  const addUser = ({ name, username, email, password }) => {
+  const addUser = ({ name, username, email, password, profilePic}) => {
     const newUser = {
       id: users.length + 1,
       name: name,
       username: username,
       email: email,
       password: password,
+      profilePic: profilePic,
     };
 
     for (let i = 0; i < users.length; i++) {
@@ -35,7 +37,7 @@ const Register = () => {
       }
     }
     const newUsers = [...users, newUser];
-    setUsers(newUsers);
+    setUsers(...users, newUsers);
     alert("User has been added successfully");
     navigate("/Login", {
       state: newUsers,
@@ -65,10 +67,10 @@ const Register = () => {
       id: 2,
       name: "username",
       type: "text",
-      placeholder: "userName",
+      placeholder: "username",
       errorMessage:
         "username must be 3-16 characters long, it contains only English letters and numbers.",
-      label: "userName",
+      label: "username",
       pattern: "^[ a-zA-Z0-9]{3,16}$",
       required: true,
     },
@@ -102,6 +104,13 @@ const Register = () => {
       errorMessage: "Passwords do not match.",
       label: "Password Confirmation",
       pattern: values.password,
+      required: true,
+    },
+    {
+      id: 6,
+      name: "profilePic",
+      type: "file",
+      label: "profile Picture",
       required: true,
     },
   ];

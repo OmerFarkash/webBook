@@ -7,9 +7,8 @@ import { ReactComponent as ShareIcon } from "./Icons/share.svg";
 import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
 import Comments from "../Comments/Comments";
 import ShareMenu from "../ShareMenu/ShareMenu";
-import posts from "../../data/Posts.json";
 
-const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
+const Post = ({ id, user, profilePic, date, desc }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [shareOpen, setSareOpen] = useState(false);
@@ -19,7 +18,7 @@ const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={profilePic} alt="" />
+            <img src="{profilePic}" alt="" />
             <div className="details">
               <sp className="userName">{user}</sp>
               <sp className="date">{date}</sp>
@@ -28,7 +27,6 @@ const Post = ({ id, user, profilePic, date, desc, img, commentsList }) => {
         </div>
         <div className="content">
           {desc}
-          <img src={img} alt="" />
         </div>
         <div className="info">
           <div className="item" onClick={() => setIsLiked(!isLiked)}>
