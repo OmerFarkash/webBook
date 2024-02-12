@@ -27,9 +27,9 @@ const Register = () => {
       username: username,
       email: email,
       password: password,
-      profilePic: profilePic,
+      profilePic: URL.createObjectURL(profilePic),
     };
-
+  
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === newUser.username) {
         alert("Username already exists");
@@ -37,12 +37,12 @@ const Register = () => {
       }
     }
     const newUsers = [...users, newUser];
-    setUsers(...users, newUsers);
+    setUsers(newUsers);
     alert("User has been added successfully");
     navigate("/", {
       state: newUsers,
     });
-  };
+  };  
 
   const navigate = useNavigate();
 
@@ -119,7 +119,11 @@ const Register = () => {
   ];
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    if (e.target.name === 'profilePic') {
+      setValues({ ...values, [e.target.name]: e.target.files[0] });
+    } else {
+      setValues({ ...values, [e.target.name]: e.target.value });
+    }
   };
 
   console.log(values);
@@ -137,14 +141,13 @@ const Register = () => {
         <div className="left">
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
-            {inputs.map((input) => (
-              <RegInput
-                key={input.id}
-                {...input}
-                value={values[input.name]}
-                onChange={onChange}
-              />
-            ))}
+          {inputs.map((input) => {
+            const inputProps = { ...input, onChange };
+            if (input.type !== 'file') {
+              inputProps.value = values[input.name];
+            }
+            return <RegInput key={input.id} {...inputProps} />;
+            })}
             <button id="registerBtn">Register</button>
           </form>
         </div>

@@ -14,8 +14,8 @@ const NavBar = ({ user }) => {
         </div>
         <div className="right">
           <div className="user">
-            {/* <img src= {user.profilePic} alt="" /> */}
-            <p>user.name</p>
+            <img src={user.profilePic} alt="User Profile" />
+            <p>{user.name}</p>
           </div>
         </div>
       </div>
