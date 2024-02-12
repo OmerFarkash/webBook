@@ -10,6 +10,7 @@ import { useContext } from "react";
 const Comments = ({ id ,profilePic}) => {
   const { user } = useContext(UserContext);
   const [commentList, setCommentList] = useState(comments);
+  console.log(commentList)
 
   const handleNewComment = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const Comments = ({ id ,profilePic}) => {
   const addComment = (value) => {
     const newComment = {
       postId: id,
-      commentId: filteredcComments.length + 1,
+      id: filteredcComments.length + 1,
       desc: value,
       user: user.name,
       profilePic: user.profilePic,
