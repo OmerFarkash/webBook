@@ -39,7 +39,7 @@ const Register = () => {
     const newUsers = [...users, newUser];
     setUsers(...users, newUsers);
     alert("User has been added successfully");
-    navigate("/Login", {
+    navigate("/", {
       state: newUsers,
     });
   };
@@ -48,6 +48,10 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (values.password !== values.passwordConfirmation) {
+      alert("Passwords do not match.");
+      return;
+    }
     addUser(values);
   };
 
@@ -103,7 +107,6 @@ const Register = () => {
       placeholder: "Password Confirmation",
       errorMessage: "Passwords do not match.",
       label: "Password Confirmation",
-      pattern: values.password,
       required: true,
     },
     {
@@ -127,7 +130,7 @@ const Register = () => {
         <div className="right">
           <h1>Web Book.</h1>
           <span>Already have an account?</span>
-          <Link to="/Login">
+          <Link to="/">
             <button>Login</button>
           </Link>
         </div>

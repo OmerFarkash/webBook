@@ -20,7 +20,7 @@ const Login = () => {
       if (users[i].username === username && users[i].password === password) {
         setUser(users[i]);
         alert("Welcome " + users[i].name);
-        navigate("/");
+        navigate("/Home");
         return;
       }
     }
