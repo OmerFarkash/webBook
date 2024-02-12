@@ -14,7 +14,7 @@ const Post = ({ id, user, profilePic, date, desc, postPic }) => {
   const [shareOpen, setSareOpen] = useState(false);
 
   return (
-    <div className="post" key={id}>
+    <div className="post" id={id}>
       <div className="container">
         <div className="user">
           <div className="userInfo">
@@ -23,13 +23,11 @@ const Post = ({ id, user, profilePic, date, desc, postPic }) => {
               <sp className="userName">{user}</sp>
               <sp className="date">{date}</sp>
             </div>
-            <div className="content">
-              {postPic && <img src={postPic} alt="" />}
-            </div>
           </div>
         </div>
         <div className="content">
           {desc}
+          {postPic && <img src={postPic} alt="" />}
         </div>
         <div className="info">
           <div className="item" onClick={() => setIsLiked(!isLiked)}>
@@ -43,7 +41,7 @@ const Post = ({ id, user, profilePic, date, desc, postPic }) => {
           </div>
           {shareOpen && <ShareMenu />}
         </div>
-        {commentOpen && <Comments id={id} />}
+        {commentOpen && <Comments id={id} profilePic={profilePic} />}
       </div>
     </div>
   );
