@@ -1,19 +1,19 @@
 import "./postMenu.css";
 import { ReactComponent as Edit } from "./Icons/pencil.svg";
 import { ReactComponent as Trash } from "./Icons/trash.svg";
-import { useContext } from "react";
 
-const PostMenu = (setPostList, { postList, id }) => {
-  const filteredPosts = postList.filter((item) => item.id !== id);
+const PostMenu = ({ setPostsList, postsList, postId }) => {
   const deletePost = () => {
-    setPostList(filteredPosts);
+    const filteredPosts = postsList.filter((item) => item.id !== postId);
+    setPostsList(filteredPosts);
   };
+
   return (
-    <div className="postMenu">
+    <div className="PostMenu">
       <div className="card">
         <div className="Menu">
           <p>
-            <Edit />
+            {/* <Edit /> */}
           </p>
           <p>
             <Trash onClick={deletePost} />

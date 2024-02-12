@@ -2,7 +2,7 @@ import "./comments.css";
 import comments from "../../data/Comments.json";
 import Comment from "../Comment/Comment.js";
 import UserContext from "../../UserContext.js";
-
+import PostMenu from "../PostMenu/PostMenu.js";
 import { useState } from "react";
 import { useContext } from "react";
 
@@ -58,7 +58,16 @@ const Comments = ({ id ,profilePic}) => {
           <button id="newCommentBtn">Send</button>
         </form>
       {filteredcComments.map((comment) => (
+        <div>
+          {user.name === comment.user && (
+            <PostMenu
+              setPostsList={setCommentList}
+              postsList={commentList}
+              postId={comment.id}
+            />
+          )}
         <Comment {...comment} />
+        </div>
       ))}
     </div>
   );

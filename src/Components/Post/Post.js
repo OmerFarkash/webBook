@@ -8,6 +8,7 @@ import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
 import Comments from "../Comments/Comments";
 import ShareMenu from "../ShareMenu/ShareMenu";
 
+
 const Post = ({ id, user, profilePic, date, desc, postPic }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);

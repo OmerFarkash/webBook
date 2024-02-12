@@ -1,0 +1,14 @@
+.PostMenu{
+    .card{
+        .Menu{
+            display: flex;
+            position: absolute;
+            transform: translate(640px, 5px);
+            gap:10px;
+
+            p{
+                cursor: pointer;
+            }
+        }
+    }
+}
