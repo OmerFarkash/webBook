@@ -97,7 +97,7 @@ const Register = () => {
         "one uppercase and one lowercase letter and one special character.",
       label: "Password",
       pattern:
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&*]{8,16})",
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$",
       required: true,
     },
     {
