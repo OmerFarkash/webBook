@@ -9,18 +9,19 @@ const NewPost = ({ setPostsList, postsList, user }) => {
   };
 
   const [values, setValues] = useState({
-    desc: ""
+    desc: "",
+    postPic: null,
   });
 
   const addPost = (value) => {
     const newPost = {
       id: postsList.length + 1,
       user: user.username,
-      profilePic: "user.profilePic",
+      profilePic: user.profilePic,
       date: "Just now",
       desc: value,
+      postPic: values.postPic ? URL.createObjectURL(values.postPic) : null,
     };
-    console.log(newPost);
     setPostsList([newPost, ...postsList]);
   };
 
@@ -34,8 +35,11 @@ const NewPost = ({ setPostsList, postsList, user }) => {
     };
 
   const onChange = (e) => {
-    setValues({[e.target.name]: e.target.value });
-    console.log(values);
+    if (e.target.name === 'postPic') {
+      setValues({ ...values, [e.target.name]: e.target.files[0] });
+    } else {
+      setValues({ ...values, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -45,6 +49,11 @@ const NewPost = ({ setPostsList, postsList, user }) => {
           <input
           {...input}
             value={values[input.name]}
+            onChange={onChange}
+          />
+          <input
+            type="file"
+            name="postPic"
             onChange={onChange}
           />
           <button id="newPostBtn">Add</button>

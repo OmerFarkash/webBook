@@ -8,7 +8,7 @@ import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
 import Comments from "../Comments/Comments";
 import ShareMenu from "../ShareMenu/ShareMenu";
 
-const Post = ({ id, user, profilePic, date, desc }) => {
+const Post = ({ id, user, profilePic, date, desc, postPic }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [shareOpen, setSareOpen] = useState(false);
@@ -18,10 +18,13 @@ const Post = ({ id, user, profilePic, date, desc }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src="{profilePic}" alt="" />
+            <img src={profilePic} alt="" />
             <div className="details">
               <sp className="userName">{user}</sp>
               <sp className="date">{date}</sp>
+            </div>
+            <div className="content">
+              {postPic && <img src={postPic} alt="" />}
             </div>
           </div>
         </div>

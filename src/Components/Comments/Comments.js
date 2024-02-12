@@ -26,10 +26,9 @@ const Comments = ({ id }) => {
       commentId: filteredcComments.length + 1,
       desc: value,
       user: user.name,
-      profilePic: "",
+      profilePic: user.profilePic,
       date: "Just now",
     };
-    console.log(newComment);
     setCommentList([newComment, ...commentList]);
   };
 
