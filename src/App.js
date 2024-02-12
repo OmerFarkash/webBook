@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App" data-theme={isDark ? "dark" : "light"}>
-      <Toggle isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
+      <Toggle testid="toggle-theme-btn" isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
       <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>

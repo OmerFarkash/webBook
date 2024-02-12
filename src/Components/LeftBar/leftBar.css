@@ -9,12 +9,10 @@
     flex-direction: column;
     background-color: var(--leftBar-bg);
     padding-top: 10px;
-
     .item {
       width: 270px;
       background-color: var(--leftBar-bg);
       justify-content: space-between;
-
       line-height: 50px;
       font-size: 18px;
       padding-left: 20px;

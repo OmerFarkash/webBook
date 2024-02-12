@@ -41,8 +41,9 @@ const LeftBar = () => {
         <div className="item">
           <Home /> Home
         </div>
-        <Link to="/">
-          <div className="item">Log out</div>
+        <Link style={{textDecoration: 'none'}} to="/">
+          <div className="item">
+            <span>Log out</span></div>
         </Link>
       </div>
     </div>
