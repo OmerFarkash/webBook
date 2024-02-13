@@ -5,7 +5,7 @@ import usersExsist from "../../data/Users.json";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(usersExsist);
 
   useEffect(() => {
     setUsers(usersExsist);

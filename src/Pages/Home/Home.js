@@ -22,7 +22,7 @@ const Home = () => {
     <div className="Home" >
       <NavBar user={user} />
       <LeftBar />
-      <Feed user={user} />
+      <Feed activeUser={user} />
     </div>
   );
 };
