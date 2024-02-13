@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     if (user === null) {
@@ -17,7 +16,6 @@ const Home = () => {
     }
   }, [user, navigate]);
 
-  console.log(user);
   return (
     <div className="Home" >
       <NavBar user={user} />

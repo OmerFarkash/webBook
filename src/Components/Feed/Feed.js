@@ -10,8 +10,6 @@ import React, { useContext } from "react";
 const Feed = ({ activeUser }) => {
   const [postsList, setPostsList] = useState(posts);
 
-  console.log(postsList);
-
   return (
     <div className="posts">
       <NewPost
@@ -21,7 +19,7 @@ const Feed = ({ activeUser }) => {
       />
       {postsList.map((post) => (
         <div>
-          {activeUser.name === post.user && (
+          {activeUser?.name === post?.user && (
             <PostMenu
               setPostsList={setPostsList}
               postsList={postsList}
