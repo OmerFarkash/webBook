@@ -8,7 +8,6 @@ import UserContext from "../../UserContext.js";
 import React, { useContext } from "react";
 
 const Feed = ({ activeUser }) => {
-  // const { activeUser } = useContext(UserContext);
   const [postsList, setPostsList] = useState(posts);
 
   console.log(postsList);
