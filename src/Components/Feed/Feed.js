@@ -4,13 +4,22 @@ import Post from "../Post/Post.js";
 import posts from "../../data/Posts.json";
 import { useState } from "react";
 import PostMenu from "../PostMenu/PostMenu.js";
-import UserContext from "../../UserContext.js";
-import React, { useContext } from "react";
 
 const Feed = ({ activeUser }) => {
   const [postsList, setPostsList] = useState(posts);
-
-  console.log(postsList);
+    
+  const editPost = (id, updatedPost) => {
+    setPostsList(postsList.map(post => {
+      if (post.id === id) {
+        if (post.user !== activeUser.name) {
+          console.error('Attempted to edit a post not owned by the active user');
+          return post;
+        }
+        return { ...post, ...updatedPost };
+      }
+      return post;
+    }));
+  };
 
   return (
     <div className="posts">
@@ -21,14 +30,14 @@ const Feed = ({ activeUser }) => {
       />
       {postsList.map((post) => (
         <div>
-          {activeUser.name === post.user && (
+          {activeUser?.name === post?.user && (
             <PostMenu
-              setPostsList={setPostsList}
-              postsList={postsList}
-              postId={post.id}
+            setPostsList={setPostsList}
+            postsList={postsList}
+            postId={post.id}
             />
           )}
-          <Post {...post} />
+           <Post {...post} editPost={editPost} activeUser={activeUser} />
         </div>
       ))}
     </div>
