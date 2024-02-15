@@ -1,0 +1,61 @@
+[
+    {
+      "id": 1,
+      "name": "name",
+      "type": "text",
+      "placeholder": "Full Name",
+      "errorMessage":
+        "Full name must be 3-16 characters long, can contain only English letters.",
+      "label": "Full Name",
+      "pattern": "^[ a-zA-Z]{3,16}$",
+      "required": true
+    },
+    {
+      "id": 2,
+      "name": "username",
+      "type": "text",
+      "placeholder": "username",
+      "errorMessage":
+        "username must be 3-16 characters long, it contains only English letters and numbers.",
+      "label": "username",
+      "pattern": "^[ a-zA-Z0-9]{3,16}$",
+      "required": true
+    },
+    {
+      "id": 3,
+      "name": "email",
+      "type": "email",
+      "placeholder": "Email@email.com",
+      "errorMessage": "Enter a valid email address",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": 4,
+      "name": "password",
+      "type": "password",
+      "placeholder": "Password",
+      "errorMessage":
+        "password must be between 8-16 characters long, contain at least one number,one uppercase and one lowercase letter and one special character.",
+      "label": "Password",
+      "pattern":
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$",
+      "required": true
+    },
+    {
+      "id": 5,
+      "name": "passwordConfirmation",
+      "type": "password",
+      "placeholder": "Password Confirmation",
+      "errorMessage": "Passwords do not match.",
+      "label": "Password Confirmation",
+      "required": true
+    },
+    {
+      "id": 6,
+      "name": "profilePic",
+      "type": "file",
+      "label": "profile Picture",
+      "required": true
+    }
+  ]

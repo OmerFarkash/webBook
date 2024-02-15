@@ -2,15 +2,12 @@ import "./comments.css";
 import comments from "../../data/Comments.json";
 import Comment from "../Comment/Comment.js";
 import UserContext from "../../UserContext.js";
-import PostMenu from "../PostMenu/PostMenu.js";
 import { useState } from "react";
 import { useContext } from "react";
 
 const Comments = ({ id }) => {
   const { user } = useContext(UserContext);
   const [commentList, setCommentList] = useState(comments);
-
-  console.log(commentList);
 
   const handleNewComment = (e) => {
     e.preventDefault();

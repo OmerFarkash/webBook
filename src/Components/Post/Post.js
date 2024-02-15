@@ -6,8 +6,8 @@ import { ReactComponent as ShareIcon } from "./Icons/share.svg";
 import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
 import Comments from "../Comments/Comments";
 import ShareMenu from "../ShareMenu/ShareMenu";
-import { ReactComponent as Edit } from "../PostMenu/Icons/pencil.svg";
-import { ReactComponent as Trash } from "../PostMenu/Icons/trash.svg";
+import { ReactComponent as Edit } from "./Icons/pencil.svg";
+import { ReactComponent as Trash } from "./Icons/trash.svg";
 
 const Post = ({
   id,
@@ -18,7 +18,7 @@ const Post = ({
   postPic,
   editPost,
   deletePost,
-  activeUser
+  activeUser,
 }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);

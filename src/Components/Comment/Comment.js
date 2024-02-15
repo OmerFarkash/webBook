@@ -1,7 +1,7 @@
 import "./comment.css";
 import { useState, useEffect } from "react";
-import { ReactComponent as Edit } from "../PostMenu/Icons/pencil.svg";
-import { ReactComponent as Trash } from "../PostMenu/Icons/trash.svg";
+import { ReactComponent as Edit } from "../Post/Icons/pencil.svg";
+import { ReactComponent as Trash } from "../Post/Icons/trash.svg";
 
 const Comment = ({
   postId,
