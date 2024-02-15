@@ -34,7 +34,8 @@ const Feed = ({ activeUser }) => {
       />
       {postsList.map((post) => (
         <Post
-          {...post}
+        key={post.id}  
+        {...post}
           editPost={editPost}
           deletePost={deletePost}
           activeUser={activeUser}

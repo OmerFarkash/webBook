@@ -4,9 +4,9 @@ import Comment from '../Components/Comment/Comment';
 describe('Comment', () => {
   const commentMock = {
     postId: 1,
-    commentId: 1,
+    id: 1,
     desc: 'Test comment',
-    user: 'Test User',
+    name: 'Test User',
     profilePicture: '',
     date: 'Just now',
   };
