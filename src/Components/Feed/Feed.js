@@ -3,7 +3,6 @@ import NewPost from "../NewPost/NewPost.js";
 import Post from "../Post/Post.js";
 import posts from "../../data/Posts.json";
 import { useState } from "react";
-import PostMenu from "../PostMenu/PostMenu.js";
 
 const Feed = ({ activeUser }) => {
   const [postsList, setPostsList] = useState(posts);
