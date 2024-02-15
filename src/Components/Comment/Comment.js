@@ -32,29 +32,31 @@ const Comment = ({
       <img src={profilePic} alt="" key={name} />
       <div className="info">
         <span>{name}</span>
-        {activeUser?.name === name && !isEditing && (
-          <div className="commentMenu">
-            <div className="item">
-              <Edit onClick={() => setIsEditing(true)} />
+        <div className="desc">
+          {activeUser?.name === name && !isEditing && (
+            <div className="commentMenu">
+              <div className="item">
+                <Edit onClick={() => setIsEditing(true)} />
+              </div>
+              <div className="item">
+                <Trash onClick={() => deleteComment(id)} />
+              </div>
             </div>
-            <div className="item">
-              <Trash onClick={() => deleteComment(id)} />
-            </div>
-          </div>
-        )}
-        {isEditing ? (
-          <form onSubmit={handleEditSubmit}>
-            <input
-              value={editedComment.desc}
-              onChange={(e) =>
-                setEditedComment({ ...editedComment, desc: e.target.value })
-              }
-            />
-            <button type="submit">Save</button>
-          </form>
-        ) : (
-          <>{desc}</>
-        )}
+          )}
+          {isEditing ? (
+            <form onSubmit={handleEditSubmit}>
+              <input
+                value={editedComment.desc}
+                onChange={(e) =>
+                  setEditedComment({ ...editedComment, desc: e.target.value })
+                }
+              />
+              <button type="submit">Save</button>
+            </form>
+          ) : (
+            <>{desc}</>
+          )}
+        </div>
       </div>
       <span className="date">{date}</span>
     </div>
