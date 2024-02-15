@@ -15,7 +15,7 @@ const NewPost = ({ setPostsList, postsList, user }) => {
   const addPost = (value) => {
     const newPost = {
       id: postsList.length + 1,
-      user: user.name,
+      name: user.name,
       profilePic: user.profilePic,
       date: "Just now",
       desc: value,

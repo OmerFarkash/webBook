@@ -12,12 +12,6 @@ const Feed = ({ activeUser }) => {
     setPostsList(
       postsList.map((post) => {
         if (post.id === id) {
-          if (post.user !== activeUser.name) {
-            console.error(
-              "Attempted to edit a post not owned by the active user"
-            );
-            return post;
-          }
           return { ...post, ...updatedPost };
         }
         return post;
