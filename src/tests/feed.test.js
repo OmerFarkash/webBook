@@ -5,7 +5,7 @@ import Feed from "../Components/Feed/Feed";
 jest.mock("../data/Posts.json", () => [
   {
     id: 1,
-    user: "Test User",
+    name: "john doe",
     profilePic: "",
     date: "Just now",
     desc: "Test post",
@@ -14,8 +14,12 @@ jest.mock("../data/Posts.json", () => [
 
 describe("Feed", () => {
   const user = {
-    name: "Test User",
-    profilePic: "",
+    "id": "1",
+    "name": "john doe",
+    "username": "john",
+    "email": "john@gmail.com",
+    "password": "John1234!",
+    "profilePic": ""
   };
 
   it("renders without crashing", () => {
@@ -24,7 +28,7 @@ describe("Feed", () => {
 
   it("displays the correct user and post", () => {
     const { getByText } = render(<Feed activeUser={user} />);
-    expect(getByText("Test User")).toBeInTheDocument();
+    expect(getByText("john doe")).toBeInTheDocument();
     expect(getByText("Test post")).toBeInTheDocument();
   });
 });
