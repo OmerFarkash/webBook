@@ -6,8 +6,20 @@ import { ReactComponent as ShareIcon } from "./Icons/share.svg";
 import { ReactComponent as CommentsIcon } from "./Icons/comments.svg";
 import Comments from "../Comments/Comments";
 import ShareMenu from "../ShareMenu/ShareMenu";
+import { ReactComponent as Edit } from "../PostMenu/Icons/pencil.svg";
+import { ReactComponent as Trash } from "../PostMenu/Icons/trash.svg";
 
-const Post = ({ id, user, profilePic, date, desc, postPic, editPost, activeUser }) => {
+const Post = ({
+  id,
+  user,
+  profilePic,
+  date,
+  desc,
+  postPic,
+  editPost,
+  deletePost,
+  activeUser,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [shareOpen, setSareOpen] = useState(false);
@@ -49,21 +61,26 @@ const Post = ({ id, user, profilePic, date, desc, postPic, editPost, activeUser 
             </div>
           </div>
           {activeUser?.name === user && !isEditing && (
-            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <div className="postMenu">
+              <div className="item">
+                <Edit onClick={() => setIsEditing(true)} />
+              </div>
+              <div className="item">
+                <Trash onClick={() => deletePost(id)} />
+              </div>
+            </div>
           )}
         </div>
         <div className="content">
           {isEditing ? (
             <form onSubmit={handleEditSubmit}>
-              <textarea
-                value={editedPost.desc}
-                onChange={(e) => setEditedPost({ ...editedPost, desc: e.target.value })}
-              />
               <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
+                value={editedPost.desc}
+                onChange={(e) =>
+                  setEditedPost({ ...editedPost, desc: e.target.value })
+                }
               />
+              <input type="file" accept="image/*" onChange={handleFileChange} />
               <button type="submit">Save</button>
             </form>
           ) : (
@@ -85,7 +102,7 @@ const Post = ({ id, user, profilePic, date, desc, postPic, editPost, activeUser 
           </div>
           {shareOpen && <ShareMenu />}
         </div>
-        {commentOpen && <Comments id={id} profilePic={profilePic} />}
+        {commentOpen && <Comments id={id} />}
       </div>
     </div>
   );

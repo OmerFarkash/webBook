@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useContext } from "react";
 
 
-const Comments = ({ id ,profilePic}) => {
+const Comments = ({ id }) => {
   const { user } = useContext(UserContext);
   const [commentList, setCommentList] = useState(comments);
   console.log(commentList)
@@ -52,7 +52,7 @@ const Comments = ({ id ,profilePic}) => {
     <div className="comments">
         <form onSubmit={handleNewComment}>
           <img
-            src={profilePic}
+            src={user.profilePic}
             alt=""
           />
           <input {...input} value={values[input.name]} onChange={onChange} />

@@ -16,7 +16,7 @@
     .user {
       display: flex;
       align-items: center;
-      /* justify-content: space-between; */
+      justify-content: space-between;
 
       .userInfo {
         display: flex;
@@ -42,10 +42,40 @@
           }
         }
       }
+
+      .postMenu {
+        display: flex;
+        .item {
+          padding: 5px;
+          cursor: pointer;
+        }
+      }
     }
 
     .content {
       margin: 20px 0px;
+
+      form {
+        border: 0px;
+        gap: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+          width: 100%;
+          padding: 10px;
+          background-color: transparent;
+          border: 0px;
+        }
+        button {
+          border: none;
+          background-color: var(--login-btn-color);
+          color: var(--login-text-color);
+          padding: 10px;
+          cursor: pointer;
+          border-radius: 25%;
+        }
+      }
 
       img {
         width: 100%;
