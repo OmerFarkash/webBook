@@ -7,18 +7,29 @@ import PostMenu from "../PostMenu/PostMenu.js";
 
 const Feed = ({ activeUser }) => {
   const [postsList, setPostsList] = useState(posts);
-    
+
   const editPost = (id, updatedPost) => {
-    setPostsList(postsList.map(post => {
-      if (post.id === id) {
-        if (post.user !== activeUser.name) {
-          console.error('Attempted to edit a post not owned by the active user');
-          return post;
+    setPostsList(
+      postsList.map((post) => {
+        if (post.id === id) {
+          if (post.user !== activeUser.name) {
+            console.error(
+              "Attempted to edit a post not owned by the active user"
+            );
+            return post;
+          }
+          return { ...post, ...updatedPost };
         }
-        return { ...post, ...updatedPost };
-      }
-      return post;
-    }));
+        return post;
+      })
+    );
+  };
+
+  const deletePost = (postId) => {
+    const filteredPosts = postsList.filter((item) => item.id !== postId);
+    if (window.confirm("Are you sure?") == true) {
+      setPostsList(filteredPosts);
+    }
   };
 
   return (
@@ -29,16 +40,12 @@ const Feed = ({ activeUser }) => {
         user={activeUser}
       />
       {postsList.map((post) => (
-        <div>
-          {activeUser?.name === post?.user && (
-            <PostMenu
-            setPostsList={setPostsList}
-            postsList={postsList}
-            postId={post.id}
-            />
-          )}
-           <Post {...post} editPost={editPost} activeUser={activeUser} />
-        </div>
+        <Post
+          {...post}
+          editPost={editPost}
+          deletePost={deletePost}
+          activeUser={activeUser}
+        />
       ))}
     </div>
   );
