@@ -6,11 +6,11 @@ import PostMenu from "../PostMenu/PostMenu.js";
 import { useState } from "react";
 import { useContext } from "react";
 
-
 const Comments = ({ id }) => {
   const { user } = useContext(UserContext);
   const [commentList, setCommentList] = useState(comments);
-  console.log(commentList)
+
+  console.log(commentList);
 
   const handleNewComment = (e) => {
     e.preventDefault();
@@ -24,9 +24,9 @@ const Comments = ({ id }) => {
   const addComment = (value) => {
     const newComment = {
       postId: id,
-      id: filteredcComments.length + 1,
+      id: commentList.length + 1,
       desc: value,
-      user: user.name,
+      name: user.name,
       profilePic: user.profilePic,
       date: "Just now",
     };
@@ -45,30 +45,42 @@ const Comments = ({ id }) => {
     setValues({ [e.target.name]: e.target.value });
     console.log(values);
   };
+  
+
+  const editComment = (id, updatedComment) => {
+    setCommentList(
+      commentList.map((comment) => {
+        if (comment.id === id) {
+          return { ...comment, ...updatedComment };
+        }
+        return comment;
+      })
+    );
+  };
+
+  const deleteComment = (id) => {
+    const filteredComments = commentList.filter((item) => item.id !== id);
+    if (window.confirm("Are you sure?") == true) {
+      setCommentList(filteredComments);
+    }
+  };
 
   const filteredcComments = commentList.filter((item) => item.postId === id);
 
   return (
     <div className="comments">
-        <form onSubmit={handleNewComment}>
-          <img
-            src={user.profilePic}
-            alt=""
-          />
-          <input {...input} value={values[input.name]} onChange={onChange} />
-          <button id="newCommentBtn">Send</button>
-        </form>
+      <form onSubmit={handleNewComment}>
+        <img src={user.profilePic} alt="" />
+        <input {...input} value={values[input.name]} onChange={onChange} />
+        <button id="newCommentBtn">Send</button>
+      </form>
       {filteredcComments.map((comment) => (
-        <div>
-          {user.name === comment.user && (
-            <PostMenu
-              setPostsList={setCommentList}
-              postsList={commentList}
-              postId={comment.id}
-            />
-          )}
-        <Comment {...comment} />
-        </div>
+        <Comment
+          {...comment}
+          editComment={editComment}
+          deleteComment={deleteComment}
+          activeUser={user}
+        />
       ))}
     </div>
   );

@@ -11,14 +11,14 @@ import { ReactComponent as Trash } from "../PostMenu/Icons/trash.svg";
 
 const Post = ({
   id,
-  user,
+  name,
   profilePic,
   date,
   desc,
   postPic,
   editPost,
   deletePost,
-  activeUser,
+  activeUser
 }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -56,11 +56,11 @@ const Post = ({
           <div className="userInfo">
             <img src={profilePic} alt="" />
             <div className="details">
-              <span className="name">{user}</span>
+              <span className="name">{name}</span>
               <span className="date">{date}</span>
             </div>
           </div>
-          {activeUser?.name === user && !isEditing && (
+          {activeUser?.name === name && !isEditing && (
             <div className="postMenu">
               <div className="item">
                 <Edit onClick={() => setIsEditing(true)} />
