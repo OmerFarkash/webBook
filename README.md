@@ -1,7 +1,7 @@
 # webBook
 
 ## description
-  In the beggeing, we read the mission fully - we decided to start by writing the web app, and whan we finish move to the android app.
+  In the beggining, we read the mission fully - we decided to start by writing the web app, and whan we finish move to the android app.
 
   We sat down and tried to figure out what tasks needed to be done to accompolish the mission - and how to split the work between us.
   We opened a new project in Jira and put up any small task we came up with, and orgenised each one to a corresponding Epic.
@@ -14,7 +14,7 @@
   After the basic look of the app was finished, we started implementing each part into the program, piece by piece.
   We searched the Internet for more information on how all the different file types (js, css, json, html...) should be delt with, and what each one is responsable for.
   The order of the implemantatin of the parts was according to the users experience in the app - so we first implemented the Register functionality, then the Login functionality, and at the end implementing all the parts in the Home page - adding new post and comments, and editing and deleting them.
-  At the end we even added a few difaulf posts to the page to be loaded when the user first enters the app.
+  At the end we even added a few difault posts to the page to be loaded when the user first enters the app.
   As the program took shape, we add tests for diffrent parts to check if the expected aoutcome is actualy working.
   We made sure to keep updating the Jira as we progresed, and added new tasks as we saw fit.
 
