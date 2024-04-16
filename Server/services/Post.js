@@ -1,7 +1,7 @@
 const post = require('../models/Post');
 const User = require('../models/User');
 
-// working don't tuch!!!!
+// works
 // help function to check if the user is authorized
 const authorize = async (username, jwt) => {
     const user = await User.findOne({androidToken: jwt});
@@ -11,43 +11,51 @@ const authorize = async (username, jwt) => {
     return user;
 }
 
-// working don't tuch!!!!
+// works
 // create a new post and save it to the database for current user
 const createPost = async (username, jwt, desc, postPic, date) => {
-    const user = authorize(username, jwt);
+    const user = await authorize(username, jwt);
     const newPost = new post({name: user.name, profilePic: user.profilePic, desc: desc});
     if (postPic != null) newPost.postPic = postPic;
     if (date) newPost.date = date;
-    return await newPost.save();
+    await newPost.save();
+    return JSON.stringify(newPost);
 };
 
 const getPost = async (name) => {
     return await post.findOne({ 'name': name });
 };
 
-// work in proggress
+// works
 // edit the post with the given postId
 const editPost = async (username, jwt, postId, desc, postPic) => {
-    authorize(username, jwt);
+    await authorize(username, jwt);
     var newVer = await post.findById(postId);
-    console.log(newVer)
     if (desc !== newVer.desc && desc != "") newVer.desc = desc;
-    console.log(newVer)
-
     if (postPic !== newVer.postPic && postPic != "") newVer.postPic = postPic;
     
-    return await newVer.save();
+    await newVer.save();
+    return JSON.stringify(newVer);
 };
 
-// working don't tuch!!!!
+// works
 const replacePost = async (username, jwt, postId, desc, postPic) => {
-    authorize(username, jwt);
+    await authorize(username, jwt);
     var newVer = await post.findById(postId);
     
     newVer.desc = desc;
     newVer.postPic = postPic;
     
-    return await newVer.save();
+    await newVer.save();
+    return JSON.stringify(newVer);
 };
 
-module.exports = {createPost, getPost, replacePost, editPost};
+// works
+const deletePost = async (username, jwt, postId) => {
+    await authorize(username, jwt);
+    await post.findByIdAndDelete(postId);
+    // if the post is not found, it is not harmful
+    return;
+};
+
+module.exports = {createPost, getPost, replacePost, editPost, deletePost};

@@ -1,11 +1,12 @@
 const postService = require('../services/Post');
 
+// works
 const createPost = async (req, res) => {
     const {desc, postPic} = req.body;
     const jwt = req.headers['authorization']?.replace('Bearer ', '')
     const username = req.params.id;
     try {
-        return res.json(postService.createPost(username, jwt, desc, postPic));
+        return res.json(await postService.createPost(username, jwt, desc, postPic));
     }
     catch (error) {
         return res.status(400).send("Post already exists");
@@ -22,30 +23,42 @@ const getPost = async (req, res) => {
     }
 };
 
+// works
 const editPost = async (req, res) => {
     const {desc, postPic} = req.body;
     const jwt = req.headers['authorization']?.replace('Bearer ', '')
     const username = req.params.id;
     const postId = req.params.pid;
     try {
-        return res.json(postService.editPost(username, jwt, postId, desc, postPic));
+        return res.json(await postService.editPost(username, jwt, postId, desc, postPic));
     }
     catch (error) {
         return res.status(400).send("Post not exists");
     }
 };
 
+// works
 const replacePost = async (req, res) => {
     const {desc, postPic} = req.body;
     const jwt = req.headers['authorization']?.replace('Bearer ', '')
     const username = req.params.id;
     const postId = req.params.pid;
     try {
-        return res.json(postService.replacePost(username, jwt, postId, desc, postPic));
+        return res.json(await postService.replacePost(username, jwt, postId, desc, postPic));
     }
     catch (error) {
         return res.status(400).send("Post not exists");
     }
 }
 
-module.exports = {createPost, getPost, replacePost, editPost};
+// works
+const deletePost = async (req, res) => {
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
+    const postId = req.params.pid;
+
+    await postService.deletePost(username, jwt, postId);
+    return res.status(220).json("Post deleted");
+}
+
+module.exports = {createPost, getPost, replacePost, editPost, deletePost};
