@@ -26,6 +26,11 @@ const Post = new Schema({
     // need to make a transform method for the pictures
     postPic: {
         type: String
+    },
+    // works
+    likes: {
+        type: [String],
+        default: []
     }
 });
 

@@ -58,4 +58,17 @@ const deletePost = async (username, jwt, postId) => {
     return;
 };
 
-module.exports = {createPost, getPost, replacePost, editPost, deletePost};
+// works
+const likePost = async (jwt, postId) => {
+    const user = await User.findOne({androidToken: jwt});
+    const currentPost = await post.findById(postId);
+    if (currentPost.likes.includes(user.username)) {
+        currentPost.likes = currentPost.likes.remove(user.username);
+    } else {
+        currentPost.likes.push(user.username);
+    }
+    await currentPost.save();
+    return JSON.stringify(currentPost.likes);
+}
+
+module.exports = {createPost, getPost, replacePost, editPost, deletePost, likePost};

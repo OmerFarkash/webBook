@@ -51,7 +51,6 @@
 			<label>username: <input name="username"></label>
 			<label>password: <input name="password"></label>
 			<label>profilePic (Base 64): <input name="profilePic"></label>
-			<label>androidToken: <input name="androidToken"></label>
 			<button type="submit">Submit</button>
 		</form>
 
@@ -108,6 +107,12 @@
 			<h3>Create post</h3>
 			<label>desc: <input name="desc"></label>
 			<label>postPic: <input name="postPic"></label>
+			<button type="submit">Submit</button>
+		</form>
+
+		<!--  can use --> 
+		<form id="likes" data-method="POST" action="http://localhost:$port/api/posts/$pid/likes/">
+			<h3>likes</h3>
 			<button type="submit">Submit</button>
 		</form>
 
@@ -178,6 +183,8 @@ const els = {
 	userPatch: document.querySelector('#user-patch'),
 	userPut: document.querySelector('#user-put'),
 
+	likes: document.querySelector('#likes'),
+
 	postsCreate: document.querySelector('#posts-create'),
 	postsGetOwn: document.querySelector('#posts-get-own'),
 
@@ -230,7 +237,7 @@ const sendForm = form => {
 	})
 }
 
-[ els.userCreate, els.tokens, els.feed, els.userDelete, els.userGet, els.userPatch, els.userPut, els.postsCreate,
+[ els.userCreate, els.tokens, els.feed, els.userDelete, els.userGet, els.userPatch, els.userPut, els.likes, els.postsCreate,
 	els.postsGetOwn, els.postDelete, els.postEditPatch, els.postEditPut, els.friendsGet,
 	els.friendsPost, els.friendsFidDelete, els.friendsFidPatch, ]
 	.forEach(onSubmit)

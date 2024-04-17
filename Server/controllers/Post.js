@@ -61,4 +61,16 @@ const deletePost = async (req, res) => {
     return res.status(220).json("Post deleted");
 }
 
-module.exports = {createPost, getPost, replacePost, editPost, deletePost};
+// works
+const likePost = async (req, res) => {
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const postId = req.params.id;
+    try {
+        return res.json(await postService.likePost(jwt, postId));
+    }
+    catch (error) {
+        return res.status(400).send("Post not exists");
+    }
+}
+
+module.exports = {createPost, getPost, replacePost, editPost, deletePost, likePost};
