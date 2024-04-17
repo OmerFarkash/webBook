@@ -1,9 +1,9 @@
 import "./navBar.css";
 import { ReactComponent as SearchIcon } from "./Icons/search.svg";
 
-const NavBar = ({ user }) => {
-  const profilePic = user?.profilePic;
-  const name = user?.name;
+const NavBar = ({ activeUser }) => {
+  const profilePic = activeUser?.profilePic;
+  const name = activeUser?.name;
 
   return (
     <div className="navBar">

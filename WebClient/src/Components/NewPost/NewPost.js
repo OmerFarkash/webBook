@@ -1,7 +1,8 @@
+import { createPost, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
-const NewPost = ({ setPostsList, postsList, user }) => {
+const NewPost = ({ user, socket }) => {
   const handleNewPost = (e) => {
     e.preventDefault();
     addPost(values.desc);
@@ -13,16 +14,10 @@ const NewPost = ({ setPostsList, postsList, user }) => {
   });
 
   const addPost = (value) => {
-    const newPost = {
-      id: postsList.length + 1,
-      name: user.name,
-      profilePic: user.profilePic,
-      date: "Just now",
-      desc: value,
-      postPic: values.postPic ? URL.createObjectURL(values.postPic) : null,
-    };
+    let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
+    let post = createPost(id, user, value, postPic);
     if (value || values.postPic) {
-      setPostsList([newPost, ...postsList]);
+      postPost(user.token, user, post, socket);
     } else {
       alert("Post can't be empty");
     }
