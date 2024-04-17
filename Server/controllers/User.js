@@ -3,7 +3,7 @@ const userServices = require('../services/User');
 const createUser = async (req, res) => {
     const { name, username, password, profilePic, androidToken } = req.body;
     try {
-        console.log(await userServices.createUser(name, username, password, profilePic, androidToken));
+        await userServices.createUser(name, username, password, profilePic, androidToken);
         return res.status(201).send("User created");
     } catch (error) {
         return res.status(400).send("User already exists");

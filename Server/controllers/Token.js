@@ -1,5 +1,6 @@
 const tokenService = require('../services/Token');
 
+// createToken is a function that creates a token for a new user
 const createToken = async (req, res) => {
     const { username, password } = req.body;
     const headers = JSON.stringify(req.headers);
@@ -23,10 +24,11 @@ const createToken = async (req, res) => {
     }
 }
 
+//need to fix this part
 const verifyToken = async (req, res, next) => {
     
     const token = req.headers['authorization']?.replace('Bearer ', '')
-    
+    // this part is working
     if (token == null) {
         return res.status(403).send("Token required");    
     }
@@ -34,6 +36,7 @@ const verifyToken = async (req, res, next) => {
     try {
         req.username = tokenService.verifyToken(token).username;
         next();
+        // isn't getting to the error if the user name is not good 
     } catch (error) {
         return res.status(401).send("Unauthorized");
     }

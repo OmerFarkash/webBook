@@ -8,20 +8,20 @@ const router = express.Router();
 // Route to create a new user
 router.post('/', UserController.createUser);
 
-// Route to create a new post
+// Route to create a new post - works
 router.post('/:id/posts', TokenController.verifyToken, postController.createPost);
 
 // Route to get all the posts of the user
 router.get('/:id/posts', TokenController.verifyToken, postController.getPost);
 
-// Route to replace a post entirely  
+// Route to replace a post entirely - works
 router.put('/:id/posts/:pid', TokenController.verifyToken, postController.replacePost);
 
-// Route to edit a post  
+// Route to edit a post - works
 router.patch('/:id/posts/:pid', TokenController.verifyToken, postController.editPost);
 
-// // Route to delete a post 
-// router.delete('/:id/posts/:pid', TokenController.verifyToken, postController.deletePost);
+// Route to delete a post - works
+router.delete('/:id/posts/:pid', TokenController.verifyToken, postController.deletePost);
 
 
 // Route to get all users
