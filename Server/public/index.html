@@ -44,10 +44,10 @@
 			<label>fid (friend id): <input id="fid" size="50"></label>
 		</form>
 		
-		<!-- edit to our versition -->
+		<!-- can use -->
 		<form id="user-create" data-method="POST" action="http://localhost:$port/api/users/">
 			<h3>Register</h3>
-			<label>user: <input name="user"></label>
+			<label>name: <input name="name"></label>
 			<label>username: <input name="username"></label>
 			<label>password: <input name="password"></label>
 			<label>profilePic (Base 64): <input name="profilePic"></label>
@@ -69,17 +69,25 @@
 			<button type="submit">Submit</button>
 		</form>
 
-		<!-- edit to our versition -->
+		<!-- can use -->
 		<form id="user-get" data-method="GET" action="http://localhost:$port/api/users/$uid/">
 			<h3>Get User Details</h3>
 			<button type="submit">Submit</button>
 		</form>
-		<!-- edit to our versition -->
-
+		
+		<!-- can use -->
 		<form id="user-patch" data-method="PATCH" action="http://localhost:$port/api/users/$uid/">
-			<h3>Get User Details (PATCH only; test PUT separately)</h3>
-			<label>new displayName: <input name="displayName"></label>
-			<label>new profileImage: <input name="profileImage"></label>
+			<h3>Get User Details PATCH</h3>
+			<label>new username: <input name="username"></label>
+			<label>new profilePic: <input name="profilePic"></label>
+			<button type="submit">Submit</button>
+		</form>
+
+		<!-- can use -->
+		<form id="user-put" data-method="PUT" action="http://localhost:$port/api/users/$uid/">
+			<h3>Get User Details PUT</h3>
+			<label>new username: <input name="username"></label>
+			<label>new profilePic: <input name="profilePic"></label>
 			<button type="submit">Submit</button>
 		</form>
 
@@ -103,7 +111,7 @@
 			<button type="submit">Submit</button>
 		</form>
 
-		<!-- edit to our versition -->
+		<!-- can use -->
 		<form id="post-edit-patch" data-method="PATCH" action="http://localhost:$port/api/users/$uid/posts/$pid">
 			<h3>Edit Post (PATCH)</h3>
 			<label>desc: <input name="desc"></label>
@@ -119,7 +127,7 @@
 			<button type="submit">Submit</button>
 		</form>
 
-		<!-- edit to our versition -->
+		<!-- can use -->
 		<form id="post-delete" data-method="DELETE" action="http://localhost:$port/api/users/$uid/posts/$pid">
 			<h3>Delete Post</h3>
 			<button type="submit">Submit</button>
@@ -168,6 +176,7 @@ const els = {
 	userDelete: document.querySelector('#user-delete'),
 	userGet: document.querySelector('#user-get'),
 	userPatch: document.querySelector('#user-patch'),
+	userPut: document.querySelector('#user-put'),
 
 	postsCreate: document.querySelector('#posts-create'),
 	postsGetOwn: document.querySelector('#posts-get-own'),
@@ -221,7 +230,7 @@ const sendForm = form => {
 	})
 }
 
-[ els.userCreate, els.tokens, els.feed, els.userDelete, els.userGet, els.userPatch, els.postsCreate,
+[ els.userCreate, els.tokens, els.feed, els.userDelete, els.userGet, els.userPatch, els.userPut, els.postsCreate,
 	els.postsGetOwn, els.postDelete, els.postEditPatch, els.postEditPut, els.friendsGet,
 	els.friendsPost, els.friendsFidDelete, els.friendsFidPatch, ]
 	.forEach(onSubmit)

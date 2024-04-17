@@ -5,7 +5,7 @@ const postController = require('../controllers/Post');
 
 const router = express.Router();
 
-// Route to create a new user
+// Route to create a new user - works
 router.post('/', UserController.createUser);
 
 // Route to create a new post - works
@@ -24,14 +24,14 @@ router.patch('/:id/posts/:pid', TokenController.verifyToken, postController.edit
 router.delete('/:id/posts/:pid', TokenController.verifyToken, postController.deletePost);
 
 
-// Route to get all users
-router.patch('/:id/friends/:fid', UserController.addFriend);
-
-// Route to get a specific user by ID
+// Route to get a specific user by ID (username) - works
 router.get('/:id', TokenController.verifyToken, UserController.getUser);
 
-// Route to update a user by ID
+// Route to update fully a user by ID (username) - works
 router.put('/:id', TokenController.verifyToken, UserController.updateUser);
+
+// Route to update a user by ID (username) - works
+router.patch('/:id', TokenController.verifyToken, UserController.editUser);
 
 // Route to delete a user by ID
 router.delete('/:id', TokenController.verifyToken, UserController.deleteUser);
