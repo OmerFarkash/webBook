@@ -1,17 +1,19 @@
 const userServices = require('../services/User');
 
+// works
 const createUser = async (req, res) => {
     const { name, username, password, profilePic, androidToken } = req.body;
     try {
-        await userServices.createUser(name, username, password, profilePic, androidToken);
-        return res.status(201).send("User created");
+        user = await userServices.createUser(name, username, password, profilePic, androidToken);
+       
+        return res.status(201).send(user);
     } catch (error) {
-        return res.status(400).send("User already exists");
+        return res.status(404).json("User already exists");
     }
 }
-
+// works
 const getUser = async (req, res) => {
-    const { username } = req.params;
+    const username = req.params.id;
     try {
         const user = await userServices.getUser(username);
         return res.status(200).send(user);
@@ -30,12 +32,27 @@ const deleteUser = async (req, res) => {
     }
 }
 
+// works
 const updateUser = async (req, res) => {
-    const { username } = req.params;
-    const { name, profilePic } = req.body;
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
+    const newUsername = req.body.username;
+    const newProfilePic = req.body.profilePic;
     try {
-        await userServices.updateUser(username, name, profilePic);
-        return res.status(200).send("User updated");
+        return res.json(await userServices.updateUser(username, jwt, newUsername, newProfilePic));
+    } catch (error) {
+        return res.status(404).send("User not exists");
+    }
+}
+
+// works
+const editUser = async (req, res) => {
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
+    const newUsername = req.body.username;
+    const newProfilePic = req.body.profilePic;
+    try {
+        return res.json(await userServices.editUser(username, jwt, newUsername, newProfilePic));
     } catch (error) {
         return res.status(404).send("User not exists");
     }
@@ -81,4 +98,4 @@ const deleteFriend = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
+module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};

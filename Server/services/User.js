@@ -1,14 +1,32 @@
 const User = require('../models/User');
+const TokenService = require('../services/Token');
 
+
+// works
+const authorize = async (username, jwt) => {
+    const user = await User.findOne({androidToken: jwt});
+    if (username !== user.username) {
+        throw new Error('not authorized');
+    }
+    return user;
+}
+
+// works
 const createUser = async (name, username, password, profilePic) => {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: username });
+    console.log(user);
     if (user !== null) {
         throw new Error('User already exists');
     }
-    const newUser = new User({ name: name, username: username, password: password, profilePic: profilePic, androidToken: "" });
-    return await newUser.save();
-};
+    const newUser = new User({ name: name, username: username, profilePic: profilePic, androidToken: "" });
+    await newUser.save();
+    
+    await TokenService.createToken(username, password, "");
 
+    return JSON.stringify(newUser);
+}
+
+// works
 const getUser = async (username) => {
     const user = await User.findOne({ "username": username});
 
@@ -29,13 +47,27 @@ const deleteUser = async (username) => {
     return await user.Delete();
 }
 
-const updateUser = async (username, name, profilePic) => {
-    const user = await User.findOne({ username });
+// works
+const updateUser = async (username, jwt, newUsername, newProfilePic) => {
+    const user = await authorize(username, jwt);
+    user.username = newUsername;
+    user.profilePic = newProfilePic;
 
-    if (user === null) {
-        throw new Error('User not exists');
-    }
-    return await user.Update({ 'name': name , 'profilePic': profilePic });
+    await user.save();
+    return JSON.stringify(user);
+}
+
+// works
+const editUser = async (username, jwt, newUsername, newProfilePic) => {
+    const user = await authorize(username, jwt);
+    
+    if (newUsername !== user.username && newUsername != "")
+        user.username = newUsername;
+    if (newProfilePic !== user.profilePic && newProfilePic != "")
+        user.profilePic = newProfilePic;
+    
+    await user.save();
+    return JSON.stringify(user);
 }
 
 const addFriend = async (username, friend) => {
@@ -74,4 +106,4 @@ const deleteFriend = async (username, friend) => {
     return await user.findOneAndDelete({ 'friends': friend }) && await friendUser.findOneAndDelete({ 'friends': user });
 }
 
-module.exports = { createUser, getUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
+module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
