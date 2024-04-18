@@ -2,13 +2,12 @@ const userServices = require('../services/User');
 
 // works
 const createUser = async (req, res) => {
-    const { name, username, password, profilePic, androidToken } = req.body;
+    const { name, username, password, profilePic } = req.body;
     try {
-        user = await userServices.createUser(name, username, password, profilePic, androidToken);
-       
-        return res.status(201).send(user);
+        user = await userServices.createUser(name, username, password, profilePic);
+        return res.status(201).json(user);
     } catch (error) {
-        return res.status(404).json("User already exists");
+        return res.status(404).send(error.message);
     }
 }
 // works
