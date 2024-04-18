@@ -66,12 +66,12 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`http://foo.com/api/users`, {
+    const response = await fetch(`http://foo.com/api/Users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringfy(user),
+      body: JSON.stringfy({ ...values}),
     });
 
     if (response["status"] === 409) {

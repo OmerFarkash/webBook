@@ -26,11 +26,10 @@ async function fetchUser(token, username) {
     });
 
     if (!res.ok) return null;
-
     return JSON.parse(await res.text());
 }
 
-async function fetchFriends(token) {
+async function fetchFriends(token, username) {
     const res = await fetch(`http://foo.com/api/Users/${username}/Friends`, {
         method: "GET",
         headers: {
@@ -40,13 +39,11 @@ async function fetchFriends(token) {
     });
 
     if (!res.ok) return null;
-
-    let data = await res.text();
-    return JSON.parse(data);
+    return JSON.parse(await res.text());
 }
 
 async function postFriendReq(token, username) {
-    const res = await fetch(`http://foo.com/api/Friends`, {
+    const res = await fetch(`http://foo.com/api/Users/${username}/Friends`, {
         method: "POST",
         headers: {
             accept: "*/*",

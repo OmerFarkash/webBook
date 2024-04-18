@@ -36,21 +36,29 @@ async function deletePost(token, username, id) {
     });
 }
 
-async function editPost(token, username, id) {
+async function editPost(token, username, post, id, socket) {
         const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${id}`, {
             method: "PUT",
             headers: {
                 accept: "text/plain",
                 Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
             },
+            body: JSON.stringify({ ...post}),
         });
 
-    if (!res.ok) return null;
-    return JSON.parse(await res.text());
+        let msg = null
+        if (res.ok) {
+            msg = JSON.parse(await res.text());
+        }
+    
+        socket.emit("post", { user:user, post:post });
+    
+        return msg;
 }
 
-async function postPost(token, user, post, socket) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${id}`, {
+async function postPost(token, user, post, id, socket) {
+    const res = await fetch(`http://foo.com/api/Users/${user.username}/Posts/${id}`, {
         method: "POST",
         headers: {
             accept: "text/plain",
