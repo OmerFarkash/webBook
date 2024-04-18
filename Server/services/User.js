@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const TokenService = require('../services/Token');
-
+const PostServices = require('../services/Post');
 
 // works
 const validUser = async (username, jwt) => {
@@ -38,14 +38,44 @@ const getUser = async (username) => {
     return user;
 }
 
-const deleteUser = async (username) => {
-    const user = await User.findOne({ username : username });
-
+// works
+const deleteUser = async (jwt, username) => {
+    const user = await validUser(username, jwt);
     if (user === null) {
         throw new Error('User not exists');
     }
 
-    return await user.Delete();
+    // delete all likes
+    for (let i = 0 ; i < user.likedPosts.length ; i++) {
+        await PostServices.likePost(jwt, user.likedPosts[i]);
+    }
+
+    // delete all posts
+    for (let i = 0 ; i < user.posts.length ; i++) {
+        await PostServices.deletePost(username, jwt, user.posts[i]);
+    }
+
+    // delete all friend requests sent
+    for (let i = 0 ; i < user.friendRequestsSent.length ; i++) {
+        var temp = await User.findOne({ username: user.friendRequestsSent[i]});
+        temp.friendRequests.remove(username);
+        await temp.save();
+        user.friendRequestsSent.pop();
+    }
+    await user.save();
+    
+    // delete all friend requests
+    for (let i = 0 ; i < user.friendRequests.length ; i++) {
+        await deleteFriend(jwt, username, user.friendRequests[i]);
+    }
+
+    // delete all friends
+    for (let i = 0 ; i < user.friends.length ; i++) {
+        await deleteFriend(jwt, username, user.friends[i]);
+    }
+    
+
+    return await User.findOneAndDelete({ username: username });
 }
 
 // works
