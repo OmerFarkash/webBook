@@ -3,7 +3,7 @@ const postService = require('../services/Post');
 // works
 const createPost = async (req, res) => {
     const {desc, postPic} = req.body;
-    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const jwt = req.headers['authorization']
     const username = req.params.id;
     try {
         return res.json(await postService.createPost(username, jwt, desc, postPic));
@@ -26,7 +26,7 @@ const getPost = async (req, res) => {
 // works
 const editPost = async (req, res) => {
     const {desc, postPic} = req.body;
-    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const jwt = req.headers['authorization']
     const username = req.params.id;
     const postId = req.params.pid;
     try {
@@ -40,7 +40,7 @@ const editPost = async (req, res) => {
 // works
 const replacePost = async (req, res) => {
     const {desc, postPic} = req.body;
-    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const jwt = req.headers['authorization']
     const username = req.params.id;
     const postId = req.params.pid;
     try {
@@ -53,7 +53,7 @@ const replacePost = async (req, res) => {
 
 // works
 const deletePost = async (req, res) => {
-    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const jwt = req.headers['authorization']
     const username = req.params.id;
     const postId = req.params.pid;
 
@@ -68,7 +68,7 @@ const deletePost = async (req, res) => {
 
 // works
 const likePost = async (req, res) => {
-    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const jwt = req.headers['authorization']
     const postId = req.params.id;
     try {
         return res.json(await postService.likePost(jwt, postId));
