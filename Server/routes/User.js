@@ -40,14 +40,14 @@ router.delete('/:id', TokenController.verifyToken, UserController.deleteUser);
 // Route to reaturn the list of my friends
 router.get('/:id/friends', TokenController.verifyToken, UserController.getFriends);
 
-// Route to create a new friend request
+// Route to create a new friend request - works
 router.post('/:id/friends', TokenController.verifyToken, UserController.askFriend);
 
 
-// Route to accept the friend request
-router.patch('/:id/friends/:fid', TokenController.verifyToken, UserController.deleteFriend);
+// Route to accept the friend request - works
+router.patch('/:id/friends/:fid', TokenController.verifyToken, UserController.addFriend);
 
-// Route to delete a friend from the list
+// Route to delete a friend from the list - works
 router.delete('/:id/friends/:fid', TokenController.verifyToken, UserController.deleteFriend);
 
 module.exports = router;

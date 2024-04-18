@@ -2,11 +2,22 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 
 // works
-// help function to check if the user is authorized
-const authorize = async (username, jwt) => {
+// help function to check if the user is known user
+const validUser = async (username, jwt) => {
     const user = await User.findOne({androidToken: jwt});
     if (username !== user.username) {
-        throw new Error('not authorized');
+        throw new Error('user name does not match token');
+    }
+    return user;
+}
+
+// works
+// help function to check if the user is the owner of the post so it can perform actions on it
+const postOwner = async (username, postId, jwt) => {
+    const user = await validUser(username, jwt);
+    const post = await Post.findById(postId);
+    if (post.name !== username) {
+        throw new Error('not authorized to edit this post');
     }
     return user;
 }
@@ -14,7 +25,7 @@ const authorize = async (username, jwt) => {
 // works
 // create a new post and save it to the database for current user
 const createPost = async (username, jwt, desc, postPic, date) => {
-    const user = await authorize(username, jwt);
+    const user = await validUser(username, jwt);
     const newPost = new Post({name: user.name, profilePic: user.profilePic, desc: desc});
     if (postPic != null) newPost.postPic = postPic;
     if (date) newPost.date = date;
@@ -31,7 +42,7 @@ const getPost = async (name) => {
 // works
 // edit the post with the given postId
 const editPost = async (username, jwt, postId, desc, postPic) => {
-    await authorize(username, jwt);
+    await postOwner(username, postId, jwt);
     var newVer = await Post.findById(postId);
     if (desc !== newVer.desc && desc != "") newVer.desc = desc;
     if (postPic !== newVer.postPic && postPic != "") newVer.postPic = postPic;
@@ -42,7 +53,7 @@ const editPost = async (username, jwt, postId, desc, postPic) => {
 
 // works
 const replacePost = async (username, jwt, postId, desc, postPic) => {
-    await authorize(username, jwt);
+    await postOwner(username, postId, jwt);
     var newVer = await Post.findById(postId);
     
     newVer.desc = desc;
@@ -55,7 +66,7 @@ const replacePost = async (username, jwt, postId, desc, postPic) => {
 // works
 // remove likes on the post from users lists, remove the post from the user's posts, rmove the post itself
 const deletePost = async (username, jwt, postId) => {
-    var user = await authorize(username, jwt);
+    var user = await postOwner(username, postId, jwt);
     const post = await Post.findById(postId);
     for (let i = 0; i < post.likes.length; i++) {
         const tempUser = await User.findOne({username: post.likes[i]});

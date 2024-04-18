@@ -3,7 +3,7 @@ const TokenService = require('../services/Token');
 
 
 // works
-const authorize = async (username, jwt) => {
+const validUser = async (username, jwt) => {
     const user = await User.findOne({androidToken: jwt});
     if (username !== user.username) {
         throw new Error('not authorized');
@@ -50,7 +50,7 @@ const deleteUser = async (username) => {
 
 // works
 const updateUser = async (username, jwt, newUsername, newProfilePic) => {
-    const user = await authorize(username, jwt);
+    const user = await validUser(username, jwt);
     user.username = newUsername;
     user.profilePic = newProfilePic;
 
@@ -60,7 +60,7 @@ const updateUser = async (username, jwt, newUsername, newProfilePic) => {
 
 // works
 const editUser = async (username, jwt, newUsername, newProfilePic) => {
-    const user = await authorize(username, jwt);
+    const user = await validUser(username, jwt);
     
     if (newUsername !== user.username && newUsername != "")
         user.username = newUsername;
@@ -71,16 +71,34 @@ const editUser = async (username, jwt, newUsername, newProfilePic) => {
     return JSON.stringify(user);
 }
 
-const addFriend = async (username, friend) => {
-    const user = await User.findOne({ username });
-    const friendUser = await User.findOne({ username: friend});
+// works
+const addFriend = async (jwt, username, friend) => {
+    var user = await validUser(username, jwt)
+    var friendUser = await User.findOne({ username: friend});
 
     if (user === null || friendUser === null) {
         throw new Error('User not exists');
     }
     
-    return await UserdUpdate({ $push: { 'friends': friend } }) && 
-    await friendUser.Update({ $push: { 'friends': username }}); 
+    if (user.friends.includes(friend) || friendUser.friends.includes(username)) {
+        throw new Error('Already friends');
+    }
+
+    if (user.friendRequests.includes(friend)) {
+        user.friendRequests.remove(friend);
+        
+        user.friends.push(friend);
+        friendUser.friends.push(username);
+
+        friendUser.friendRequestsSent.remove(username);
+
+        await user.save();
+        await friendUser.save();
+    }
+    else {
+        throw new Error('No friend request');
+    }
+    return; 
 }
 
 const getFriends = async (username) => {
@@ -88,23 +106,51 @@ const getFriends = async (username) => {
     return await user.friends;
 }
 
-const askFriend = async (username, friend) => {
-    const user = await User.findOne({ username });
-    const friendUser = await User.findOne({ username: friend});
-
-    if (user === null || friendUser === null) {
+// works
+const askFriend = async (jwt, friend) => {
+    var user = await User.findOne({ androidToken: jwt });
+    var friendUser = await User.findOne({ username: friend});
+    if (user == null || friendUser == null) {
         throw new Error('User not exists');
     }
-    return await friendUser.Update({ $push: { 'friendRequests': username }});
+    if (user.friends.includes(friend) || friendUser.friends.includes(user.username)) {
+        throw new Error('Already friends');
+    }
+    user.friendRequestsSent.push(friend);
+    await user.save();
+    friendUser.friendRequests.push(user.username);
+    return await friendUser.save();
 }
 
-const deleteFriend = async (username, friend) => {
-    const user = await User.findOne({ username });
-    const friendUser = await User.findOne({ username: friend});
+// works
+// delete friend or friend request depending on the case
+const deleteFriend = async (jwt, username, friend) => {
+    var user = await validUser(username, jwt);
+    var friendUser = await User.findOne({ username: friend});
+
     if (user === null || friendUser === null) {
         throw new Error('User not exists');
     }
-    return await user.findOneAndDelete({ 'friends': friend }) && await friendUser.findOneAndDelete({ 'friends': user });
+    
+    if (user.friends.includes(friend) || friendUser.friends.includes(username)) {
+        user.friends.remove(friend);
+        friendUser.friends.remove(username);
+        await user.save();
+        await friendUser.save();
+        return;
+    }
+
+    if (user.friendRequests.includes(friend)) {
+        user.friendRequests.remove(friend);
+        await user.save();
+        
+        friendUser.friendRequestsSent.remove(username);
+        await friendUser.save();
+        
+        return;
+    }
+
+    throw new Error('Not friends');
 }
 
 module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};

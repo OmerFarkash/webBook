@@ -57,8 +57,13 @@ const deletePost = async (req, res) => {
     const username = req.params.id;
     const postId = req.params.pid;
 
-    await postService.deletePost(username, jwt, postId);
-    return res.status(220).json("Post deleted");
+    try {
+        await postService.deletePost(username, jwt, postId);
+        return res.status(220).json("Post deleted");
+    }
+    catch (error) {
+        return res.status(400).send(error.message);
+    }
 }
 
 // works

@@ -26,13 +26,17 @@ const User = new Schema({
     androidToken: {
         type: String,
     },
-    // not tested
+    // works
     friends: {
         type: [String],
         default: []
     },
-    // not tested
+    // works
     friendRequests: {
+        type: [String],
+        default: []
+    },
+    friendRequestsSent: {
         type: [String],
         default: []
     },
@@ -41,7 +45,7 @@ const User = new Schema({
         type: [mongoose.Schema.Types.ObjectId],
         default: []
     },
-    // not tested
+    // works
     likedPosts: {
         type: [mongoose.Schema.Types.ObjectId],
         default: []
