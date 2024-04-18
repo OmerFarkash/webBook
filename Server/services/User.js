@@ -14,14 +14,15 @@ const authorize = async (username, jwt) => {
 // works
 const createUser = async (name, username, password, profilePic) => {
     const user = await User.findOne({ username: username });
-    console.log(user);
+    
     if (user !== null) {
         throw new Error('User already exists');
     }
-    const newUser = new User({ name: name, username: username, profilePic: profilePic, androidToken: "" });
+    var newUser = new User({ name: name, username: username, profilePic: profilePic, androidToken: "" });
     await newUser.save();
     
     await TokenService.createToken(username, password, "");
+    newUser = await User.findOne({ 'username': username });
 
     return JSON.stringify(newUser);
 }

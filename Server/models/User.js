@@ -36,8 +36,13 @@ const User = new Schema({
         type: [String],
         default: []
     },
-    // not tested
+    // works
     posts: {
+        type: [mongoose.Schema.Types.ObjectId],
+        default: []
+    },
+    // not tested
+    likedPosts: {
         type: [mongoose.Schema.Types.ObjectId],
         default: []
     }
