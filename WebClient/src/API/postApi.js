@@ -57,8 +57,8 @@ async function editPost(token, username, post, id, socket) {
         return msg;
 }
 
-async function postPost(token, user, post, id, socket) {
-    const res = await fetch(`http://foo.com/api/Users/${user.username}/Posts/${id}`, {
+async function postPost(token, username, post, socket) {
+    const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${post.id}`, {
         method: "POST",
         headers: {
             accept: "text/plain",
@@ -88,5 +88,9 @@ function createPost(id, user, desc, pic) {
         postPic: pic,
     };
 }
+
+// function likePost(token, username, post, id, socket) {
+    
+// }
 
 export { fetchPosts, fetchPost, deletePost, editPost, postPost, createPost }

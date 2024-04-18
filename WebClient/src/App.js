@@ -33,9 +33,8 @@ function App() {
       <Toggle
         testid="toggle-theme-btn"
         isChecked={isDark}
-        handleChange={() => setIsDark(!isDark)}
-      />
-      <UserContext.Provider value={{ activeUser, setaActiveUser }}>
+        handleChange={() => setIsDark(!isDark)} />
+      <UserContext.Provider value={{ activeUser, setActiveUser }}>
         <BrowserRouter>
           <Routes>
             <Route

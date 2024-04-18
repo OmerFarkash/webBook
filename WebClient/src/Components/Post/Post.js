@@ -49,6 +49,7 @@ const Post = ({
     }
   };
 
+  
   return (
     <div className="post" id={id}>
       <div className="container">

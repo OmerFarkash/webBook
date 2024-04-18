@@ -19,16 +19,6 @@ const Login = ({ setUserByToken }) => {
     } else {
       setUserByToken(token, input.username);
     }
-    //   for (let i = 0; i < users.length; i++) {
-    //     if (users[i].username === username && users[i].password === password) {
-    //       setUser(users[i]);
-    //       alert("Welcome " + users[i].name);
-    //       navigate("/Home");
-    //       return;
-    //     }
-    //   }
-    //   alert("username or password is incorrect");
-    // };
 
     const handleChange = (name, value) => {
       setInput({

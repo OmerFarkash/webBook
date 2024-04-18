@@ -4,11 +4,12 @@ import Post from "../Post/Post.js";
 // import posts from "../../data/Posts.json";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "../../API/postApi.js";
-import { fetchToken } from "../../API/userApi.js";
 
 const Feed = async ({ activeUser }) => {
 
+  const [posts, setPosts] = useState();
   let postsList = await fetchPosts(activeUser.token);
+  setPosts(postsList);
 
   // const [postsList, setPostsList] = useState();
 
@@ -33,11 +34,11 @@ const Feed = async ({ activeUser }) => {
   return (
     <div className="posts">
       <NewPost
-        // setPostsList={setPostsList}
-        postsList={postsList}
+        setPosts={setPosts}
+        postsList={posts}
         user={activeUser}
       />
-      {postsList.map((post) => (
+      {posts.map((post) => (
         <Post
         key={post.id}  
         {...post}

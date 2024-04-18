@@ -14,7 +14,7 @@ import { ReactComponent as Logout } from "./Icons/logOut.svg";
 
 import { Link } from "react-router-dom";
 
-const LeftBar = () => {
+const LeftBar = (activeUser, setActiveUser) => {
   return (
     <div className="leftBar">
       <div className="container">
@@ -52,7 +52,7 @@ const LeftBar = () => {
           <Games /> Games
         </div>
         <Link style={{ textDecoration: "none" }} to="/">
-          <div className="item">
+          <div className="item" onClick={setActiveUser({})}>
             <Logout /> Logout
           </div>
         </Link>

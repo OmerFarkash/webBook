@@ -2,24 +2,26 @@ import { createPost, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
-const NewPost = ({ user, socket }) => {
-  const handleNewPost = (e) => {
-    e.preventDefault();
-    addPost(values.desc);
-  };
+const NewPost = ({ setPosts, posts, activeUser }) => {
 
   const [values, setValues] = useState({
     desc: "",
     postPic: null,
   });
 
-  const addPost = (value) => {
+  const handleNewPost = (e) => {
+    e.preventDefault();
+    addPost();
+  }; 
+
+  const addPost = () => {
     let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
-    let post = createPost(id, user, value, postPic);
-    if (value || values.postPic) {
-      postPost(user.token, user, post, socket);
+    let newPost = createPost(id, activeUser, values.desc, postPic); // need to understand where id comes from
+    if (values.desc || values.postPic) {
+      postPost(user.token, user.username, newPost, socket); 
+      // setPosts(...posts, newPost); // not sure if needed
     } else {
-      alert("Post can't be empty");
+      alert("Post can't be empty!");
     }
   };
 
