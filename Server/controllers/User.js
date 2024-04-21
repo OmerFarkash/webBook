@@ -57,10 +57,13 @@ const editUser = async (req, res) => {
     }
 }
 
+// works
 const addFriend = async (req, res) => {
-    const { username, friend } = req.params;
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
+    const friend = req.params.fid;
     try {
-        await userServices.addFriend(username, friend);
+        await userServices.addFriend(jwt, username, friend);
         return res.status(200).send("Friend added");
     } catch (error) {
         return res.status(404).send("User not exists");
@@ -77,20 +80,25 @@ const getFriends = async (req, res) => {
     }
 }
 
+// works
 const askFriend = async (req, res) => {
-    const { username, friend } = req.params;
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const friend = req.params.id;
     try {
-        await userServices.askFriend(username, friend);
+        await userServices.askFriend(jwt, friend);
         return res.status(200).send("Friend request sent");
     } catch (error) {
-        return res.status(404).send("User not exists");
+        return res.status(404).json(friend + " not exists");
     }
 }
 
+// works
 const deleteFriend = async (req, res) => {
-    const { username, friend } = req.params;
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
+    const friend = req.params.fid;
     try {
-        await userServices.deleteFriend(username, friend);
+        await userServices.deleteFriend(jwt, username, friend);
         return res.status(200).send("Friend deleted");
     } catch (error) {
         return res.status(404).send("User or friend not exists");
