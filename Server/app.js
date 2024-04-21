@@ -29,4 +29,6 @@ app.use('/api/posts', posts);
 app.use('/api/users', users);
 app.use('/api/tokens', tokens);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, () => {
+    console.log('Server started on port ' + process.env.PORT);
+});

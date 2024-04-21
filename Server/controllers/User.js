@@ -7,7 +7,7 @@ const createUser = async (req, res) => {
         user = await userServices.createUser(name, username, password, profilePic);
         return res.status(201).json(user);
     } catch (error) {
-        return res.status(404).send(error.message);
+        return res.json(error);
     }
 }
 // works

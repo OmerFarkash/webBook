@@ -7,9 +7,9 @@ import { fetchPosts } from "../../API/postApi.js";
 
 const Feed = async ({ activeUser }) => {
 
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   let postsList = await fetchPosts(activeUser.token);
-  setPosts(postsList);
+  setPosts(await postsList);
 
   return (
     <div className="posts">

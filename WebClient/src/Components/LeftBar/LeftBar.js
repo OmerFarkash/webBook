@@ -13,8 +13,9 @@ import { ReactComponent as Games } from "./Icons/games.svg";
 import { ReactComponent as Logout } from "./Icons/logOut.svg";
 
 import { Link } from "react-router-dom";
+import { defaultUser } from "../../API/userApi";
 
-const LeftBar = (activeUser, setActiveUser) => {
+const LeftBar = ({setActiveUser}) => {
   return (
     <div className="leftBar">
       <div className="container">
@@ -52,7 +53,7 @@ const LeftBar = (activeUser, setActiveUser) => {
           <Games /> Games
         </div>
         <Link style={{ textDecoration: "none" }} to="/">
-          <div className="item" onClick={setActiveUser({})}>
+          <div className="item" >
             <Logout /> Logout
           </div>
         </Link>

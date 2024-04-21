@@ -1,24 +1,22 @@
 /** @format */
+const server = 'localhost:12345';
 
-async function fetchToken({ username, password }) {
-    let res = await fetch("http://foo.com/api/tokens", {
+
+async function fetchToken(username, password ) {
+    let res = await fetch(`http://${server}/api/tokens/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ "username": username, "password": password }),
     });
 
-    if (!res.ok) return null;
-
-    const reader = res.body.getReader();
-    let encodedResult = await reader.read();
-    let token = new TextDecoder("utf-8").decode(encodedResult.value);
-    return token;
+    console.log(res);    
+    return ;
 }
 
 async function fetchUser(token, username) {
-    const res = await fetch(`http://foo.com/api/Users/${username}`, {
+    const res = await fetch(`http://${server}/api/Users/${username}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -30,7 +28,7 @@ async function fetchUser(token, username) {
 }
 
 async function fetchFriends(token, username) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Friends`, {
+    const res = await fetch(`http://${server}/api/Users/${username}/Friends`, {
         method: "GET",
         headers: {
             accept: "text/plain",
@@ -43,7 +41,7 @@ async function fetchFriends(token, username) {
 }
 
 async function postFriendReq(token, username) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Friends`, {
+    const res = await fetch(`http://${server}/api/Users/${username}/Friends`, {
         method: "POST",
         headers: {
             accept: "*/*",

@@ -7,20 +7,13 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Home = ({activeUser, setActiveUser}) => {
-  // const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user === null) {
-  //     navigate('/');
-  //   }
-  // }, [user, navigate]);
-
   return (
-    <div className="Home" >
-      <NavBar activeUser={activeUser} />
-      <LeftBar activeUser={activeUser} setActiveUser={setActiveUser}/>
+    <div className="home">
+      <LeftBar activeUser={activeUser} setActiveUser={setActiveUser} />
       <Feed activeUser={activeUser} />
+      <NavBar activeUser={activeUser} />
     </div>
   );
 };

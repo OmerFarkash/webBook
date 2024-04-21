@@ -24,21 +24,16 @@ const createToken = async (req, res) => {
     }
 }
 
-//need to fix this part
-const verifyToken = async (req, res, next) => {
-    
-    const token = req.headers['authorization']
-    // this part is working
-    if (token == null) {
-        return res.status(403).send("Token required");    
-    }
-
+const verifyToken = async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username);
+    console.log(password);
     try {
-        req.username = tokenService.verifyToken(token).username;
-        next();
-        // isn't getting to the error if the user name is not good 
+        return res.JSON(await tokenService.verifyToken(username, password));
+         
     } catch (error) {
-        return res.status(401).send("Unauthorized");
+        return res.null
     }
 }
 

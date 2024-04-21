@@ -29,9 +29,9 @@ const NewPost = ({ setPosts, posts, activeUser }) => {
   const handleNewPost = (e) => {
     e.preventDefault();
     let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
-    let newPost = createPost(id, activeUser, values.desc, postPic); // need to understand where id comes from
+    let newPost = createPost(activeUser, values.desc, postPic); // need to understand where id comes from
     if (values.desc || values.postPic) {
-      postPost(user, newPost, socket); // need to define socket in Feed or Home
+      postPost(activeUser, newPost, socket); // need to define socket in Feed or Home
       // setPosts(...posts, newPost); // not sure if needed
     } else {
       alert("Post can't be empty!");

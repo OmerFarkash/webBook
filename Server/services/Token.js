@@ -19,10 +19,16 @@ const createToken = async (username, password, androidToken) => {
     return token;
 }
 
-const verifyToken = (token) => {
+const verifyToken = async (username, password) => {
     try {
-        const data = jwt.verify(token, secretKey);
-        return data;
+        console.log(username);
+        const token = jwt.sign({ username , password }, secretKey);
+        const user = await User.findOne({ username });
+        const userToken = user.androidToken;
+        console.log(user);
+        if (token === userToken) {
+            return JSON.stringify(userToken);
+        }
     } catch (err) {
         throw new Error('Invalide token');
     }

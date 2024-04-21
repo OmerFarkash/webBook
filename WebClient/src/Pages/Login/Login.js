@@ -1,39 +1,23 @@
 import "./login.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import UserContext from "../../UserContext.js";
-import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { fetchToken } from "../../API/userApi.js";
 
 const Login = ({ setUserByToken }) => {
-  const location = useLocation();
-  const users = location.state;
-  const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
 
-  const [input, setInput] = useState({ username: "", password: "" });
+  //const [input, setInput] = useState({ username: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let token = await fetchToken(input);
+    const username = e.target[0].value;
+    const password = e.target[1].value;
+    let token = await fetchToken(username, password);
     if (token === null) {
       alert("Wrong username or password");
     } else {
-      setUserByToken(token, input.username);
+      setUserByToken(token, username);
     }
-
-    const handleChange = (name, value) => {
-      setInput({
-        ...input,
-        [name]: value,
-      });
-    };
-
-    const setInputUsername = (value) => {
-      handleChange("username", value);
-    };
-
-    const setInputPassword = (value) => {
-      handleChange("password", value);
-    };
+  };
 
     return (
       <div className="Login">
@@ -51,12 +35,10 @@ const Login = ({ setUserByToken }) => {
               <input
                 type="text"
                 placeholder="username"
-                onChange={setInputUsername}
               />
               <input
                 type="password"
                 placeholder="Password"
-                onChange={setInputPassword}
               />
               <button id="loginbBtn">Login</button>
             </form>
@@ -65,6 +47,5 @@ const Login = ({ setUserByToken }) => {
       </div>
     );
   };
-};
 
 export default Login;

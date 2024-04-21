@@ -16,7 +16,7 @@ const NavBar = ({ activeUser }) => {
           </div>
         </div>
         <div className="right">
-          {user && (
+          {activeUser && (
             <div className="user">
               <img src={profilePic} alt="User Profile" />
               <p>{name}</p>

@@ -1,7 +1,8 @@
 /** @format */
+const server = "localhost:12345";
 
 async function fetchPosts(token) {
-    const res = await fetch(`http://foo.com/api/posts`, {
+    const res = await fetch(`http://${server}/api/posts`, {
         method: "GET",
         headers: {
             accept: "text/plain",
@@ -9,12 +10,14 @@ async function fetchPosts(token) {
         },
     });
 
+    console.log(res);
+
     if (!res.ok) return null;
     return JSON.parse(await res.text());
 }
 
 async function fetchPost(token,username, id) {
-    const res = await fetch(`http://foo.com/api/users/${username}/posts/${id}`, {
+    const res = await fetch(`http://${server}/api/users/${username}/posts/${id}`, {
         method: "GET",
         headers: {
             accept: "text/plain",
@@ -27,7 +30,7 @@ async function fetchPost(token,username, id) {
 }
 
 async function deletePost(token, post) {
-    const res = await fetch(`http://foo.com/api/users/${post.name}/posts/${post.id}`, {
+    await fetch(`http://${server}/api/users/${post.name}/posts/${post.id}`, {
         method: "DELETE",
         headers: {
             accept: "text/plain",
@@ -37,7 +40,7 @@ async function deletePost(token, post) {
 }
 
 async function editPost(token, post, socket) {
-    const res = await fetch(`http://foo.com/api/users/${post.username}/posts/${post.id}`, {
+    const res = await fetch(`http://${server}/api/users/${post.username}/posts/${post.id}`, {
         method: "PUT",
         headers: {
             accept: "text/plain",
@@ -52,13 +55,13 @@ async function editPost(token, post, socket) {
         msg = JSON.parse(await res.text());
     }
     
-    socket.emit("post", { user:user, post:post });
+    socket.emit("post", { "user":post.username, post:post });
     
     return msg;
 }
 
 async function postPost(user, post, socket) {
-    const res = await fetch(`http://foo.com/api/users/${user.username}/posts/${post.id}`, {
+    const res = await fetch(`http://${server}/api/users/${user.username}/posts/`, {
         method: "POST",
         headers: {
             accept: "text/plain",
@@ -78,9 +81,8 @@ async function postPost(user, post, socket) {
     return msg;
 }
 
-function createPost(id, user, desc, pic) {
+function createPost(user, desc, pic) {
     return {
-        id: id,
         name: user.name,
         profilePic: user.profilePic,
         date: "",
@@ -90,7 +92,7 @@ function createPost(id, user, desc, pic) {
 }
 
 async function likePost(token, post) {
-    const res = await fetch(`http://foo.com/api/users/${post.name}/posts/${post.id}/likes`, {
+    const res = await fetch(`http://${server}/api/users/${post.name}/posts/${post.id}/likes`, {
         method: "POST",
         headers: {
             accept: "text/plain",

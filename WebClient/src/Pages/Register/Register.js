@@ -23,34 +23,9 @@ const Register = () => {
     profilePic: "",
   });
 
-  // const addUser = ({ name, username, email, password, profilePic }) => {
-  //   const newUser = {
-  //     id: users.length + 1,
-  //     name: name,
-  //     username: username,
-  //     email: email,
-  //     password: password,
-  //     profilePic: URL.createObjectURL(profilePic),
-  //   };
-
-  //   // for (let i = 0; i < users.length; i++) {
-  //   //   if (users[i].username === newUser.username) {
-  //   //     alert("Username already exists");
-  //   //     return;
-  //   //   }
-  //   // }
-
-  //   const newUsers = [...users, newUser];
-  //   setUsers(newUsers);
-  //   alert("User has been added successfully");
-  //   navigate("/", {
-  //     state: newUsers,
-  //   });
-  // };
-
   const onChange = (e) => {
     if (e.target.name === "profilePic") {
-      setValues({ ...values, [e.target.name]: e.target.files[0] });
+      setValues({ ...values, [e.target.name]: URL.createObjectURL(e.target.files[0])});
     } else {
       setValues({ ...values, [e.target.name]: e.target.value });
     }
@@ -66,12 +41,12 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`http://foo.com/api/Users`, {
+    const response = await fetch(`http://localhost:12345/api/users/`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringfy({ ...values}),
+      body: JSON.stringify({"name": values.name, "username": values.username, "password": values.password, "profilePic": values.profilePic}),
     });
 
     if (response["status"] === 409) {
@@ -96,7 +71,6 @@ const Register = () => {
           <h1>Register</h1>
           <form
             onSubmit={validateAndSubmit}
-            action="http://localhost:8080/register"
             method="post"
           >
             {inputs.map((input) => {

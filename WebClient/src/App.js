@@ -1,24 +1,26 @@
 import "./App.css";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Await } from "react-router-dom";
 import Home from "./Pages/Home/Home.js";
 import { useState } from "react";
 import { Toggle } from "./Components/Toggle/Toggle.js";
 import UserContext from "./UserContext.js";
-import { fetchPosts } from "./API/userApi.js";
+import { fetchUser, fetchFriends } from "./API/userApi.js";
+import { fetchPosts } from "./API/postApi.js";
+import { defaultUser } from "./API/userApi.js";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
   // const [user, setUser] = useState(null);
 
-  const [activeUser, setActiveUser] = useState(defaultUser());
+  const [activeUser, setActiveUser] = useState(defaultUser);
 
   const setUserByToken = async (token, username) => {
     let user = await fetchUser(token, username);
     let friends = await fetchFriends(token);
     let posts = await fetchPosts(token);
-    setActiveUser({
+    setActiveUser ({
       name: user.name,
       username: username,
       profilePic: user.profilePic,
