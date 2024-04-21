@@ -12,10 +12,11 @@ const Login = ({ setUserByToken }) => {
     const username = e.target[0].value;
     const password = e.target[1].value;
     let token = await fetchToken(username, password);
+    
     if (token === null) {
       alert("Wrong username or password");
     } else {
-      setUserByToken(token, username);
+      await setUserByToken(token, username);
     }
   };
 

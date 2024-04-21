@@ -17,16 +17,18 @@ function App() {
   const [activeUser, setActiveUser] = useState(defaultUser);
 
   const setUserByToken = async (token, username) => {
+    console.log(token , username);
     let user = await fetchUser(token, username);
-    let friends = await fetchFriends(token);
-    let posts = await fetchPosts(token);
+    console.log(user);
+    if (user == null) return;
+
     setActiveUser ({
       name: user.name,
       username: username,
       profilePic: user.profilePic,
       token: token,
-      friends: friends,
-      posts: posts,
+      friends: user.friends,
+      posts: user.posts,
     });
   };
 
@@ -42,7 +44,7 @@ function App() {
             <Route
               path="/"
               element={
-                activeUser.token === "" ? (
+                activeUser.token == null ? (
                   <Login setUserByToken={setUserByToken} />
                 ) : (
                   <Home activeUser={activeUser} setActiveUser={setActiveUser} />

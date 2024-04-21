@@ -24,17 +24,35 @@ const createToken = async (req, res) => {
     }
 }
 
-const verifyToken = async (req, res) => {
+const verifyToken = async (req, res, next) => {
+    
+    var token = req.headers['authorization']
+    token = token.replaceAll('"', '');
+    if (token == null) {
+        return res.status(403).send("Token required");    
+    }
+
+    try {
+
+        req.username = tokenService.verifyToken(token);
+        // next();
+        
+    } catch (error) {
+        
+        return res.send("Invalid token");
+    }
+}
+
+const verifyLogin = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log(username);
-    console.log(password);
     try {
-        return res.JSON(await tokenService.verifyToken(username, password));
+        var result = (await tokenService.verifyLogin(username, password));
+        return res.status(200).send(result);
          
     } catch (error) {
         return res.null
     }
 }
 
-module.exports = { createToken, verifyToken };
+module.exports = { createToken, verifyToken, verifyLogin };

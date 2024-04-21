@@ -35,7 +35,7 @@ const getUser = async (username) => {
         throw new Error('User not exists');
     }
     
-    return user;
+    return JSON.stringify(user);
 }
 
 // works
