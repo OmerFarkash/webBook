@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 
-/* the schema for the user model in the database
-   this is working good for part of it - not all tested*/
+/* the schema for the user model in the database */
 
 // we don't save password in the database
 const Schema = mongoose.Schema;

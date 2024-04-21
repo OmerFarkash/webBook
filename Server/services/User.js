@@ -131,9 +131,21 @@ const addFriend = async (jwt, username, friend) => {
     return; 
 }
 
-const getFriends = async (username) => {
-    const user = await User.findOne({ username });
-    return await user.friends;
+// works
+const getFriends = async (jwt, username) => {
+    const user = await User.findOne({ "androidToken": jwt });
+    const friend = await User.findOne({ "username": username });
+
+    if (user === null || friend === null) {
+        throw new Error('User not exists');
+    }
+    if (user.friends.includes(username)) {
+        return JSON.stringify(friend.friends);
+    }
+    if (user === friend) {
+        return JSON.stringify(user.friends);
+    }
+    throw new Error('Not friends');
 }
 
 // works

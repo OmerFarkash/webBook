@@ -138,7 +138,7 @@
 			<button type="submit">Submit</button>
 		</form>
 
-		<!-- edit to our versition -->
+		<!-- can use -->
 		<form id="friends-get" data-method="GET" action="http://localhost:$port/api/users/$uid/friends">
 			<h3>Get Friends List</h3>
 			<button type="submit">Submit</button>
@@ -202,10 +202,10 @@ const els = {
 /* Initialization */
 
 const DEFAULT_FRIEND_ID = 'roni' // default for :fid
-const DEFAULT_JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9tZXIiLCJwYXNzd29yZCI6InBhc3N3b3JkIiwiaWF0IjoxNzEzNDUyMTU0fQ.mqD2DOvLDAsGpV-4HZC_8jdrXhq_-V10r0ouK_TacJc' // Has to be the JWT of :id
+const DEFAULT_JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvbmkiLCJwYXNzd29yZCI6Im5vUGFzcyIsImlhdCI6MTcxMzQ1NDI5NX0.Uc9weN1bMRW3W4ICZEWMLXCvlXPZPk56QPZLL2sbdAE' // Has to be the JWT of :id
 const DEFAULT_PORT = 12345
 const DEFAULT_POST_ID = '661ff71fd86e42fad3c2e24e' // default for :pid
-const DEFAULT_USER_ID = 'omer' // default for :id
+const DEFAULT_USER_ID = 'roni' // default for :id
 
 els.fid.value = DEFAULT_FRIEND_ID
 els.jwtToken.value = DEFAULT_JWT
@@ -229,7 +229,7 @@ const sendForm = form => {
 	return fetch(url, Object.assign({
 		method: method,
 		headers: {
-			'Authorization': 'Bearer ' + els.jwtToken.value,
+			'Authorization': els.jwtToken.value,
 			'Content-Type': 'application/json',
 		},
 	}, body)).then(async res => {

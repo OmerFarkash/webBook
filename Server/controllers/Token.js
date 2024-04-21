@@ -27,7 +27,7 @@ const createToken = async (req, res) => {
 //need to fix this part
 const verifyToken = async (req, res, next) => {
     
-    const token = req.headers['authorization']?.replace('Bearer ', '')
+    const token = req.headers['authorization']
     // this part is working
     if (token == null) {
         return res.status(403).send("Token required");    
