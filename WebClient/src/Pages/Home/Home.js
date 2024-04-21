@@ -19,7 +19,7 @@ const Home = ({activeUser, setActiveUser}) => {
   return (
     <div className="Home" >
       <NavBar activeUser={activeUser} />
-      <LeftBar />
+      <LeftBar activeUser={activeUser} setActiveUser={setActiveUser}/>
       <Feed activeUser={activeUser} />
     </div>
   );
