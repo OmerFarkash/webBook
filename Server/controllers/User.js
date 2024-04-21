@@ -22,9 +22,10 @@ const getUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    const { username } = req.params;
+    const jwt = req.headers['authorization']?.replace('Bearer ', '')
+    const username = req.params.id;
     try {
-        await userServices.deleteUser(username);
+        await userServices.deleteUser(jwt, username);
         return res.status(200).send("User deleted");
     } catch (error) {
         return res.status(404).send("User not exists");

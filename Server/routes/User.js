@@ -33,7 +33,7 @@ router.put('/:id', TokenController.verifyToken, UserController.updateUser);
 // Route to update a user by ID (username) - works
 router.patch('/:id', TokenController.verifyToken, UserController.editUser);
 
-// Route to delete a user by ID
+// Route to delete a user by ID (username) - works
 router.delete('/:id', TokenController.verifyToken, UserController.deleteUser);
 
 
