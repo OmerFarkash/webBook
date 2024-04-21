@@ -1,7 +1,7 @@
 /** @format */
 const server = 'localhost:12345';
 
-
+// works
 async function fetchToken(username, password ) {
     let res = await fetch(`http://${server}/api/tokens/`, {
         method: "POST",
@@ -11,20 +11,21 @@ async function fetchToken(username, password ) {
         body: JSON.stringify({ "username": username, "password": password }),
     });
 
-    console.log(res);    
-    return ;
+    var token = await res.text();
+    return token;
 }
 
 async function fetchUser(token, username) {
     const res = await fetch(`http://${server}/api/Users/${username}`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         },
     });
 
     if (!res.ok) return null;
-    return JSON.parse(await res.text());
+    let result = await res.text();
+    return (result);
 }
 
 async function fetchFriends(token, username) {
@@ -32,12 +33,13 @@ async function fetchFriends(token, username) {
         method: "GET",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         },
     });
 
     if (!res.ok) return null;
-    return JSON.parse(await res.text());
+    let result = await res.text();
+    return (result);
 }
 
 async function postFriendReq(token, username) {
@@ -45,7 +47,7 @@ async function postFriendReq(token, username) {
         method: "POST",
         headers: {
             accept: "*/*",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ username }),
@@ -59,7 +61,7 @@ async function postFriendReq(token, username) {
     }
 
     return {
-        content: JSON.parse(await res.text()),
+        content: (await res.text()),
         ok: res.ok,
     };
 }
@@ -69,7 +71,7 @@ function defaultUser() {
         username: "",
         profilePic: "",
         displayName: "",
-        token: "",
+        token: null,
     };
 }
 

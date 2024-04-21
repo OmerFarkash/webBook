@@ -6,7 +6,7 @@ async function fetchPosts(token) {
         method: "GET",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         },
     });
 
@@ -21,7 +21,7 @@ async function fetchPost(token,username, id) {
         method: "GET",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         },
     });
 
@@ -34,7 +34,7 @@ async function deletePost(token, post) {
         method: "DELETE",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         },
     });
 }
@@ -44,7 +44,7 @@ async function editPost(token, post, socket) {
         method: "PUT",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...post}),
@@ -65,7 +65,7 @@ async function postPost(user, post, socket) {
         method: "POST",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `${user.token}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...post}),
@@ -96,7 +96,7 @@ async function likePost(token, post) {
         method: "POST",
         headers: {
             accept: "text/plain",
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({token}),

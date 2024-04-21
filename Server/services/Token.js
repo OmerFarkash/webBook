@@ -18,20 +18,27 @@ const createToken = async (username, password, androidToken) => {
     await User.findOneAndUpdate({ username }, { androidToken: token });
     return token;
 }
-
-const verifyToken = async (username, password) => {
+const verifyToken = (token) => {
     try {
-        console.log(username);
-        const token = jwt.sign({ username , password }, secretKey);
+        const data = jwt.verify(token, secretKey);
+        return data;
+    } catch (err) {
+        throw new Error('Invalide token');
+    }
+}
+
+const verifyLogin = async (username, password) => {
+    try {
         const user = await User.findOne({ username });
-        const userToken = user.androidToken;
-        console.log(user);
-        if (token === userToken) {
-            return JSON.stringify(userToken);
+        const token = user.androidToken;
+        const res = jwt.decode(token, secretKey);
+        
+        if (password === res.password) {
+            return JSON.stringify(token);
         }
     } catch (err) {
         throw new Error('Invalide token');
     }
 }
 
-module.exports = { createToken, verifyToken };
+module.exports = { createToken, verifyToken, verifyLogin };
