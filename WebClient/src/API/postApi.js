@@ -1,7 +1,7 @@
 /** @format */
 
 async function fetchPosts(token) {
-    const res = await fetch(`http://foo.com/api/Posts`, {
+    const res = await fetch(`http://foo.com/api/posts`, {
         method: "GET",
         headers: {
             accept: "text/plain",
@@ -14,7 +14,7 @@ async function fetchPosts(token) {
 }
 
 async function fetchPost(token,username, id) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${id}`, {
+    const res = await fetch(`http://foo.com/api/users/${username}/posts/${id}`, {
         method: "GET",
         headers: {
             accept: "text/plain",
@@ -26,8 +26,8 @@ async function fetchPost(token,username, id) {
     return JSON.parse(await res.text());
 }
 
-async function deletePost(token, username, id) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${id}`, {
+async function deletePost(token, post) {
+    const res = await fetch(`http://foo.com/api/users/${post.name}/posts/${post.id}`, {
         method: "DELETE",
         headers: {
             accept: "text/plain",
@@ -36,33 +36,33 @@ async function deletePost(token, username, id) {
     });
 }
 
-async function editPost(token, username, post, id, socket) {
-        const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${id}`, {
-            method: "PUT",
-            headers: {
-                accept: "text/plain",
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...post}),
-        });
-
-        let msg = null
-        if (res.ok) {
-            msg = JSON.parse(await res.text());
-        }
-    
-        socket.emit("post", { user:user, post:post });
-    
-        return msg;
-}
-
-async function postPost(token, username, post, socket) {
-    const res = await fetch(`http://foo.com/api/Users/${username}/Posts/${post.id}`, {
-        method: "POST",
+async function editPost(token, post, socket) {
+    const res = await fetch(`http://foo.com/api/users/${post.username}/posts/${post.id}`, {
+        method: "PUT",
         headers: {
             accept: "text/plain",
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...post}),
+    });
+
+    let msg = null
+    if (res.ok) {
+        msg = JSON.parse(await res.text());
+    }
+    
+    socket.emit("post", { user:user, post:post });
+    
+    return msg;
+}
+
+async function postPost(user, post, socket) {
+    const res = await fetch(`http://foo.com/api/users/${user.username}/posts/${post.id}`, {
+        method: "POST",
+        headers: {
+            accept: "text/plain",
+            Authorization: `Bearer ${user.token}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...post}),
@@ -83,14 +83,25 @@ function createPost(id, user, desc, pic) {
         id: id,
         name: user.name,
         profilePic: user.profilePic,
-        date: "Just now",
+        date: "",
         desc: desc,
         postPic: pic,
     };
 }
 
-// function likePost(token, username, post, id, socket) {
-    
-// }
+async function likePost(token, post) {
+    const res = await fetch(`http://foo.com/api/users/${post.name}/posts/${post.id}/likes`, {
+        method: "POST",
+        headers: {
+            accept: "text/plain",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({token}),
+    });
 
-export { fetchPosts, fetchPost, deletePost, editPost, postPost, createPost }
+    if (!res.ok) return null;
+    return JSON.parse(await res.text());
+}
+
+export { fetchPosts, fetchPost, deletePost, editPost, postPost, createPost, likePost }

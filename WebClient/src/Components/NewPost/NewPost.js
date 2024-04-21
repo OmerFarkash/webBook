@@ -9,23 +9,7 @@ const NewPost = ({ setPosts, posts, activeUser }) => {
     postPic: null,
   });
 
-  const handleNewPost = (e) => {
-    e.preventDefault();
-    addPost();
-  }; 
-
-  const addPost = () => {
-    let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
-    let newPost = createPost(id, activeUser, values.desc, postPic); // need to understand where id comes from
-    if (values.desc || values.postPic) {
-      postPost(user.token, user.username, newPost, socket); 
-      // setPosts(...posts, newPost); // not sure if needed
-    } else {
-      alert("Post can't be empty!");
-    }
-  };
-
-  const input = {
+    const input = {
     name: "desc",
     type: "text",
     placeholder: "What's on your mind?",
@@ -33,13 +17,26 @@ const NewPost = ({ setPosts, posts, activeUser }) => {
     required: false,
   };
 
-  const onChange = (e) => {
+    const onChange = (e) => {
     if (e.target.name === "postPic") {
       setValues({ ...values, [e.target.name]: e.target.files[0] });
     } else {
       setValues({ ...values, [e.target.name]: e.target.value });
     }
   };
+
+//create and post new post
+  const handleNewPost = (e) => {
+    e.preventDefault();
+    let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
+    let newPost = createPost(id, activeUser, values.desc, postPic); // need to understand where id comes from
+    if (values.desc || values.postPic) {
+      postPost(user, newPost, socket); // need to define socket in Feed or Home
+      // setPosts(...posts, newPost); // not sure if needed
+    } else {
+      alert("Post can't be empty!");
+    }  }; 
+
 
   return (
     <div className="newPost">

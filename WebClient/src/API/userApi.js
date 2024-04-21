@@ -1,7 +1,7 @@
 /** @format */
 
 async function fetchToken({ username, password }) {
-    let res = await fetch("http://foo.com/api/Tokens", {
+    let res = await fetch("http://foo.com/api/tokens", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -11,26 +11,6 @@ const Feed = async ({ activeUser }) => {
   let postsList = await fetchPosts(activeUser.token);
   setPosts(postsList);
 
-  // const [postsList, setPostsList] = useState();
-
-  // const editPost = (id, updatedPost) => {
-  //   setPostsList(
-  //     postsList.map((post) => {
-  //       if (post.id === id) {
-  //         return { ...post, ...updatedPost };
-  //       }
-  //       return post;
-  //     })
-  //   );
-  // };
-
-  // const deletePost = (postId) => {
-  //   const filteredPosts = postsList.filter((item) => item.id !== postId);
-  //   if (window.confirm("Are you sure?") == true) {
-  //     setPostsList(filteredPosts);
-  //   }
-  // };
-
   return (
     <div className="posts">
       <NewPost
@@ -40,10 +20,9 @@ const Feed = async ({ activeUser }) => {
       />
       {posts.map((post) => (
         <Post
+        
         key={post.id}  
-        {...post}
-          // editPost={editPost}
-          // deletePost={deletePost}
+        post = {post}
           activeUser={activeUser}
         />
       ))}
