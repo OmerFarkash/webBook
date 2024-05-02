@@ -1,6 +1,7 @@
 .post {
   display: flex;
   width: 700px;
+  justify-content: center;
   -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);

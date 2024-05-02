@@ -1,10 +1,15 @@
-.posts {
-  width: fit-content;
+.feed {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 100px;
-  padding-left: 500px;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  background-color: transparent;
+  justify-content: center;
+
+  .posts {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-color: transparent;
+  }
 }

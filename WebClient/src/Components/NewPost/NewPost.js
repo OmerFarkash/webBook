@@ -2,14 +2,13 @@ import { createPost, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
-const NewPost = ({ setPosts, posts, activeUser }) => {
-
+const NewPost = ({ setPosts, posts, activeUser, socket }) => {
   const [values, setValues] = useState({
     desc: "",
     postPic: null,
   });
 
-    const input = {
+  const input = {
     name: "desc",
     type: "text",
     placeholder: "What's on your mind?",
@@ -17,7 +16,7 @@ const NewPost = ({ setPosts, posts, activeUser }) => {
     required: false,
   };
 
-    const onChange = (e) => {
+  const onChange = (e) => {
     if (e.target.name === "postPic") {
       setValues({ ...values, [e.target.name]: e.target.files[0] });
     } else {
@@ -25,18 +24,18 @@ const NewPost = ({ setPosts, posts, activeUser }) => {
     }
   };
 
-//create and post new post
+  //create and post new post
   const handleNewPost = (e) => {
     e.preventDefault();
     let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
-    let newPost = createPost(activeUser, values.desc, postPic); // need to understand where id comes from
+    let newPost = createPost(activeUser, values.desc, postPic);
     if (values.desc || values.postPic) {
       postPost(activeUser, newPost, socket); // need to define socket in Feed or Home
       // setPosts(...posts, newPost); // not sure if needed
     } else {
       alert("Post can't be empty!");
-    }  }; 
-
+    }
+  };
 
   return (
     <div className="newPost">

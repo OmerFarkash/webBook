@@ -1,6 +1,7 @@
 import "./App.css";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
+import Profile from "./Pages/Profile/Profile.js";
 import { BrowserRouter, Routes, Route, Await } from "react-router-dom";
 import Home from "./Pages/Home/Home.js";
 import { useState } from "react";
@@ -17,12 +18,12 @@ function App() {
   const [activeUser, setActiveUser] = useState(defaultUser);
 
   const setUserByToken = async (token, username) => {
-    console.log(token , username);
+    console.log(token, username);
     let user = await fetchUser(token, username);
     console.log(user);
     if (user == null) return;
 
-    setActiveUser ({
+    setActiveUser({
       name: user.name,
       username: username,
       profilePic: user.profilePic,
@@ -37,7 +38,8 @@ function App() {
       <Toggle
         testid="toggle-theme-btn"
         isChecked={isDark}
-        handleChange={() => setIsDark(!isDark)} />
+        handleChange={() => setIsDark(!isDark)}
+      />
       <UserContext.Provider value={{ activeUser, setActiveUser }}>
         <BrowserRouter>
           <Routes>
@@ -52,6 +54,7 @@ function App() {
               }
             />
             <Route path="/Register" element={<Register />} />
+            <Route path="/User" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

@@ -11,20 +11,33 @@ import { ReactComponent as Messenger } from "./Icons/messenger.svg";
 import { ReactComponent as Market } from "./Icons/marketPlace.svg";
 import { ReactComponent as Games } from "./Icons/games.svg";
 import { ReactComponent as Logout } from "./Icons/logOut.svg";
-
 import { Link } from "react-router-dom";
 import { defaultUser } from "../../API/userApi";
 
-const LeftBar = ({setActiveUser}) => {
+const LeftBar = ({ activeUser, setActiveUser }) => {
+  // const history = useHistory();
+  // function handleClick() {
+  //   history.push(`/User/${activeUser.username}`, user={activeUser});
+  // }
   return (
     <div className="leftBar">
       <div className="container">
-        <div className="item">
-          <Profile /> Profile
-        </div>
-        <div className="item">
-          <Home /> Home
-        </div>
+        <Link
+          style={{ textDecoration: "none" }}
+          to={{
+            pathname: `/User/${activeUser.username}`,
+            user: { activeUser },
+          }}
+        >
+          <div className="item" onClick={handleClick}>
+            <Profile /> Profile
+          </div>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/">
+          <div className="item">
+            <Home /> Home
+          </div>
+        </Link>
         <div className="item">
           <Friends /> Friends
         </div>
@@ -52,8 +65,13 @@ const LeftBar = ({setActiveUser}) => {
         <div className="item">
           <Games /> Games
         </div>
-        <Link style={{ textDecoration: "none" }} to="/">
-          <div className="item" >
+        <Link
+          style={{ textDecoration: "none" }}
+          to="/"
+          onClick={setActiveUser(defaultUser)}
+        >
+          {" "}
+          <div className="item">
             <Logout /> Logout
           </div>
         </Link>
