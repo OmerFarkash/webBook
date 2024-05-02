@@ -108,4 +108,15 @@ const deleteFriend = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
+const getFriendReqs = async (req, res) => {
+    const jwt = req.headers['authorization']
+    const username = req.params.id;
+    try {
+        const reqs = await userServices.getFriendReqs(jwt);
+        return res.json(reqs)
+    } catch (error) {
+        return res.status(404).send("User not exists");
+    }
+}
+
+module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend, getFriendReqs};

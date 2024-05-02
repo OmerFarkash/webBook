@@ -9,7 +9,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReqList from "../../Components/ReqList/ReqList.js";
 
 const Home = ({ activeUser, setActiveUser }) => {
-  const navigate = useNavigate();
 
   return (
     <div className="home">

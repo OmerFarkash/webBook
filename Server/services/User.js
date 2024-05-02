@@ -195,4 +195,14 @@ const deleteFriend = async (jwt, username, friend) => {
     throw new Error('Not friends');
 }
 
-module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
+const getFriendReqs = async (jwt) => {
+    const user = await User.findOne({ "androidToken": jwt });
+
+    if (user === null) {
+        throw new Error('User not exists');
+    } else {
+        return JSON.stringify(user.friendRequests);
+    }
+}
+
+module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend, getFriendReqs};

@@ -8,10 +8,13 @@ const Feed = ({ activeUser }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
-  useEffect(async () => {
-    setPosts(await fetchPosts(activeUser.token));
+  useEffect(() => {
+    async function fetchData() {
+      return await fetchPosts(activeUser.token);
+    }
+    setPosts(fetchData());
     setIsLoading(false);
-  });
+  }, []);
 
   return (
     <div className="feed">
