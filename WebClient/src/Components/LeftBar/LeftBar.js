@@ -15,10 +15,6 @@ import { Link } from "react-router-dom";
 import { defaultUser } from "../../API/userApi";
 
 const LeftBar = ({ activeUser, setActiveUser }) => {
-  // const history = useHistory();
-  // function handleClick() {
-  //   history.push(`/User/${activeUser.username}`, user={activeUser});
-  // }
   return (
     <div className="leftBar">
       <div className="container">
@@ -29,7 +25,7 @@ const LeftBar = ({ activeUser, setActiveUser }) => {
             user: { activeUser },
           }}
         >
-          <div className="item" onClick={handleClick}>
+          <div className="item">
             <Profile /> Profile
           </div>
         </Link>
@@ -70,7 +66,6 @@ const LeftBar = ({ activeUser, setActiveUser }) => {
           to="/"
           onClick={setActiveUser(defaultUser)}
         >
-          {" "}
           <div className="item">
             <Logout /> Logout
           </div>

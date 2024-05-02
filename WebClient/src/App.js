@@ -46,7 +46,7 @@ function App() {
             <Route
               path="/"
               element={
-                activeUser.token == null ? (
+                (activeUser.token === null) ? (
                   <Login setUserByToken={setUserByToken} />
                 ) : (
                   <Home activeUser={activeUser} setActiveUser={setActiveUser} />
@@ -54,7 +54,7 @@ function App() {
               }
             />
             <Route path="/Register" element={<Register />} />
-            <Route path="/User" element={<Profile />} />
+            <Route path="/User" element={<Profile activeUser={activeUser} user={activeUser} />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

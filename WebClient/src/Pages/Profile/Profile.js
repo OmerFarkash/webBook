@@ -2,13 +2,13 @@ import "./profile.css";
 import LeftBar from "../../Components/LeftBar/LeftBar.js";
 import NavBar from "../../Components/NavBar/NavBar.js";
 import UserContext from "../../UserContext.js";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ReqList from "../../Components/FriendReq/ReqList.js";
-import FriendList from "../../FriendList/FriendList.js";
-import { ReactComponent as Edit } from "../Post/Icons/pencil.svg";
-import { editUser } from "../../API/userApi";
+import ReqList from "../../Components/ReqList/ReqList.js";
+import FriendList from "../../Components/FriendList/FriendList.js";
+import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
+import { editUser } from "../../API/userApi.js";
 
 const Profile = ({ user, activeUser }) => {
   const navigate = useNavigate();
@@ -16,14 +16,14 @@ const Profile = ({ user, activeUser }) => {
   const [editedUser, setEditedUser] = useState({ activeUser });
 
   useEffect(() => {
-    if (user === null) {
+    if (activeUser.token === null) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [activeUser, navigate]);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    editUser(editedUser, socket);
+    // editUser(editedUser, socket);
     setIsEditing(false);
   };
 
@@ -70,7 +70,7 @@ const Profile = ({ user, activeUser }) => {
     <div>
       <NavBar user={user} />
       <LeftBar />
-      <ReqList />
+      <ReqList activeUser={activeUser} />
       <div className="profile">
         <div className="page">
           <div className="container">
@@ -109,7 +109,7 @@ const Profile = ({ user, activeUser }) => {
               </div>
             </div>
             <div className="Friends">
-              <FriendList user={user} />
+              <FriendList activeUser={activeUser} user={user} />
             </div>
           </div>
         </div>

@@ -1,19 +1,17 @@
 import "./friendList.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { fetchFriends } from "../../API/userApi";
 
+const FriendList = ({ activeUser, user }) => {
+  const navigate = useNavigate();
 
-const FriendList = ({ user }) => {
   const [friendList, setFriendList] = useState([]);
-  //   let list = fetchFriends(activeUser.token, activeUser.username);
-  //   setFriendList(list);
-
-  const history = useHistory();
-
+    let list = fetchFriends(activeUser.token, user.username);
+    setFriendList(list);
 
   function handleClick({ user }) {
-    history.push(`/User/${user.username}`, (user = { user }));
+    navigate(`/User/${user.username}`, { user: user });
   }
 
   const Friend = ({ user }) => {

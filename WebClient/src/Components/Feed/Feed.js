@@ -14,7 +14,7 @@ const Feed = ({ activeUser }) => {
   });
 
   return (
-    <dic className="feed">
+    <div className="feed">
       <div className="posts">
         <NewPost setPosts={setPosts} postsList={posts} user={activeUser} />
         {isLoading ? (
@@ -25,7 +25,7 @@ const Feed = ({ activeUser }) => {
           ))
         )}
       </div>
-    </dic>
+    </div>
   );
 };
 

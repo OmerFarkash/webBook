@@ -34,8 +34,8 @@ const verifyToken = async (req, res, next) => {
   }
 
   try {
-    req.username = tokenService.verifyToken(token);
-    // next();
+    req.username = tokenService.verifyToken(token).username;
+    next();
   } catch (error) {
     return res.send("Invalid token");
   }

@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as Accept } from "./Icons/check.svg";
 import { ReactComponent as Reject } from "./Icons/x.svg";
-import { useHistory } from "react-router-dom";
+import { fetchFriendReqs } from "../../API/userApi";
 
 const ReqList = ({ activeUser }) => {
   const navigate = useNavigate();
-  const history = useHistory();
 
   const [reqList, setReqList] = useState([]);
-  // let list = fetchFriendReq(activeUser.token);
-  // setReqList(list);
+  let list = fetchFriendReqs(activeUser.token);
+  if(!(list == null)){
+    setReqList(list);
+  }
 
   function handleClick({ user }) {
-    history.push(`/User/${user.username}`, (user = { user }));
+    navigate(`/User/${user.username}`, {user: user});
   }
 
   const acceptReq = () => {
@@ -55,7 +56,7 @@ const ReqList = ({ activeUser }) => {
         <div className="item">
           <FriendReq />
         </div>
-        {reqList.map((user) => (
+        {reqList.forEach((user) => (
           <FriendReq user={user} />
         ))}
       </div>
