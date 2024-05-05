@@ -9,10 +9,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReqList from "../../Components/ReqList/ReqList.js";
 
 const Home = () => {
-  const activeUser = useContext(UserContext);
-  const { setActiveUser } = useContext(UserContext);
-
-
   return (
     <div className="home">
       <NavBar />

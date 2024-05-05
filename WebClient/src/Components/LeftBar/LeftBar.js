@@ -13,18 +13,22 @@ import { ReactComponent as Games } from "./Icons/games.svg";
 import { ReactComponent as Logout } from "./Icons/logOut.svg";
 import { Link } from "react-router-dom";
 import { defaultUser } from "../../API/userApi";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import UserContext from "../../UserContext.js";
+import { useNavigate } from "react-router-dom";
+
 
 const LeftBar = () => {
   const activeUser = useContext(UserContext);
   const { setActiveUser } = useContext(UserContext);
   const user = activeUser.activeUser;
   const username = user.username;
-  console.log(activeUser.activeUser.username);
+  const navigate = useNavigate();
+
   
   const handleLogout = () => {
     setActiveUser(defaultUser);
+    navigate('/');
   };
 
   return (

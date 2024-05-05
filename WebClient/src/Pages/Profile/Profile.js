@@ -12,19 +12,24 @@ import { editUser } from "../../API/userApi.js";
 
 const Profile = ({user}) => {
   const activeUser = useContext(UserContext);
+  const { setActiveUser } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState({ activeUser });
+  const [editedUser, setEditedUser] = useState(activeUser.activeUser);
+  console.log(activeUser.activeUser.username , user.username)
 
   useEffect(() => {
-    if (activeUser.token == "") {
+    if (activeUser.activeUser.token == "") {
       navigate("/");
     }
   }, [activeUser, navigate]);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    // editUser(editedUser, socket);
+    console.log(editedUser)
+    editUser(editedUser);
+    setActiveUser(editedUser);
     setIsEditing(false);
   };
 
@@ -94,14 +99,14 @@ const Profile = ({user}) => {
                   </form>
                 ) : (
                   <>
-                    <img src="{profilePic}" alt="" />
+                    <img src={user.profilePic} alt="" />
                     <div className="details">
-                      <span className="name">user.name</span>
+                      <span className="name">{user.name}</span>
                     </div>
                   </>
                 )}
 
-                {activeUser.username === user.username && !isEditing && (
+                {activeUser.activeUser.username === user.username && !isEditing && (
                   <div className="item">
                     <Edit onClick={() => setIsEditing(true)} />
                   </div>

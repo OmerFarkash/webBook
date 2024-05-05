@@ -12,7 +12,7 @@ const Feed = () => {
 
   useEffect(() => {
     async function fetchData() {
-      return await fetchPosts(activeUser.token);
+      return await fetchPosts(activeUser.activeUser.token);
     }
     setPosts(fetchData());
     if (posts != null) {
@@ -24,12 +24,20 @@ const Feed = () => {
   return (
     <div className="feed">
       <div className="posts">
-        <NewPost setPosts={setPosts} postsList={posts} user={activeUser} />
+        <NewPost
+          setPosts={setPosts}
+          postsList={posts}
+          activeUser={activeUser.activeUser}
+        />
         {isLoading ? (
           <div>No posts yet...</div>
         ) : (
           posts.map((post) => (
-            <Post key={post.id} post={post} activeUser={activeUser} />
+            <Post
+              key={post.id}
+              post={post}
+              activeUser={activeUser.activeUser}
+            />
           ))
         )}
       </div>
