@@ -2,7 +2,7 @@ import { createPost, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
-const NewPost = ({ setPosts, posts, activeUser, socket }) => {
+const NewPost = ({ setPosts, postsList, activeUser, socket }) => {
   const [values, setValues] = useState({
     desc: "",
     postPic: null,
@@ -30,8 +30,9 @@ const NewPost = ({ setPosts, posts, activeUser, socket }) => {
     let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
     let newPost = createPost(activeUser, values.desc, postPic);
     if (values.desc || values.postPic) {
-      postPost(activeUser, newPost, socket); // need to define socket in Feed or Home
-      // setPosts(...posts, newPost); // not sure if needed
+      postPost(activeUser, newPost); // need to define socket in Feed or Home
+      setPosts(...postsList, newPost); // not sure if needed
+      console.log("secce")
     } else {
       alert("Post can't be empty!");
     }

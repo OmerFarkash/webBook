@@ -38,15 +38,15 @@ async function editUser(editedUser) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: editedUser.username,
-      newUsername: editedUser.name,
-      newProfilePic: editedUser.profilePic,
+      "id": editedUser.username,
+      "newName": editedUser.name,
+      "newProfilePic": editedUser.profilePic,
     }),
   });
 
   if (!res.ok) return null;
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function fetchFriends(token, username) {
@@ -75,7 +75,7 @@ async function fetchFriendReqs(activeUser) {
     }
   );
 
-  if (!res.ok) return "";
+  if (!res.ok) return "not found";
   let result = await res.text();
   return result;
 }

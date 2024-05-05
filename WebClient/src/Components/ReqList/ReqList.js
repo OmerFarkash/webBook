@@ -3,19 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ReactComponent as Accept } from "./Icons/check.svg";
 import { ReactComponent as Reject } from "./Icons/x.svg";
-import { fetchFriendReqs } from "../../API/userApi";
+import { acceptFriendReq, deleteFriendReq, fetchFriendReqs } from "../../API/userApi";
 import UserContext from "../../UserContext";
 
 const ReqList = () => {
   const activeUser = useContext(UserContext);
-  const { setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [reqList, setReqList] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      return await fetchFriendReqs(activeUser);
+      return await fetchFriendReqs(activeUser.activeUser);
     }
     setReqList(fetchData());
     if(reqList != null ) {
@@ -28,11 +27,11 @@ const ReqList = () => {
   }
 
   const acceptReq = ({ user }) => {
-    // add friend to activeUser friends list + delete request from list
+    acceptFriendReq(activeUser.activeUser, user);
   };
 
   const rejectReq = ({ user }) => {
-    // delete request from list
+    deleteFriendReq(activeUser.activeUser, user);
   };
 
   const FriendReq = ({ user }) => {

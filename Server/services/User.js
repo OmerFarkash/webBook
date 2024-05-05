@@ -79,9 +79,9 @@ const deleteUser = async (jwt, username) => {
 }
 
 // works
-const updateUser = async (username, jwt, newUsername, newProfilePic) => {
+const updateUser = async (username, jwt, newName, newProfilePic) => {
     const user = await validUser(username, jwt);
-    user.username = newUsername;
+    user.name = newName;
     user.profilePic = newProfilePic;
 
     await user.save();
@@ -197,6 +197,7 @@ const deleteFriend = async (jwt, username, friend) => {
 
 const getFriendReqs = async (jwt) => {
     const user = await User.findOne({ "androidToken": jwt });
+    console.log(user);
 
     if (user === null) {
         throw new Error('User not exists');

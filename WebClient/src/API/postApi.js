@@ -12,7 +12,8 @@ async function fetchPosts(token) {
 
   if (!res.ok) return null;
   let result = await res.text();
-  return result;
+  console.log(result)
+  return (result);
 }
 
 async function fetchPost(token, username, id) {
@@ -66,7 +67,7 @@ async function editPost(token, post, socket) {
   return msg;
 }
 
-async function postPost(user, post, socket) {
+async function postPost(user, post) {
   const res = await fetch(
     `http://${server}/api/users/${user.username}/posts/`,
     {
@@ -85,7 +86,7 @@ async function postPost(user, post, socket) {
     msg = JSON.parse(await res.text());
   }
 
-  socket.emit("post", { user: user, post: post });
+  // socket.emit("post", { user: user, post: post });
 
   return msg;
 }
