@@ -35,8 +35,26 @@ const createPost = async (username, jwt, desc, postPic, date) => {
     return JSON.stringify(newPost);
 };
 
-const getPost = async (name) => {
-    return await Post.findOne({ 'name': name });
+// return all the user's posts - if the user is a friend or the user itself
+const getUserPosts = async (jwt, wantToSee) => {
+    const user = await User.findOne({androidToken: jwt});
+    try {
+        if (user.friends.includes(wantToSee) || user.username === wantToSee) {
+            var posts = [];
+            for (let i = 0; i < user.posts.length; i++) {
+                posts[i] = await Post.findById(user.posts[i]);
+                if (posts.length == 25) 
+                    break;
+            }
+            return JSON.stringify(posts); 
+        }
+        else {
+            return JSON.stringify("not authorized to see this user posts");
+        }
+    }
+    catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 // works
@@ -98,4 +116,30 @@ const likePost = async (jwt, postId) => {
     return JSON.stringify(currentPost.likes);
 }
 
-module.exports = {createPost, getPost, replacePost, editPost, deletePost, likePost};
+const getFeed = async (jwt) => {
+    const user = await User.findOne({androidToken: jwt});
+    var friendsPosts = [];
+    var otherPosts = [];
+
+    // if Post is not valid for the list of all posts i need to find a different way to get all the posts
+    for (let i = 0; i < Post.length; i++) {
+        if ((user.username === Post[i].name) || (user.friends.includes(Post[i].name))) {
+            friendsPosts.push(Post[i]);
+            friendsPosts = friendsPosts.sort((a, b) => b.date - a.date);
+            if (friendsPosts.length > 20) 
+                friendsPosts.pop();
+        }
+        else {
+            otherPosts.push(Post[i]);
+            otherPosts = otherPosts.sort((a, b) => b.date - a.date);
+            if (otherPosts.length > 5) 
+                otherPosts.pop();
+        }
+    }
+    var feed = friendsPosts.concat(otherPosts);
+    feed = feed.sort((a, b) => b.date - a.date);
+    return JSON.stringify(feed);
+
+}
+
+module.exports = {createPost, getUserPosts, replacePost, editPost, deletePost, likePost, getFeed};

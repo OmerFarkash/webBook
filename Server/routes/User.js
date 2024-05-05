@@ -12,7 +12,7 @@ router.post('/', UserController.createUser);
 router.post('/:id/posts', TokenController.verifyToken, postController.createPost);
 
 // Route to get all the posts of the user
-router.get('/:id/posts', TokenController.verifyToken, postController.getPost);
+router.get('/:id/posts', TokenController.verifyToken, postController.getUserPosts);
 
 // Route to replace a post entirely - works
 router.put('/:id/posts/:pid', TokenController.verifyToken, postController.replacePost);

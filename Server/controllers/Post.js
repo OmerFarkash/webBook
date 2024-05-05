@@ -13,13 +13,16 @@ const createPost = async (req, res) => {
     }
 };
 
-const getPost = async (req, res) => {
+const getUserPosts = async (req, res) => {
+    const jwt = req.headers['authorization']
+    const wantToSee = req.params.id;
+
     try {
-        const post = await postService.getPost(req.params.name);
-        return res.status(200).send(post);
+        const posts = await postService.getUserPosts(jwt, wantToSee);
+        return res.status(200).send(posts);
     }
     catch (error) {
-        return res.status(404).send("Post not exists");
+        return res.status(404).send("Posts not exists");
     }
 };
 
@@ -78,4 +81,15 @@ const likePost = async (req, res) => {
     }
 }
 
-module.exports = {createPost, getPost, replacePost, editPost, deletePost, likePost};
+const getFeed = async (req, res) => {
+    const jwt = req.headers['authorization']
+    try {
+        const posts = await postService.getFeed(jwt);
+        return res.status(200).send(posts);
+    }
+    catch (error) {
+        return res.status(404).send("Posts not exists");
+    }
+}
+
+module.exports = {createPost, getUserPosts, replacePost, editPost, deletePost, likePost, getFeed};
