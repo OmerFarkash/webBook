@@ -1,0 +1,72 @@
+.profile {
+  height: 100vh;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  background-image: var(--home-bg);
+  background-size: cover;
+  background-attachment: fixed;
+
+  .page {
+    display: flex;
+    width: 700px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    border-radius: 20px;
+    background-color: var(--foreground-color);
+    color: var(--primary-text-color);
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      width: 100%;
+
+      .user {
+        display: flex;
+        width: 100%;
+
+        .userInfo {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          gap: 20px;
+
+          img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .span {
+            size: 100px;
+          }
+          button {
+            width: fit-content;
+            height: fit-content;
+            padding: 10px;
+            border: none;
+            background-color: var(--login-btn-color);
+            color: var(--background-color);
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 20px;
+          }
+          button:hover {
+            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+              0 17px 50px 0 rgba(0, 0, 0, 0.19);
+          }
+        }
+      }
+
+      .Friends {
+        align-self: self-end;
+      }
+    }
+  }
+}

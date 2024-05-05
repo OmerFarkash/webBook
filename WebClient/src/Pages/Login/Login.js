@@ -13,7 +13,7 @@ const Login = ({ setUserByToken }) => {
     const password = e.target[1].value;
     let token = await fetchToken(username, password);
     
-    if (token === null) {
+    if (token === "") {
       alert("Wrong username or password");
     } else {
       await setUserByToken(token, username);

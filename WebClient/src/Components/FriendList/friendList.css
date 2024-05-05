@@ -1,0 +1,30 @@
+.FriendList {
+  .Friend {
+    height: fit-content;
+    display: flex;
+    width: fit-content;
+    background: var(--foreground-color);
+    margin: 1px;
+    border-radius: 10px;
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 150px;
+      justify-content: space-around;
+      padding: 10px;
+
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      span {
+        color: var(--primary-text-color);
+        cursor: pointer;
+      }
+    }
+  }
+}

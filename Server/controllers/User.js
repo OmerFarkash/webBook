@@ -4,7 +4,7 @@ const userServices = require('../services/User');
 const createUser = async (req, res) => {
     const { name, username, password, profilePic } = req.body;
     try {
-        user = await userServices.createUser(name, username, password, profilePic);
+        const user = await userServices.createUser(name, username, password, profilePic);
         return res.status(201).json(user);
     } catch (error) {
         return res.json(error);
@@ -22,7 +22,7 @@ const getUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    const jwt = req.headers['authorization']
+    const jwt = req.headers['Authorization']
     const username = req.params.id;
     try {
         await userServices.deleteUser(jwt, username);
@@ -108,4 +108,15 @@ const deleteFriend = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend};
+const getFriendReqs = async (req, res) => {
+    const jwt = req.headers['authorization']
+    const username = req.params.id;
+    try {
+        const reqs = await userServices.getFriendReqs(jwt);
+        return res.json(reqs)
+    } catch (error) {
+        return res.status(404).send("User not exists");
+    }
+}
+
+module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend, getFriendReqs};

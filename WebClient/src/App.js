@@ -1,35 +1,34 @@
 import "./App.css";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
-import { BrowserRouter, Routes, Route, Await } from "react-router-dom";
+import Profile from "./Pages/Profile/Profile.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home.js";
 import { useState } from "react";
 import { Toggle } from "./Components/Toggle/Toggle.js";
-import UserContext from "./UserContext.js";
-import { fetchUser, fetchFriends } from "./API/userApi.js";
-import { fetchPosts } from "./API/postApi.js";
+import { fetchUser } from "./API/userApi.js";
 import { defaultUser } from "./API/userApi.js";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
-  // const [user, setUser] = useState(null);
-
   const [activeUser, setActiveUser] = useState(defaultUser);
 
   const setUserByToken = async (token, username) => {
-    console.log(token , username);
-    let user = await fetchUser(token, username);
+    console.log(activeUser);
+    const user = await fetchUser(token, username);
     console.log(user);
-    if (user == null) return;
-
-    setActiveUser ({
+    if (user == null) {
+      return;
+    }
+    setActiveUser({
       name: user.name,
-      username: username,
+      username: user.username,
       profilePic: user.profilePic,
-      token: token,
+      token: user.androidToken,
       friends: user.friends,
       posts: user.posts,
     });
+    console.log(activeUser);
   };
 
   return (
@@ -37,24 +36,27 @@ function App() {
       <Toggle
         testid="toggle-theme-btn"
         isChecked={isDark}
-        handleChange={() => setIsDark(!isDark)} />
-      <UserContext.Provider value={{ activeUser, setActiveUser }}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                activeUser.token == null ? (
-                  <Login setUserByToken={setUserByToken} />
-                ) : (
-                  <Home activeUser={activeUser} setActiveUser={setActiveUser} />
-                )
-              }
-            />
-            <Route path="/Register" element={<Register />} />
-          </Routes>
-        </BrowserRouter>
-      </UserContext.Provider>
+        handleChange={() => setIsDark(!isDark)}
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              activeUser.token === "" ? (
+                <Login setUserByToken={setUserByToken} />
+              ) : (
+                <Home activeUser={activeUser} setActiveUser={setActiveUser} />
+              )
+            }
+          />
+          <Route path="/Register" element={<Register />} />
+          <Route
+            path="/User"
+            element={<Profile activeUser={activeUser} user={activeUser} />}
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

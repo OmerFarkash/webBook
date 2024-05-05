@@ -43,6 +43,9 @@ router.get('/:id/friends', TokenController.verifyToken, UserController.getFriend
 // Route to create a new friend request - works
 router.post('/:id/friends', TokenController.verifyToken, UserController.askFriend);
 
+// Route to reaturn the list of my friends
+router.get('/:id/friendReqs', TokenController.verifyToken, UserController.getFriendReqs);
+
 
 // Route to accept the friend request - works
 router.patch('/:id/friends/:fid', TokenController.verifyToken, UserController.addFriend);
