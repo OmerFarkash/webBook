@@ -1,11 +1,31 @@
 import "./login.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { fetchToken } from "../../API/userApi.js";
+import { useState, useContext } from "react";
+import { fetchToken, fetchUser } from "../../API/userApi.js";
+import UserContext from "../../UserContext.js";
 
-const Login = ({ setUserByToken }) => {
 
-  //const [input, setInput] = useState({ username: "", password: "" });
+const Login = () => {
+
+  const { setActiveUser } = useContext(UserContext);
+  const activeUser = useContext(UserContext);
+
+  const setUserByToken = async (token, username) => {
+    const user = await fetchUser(token, username);
+    console.log(user);
+    if (user == null) {
+      return;
+    }
+    setActiveUser({
+      name: user.name,
+      username: user.username,
+      profilePic: user.profilePic,
+      token: user.androidToken,
+      friends: user.friends,
+      posts: user.posts,
+    });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

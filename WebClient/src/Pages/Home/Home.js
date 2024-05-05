@@ -8,14 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReqList from "../../Components/ReqList/ReqList.js";
 
-const Home = ({ activeUser, setActiveUser }) => {
+const Home = () => {
+  const activeUser = useContext(UserContext);
+  const { setActiveUser } = useContext(UserContext);
+
 
   return (
     <div className="home">
-      <LeftBar activeUser={activeUser} setActiveUser={setActiveUser} />
-      <Feed activeUser={activeUser} />
-      <ReqList activeUser={activeUser} />
-      <NavBar activeUser={activeUser} />
+      <NavBar />
+      <LeftBar />
+      <Feed />
+      <ReqList />
     </div>
   );
 };

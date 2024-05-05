@@ -1,32 +1,37 @@
 import "./reqList.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ReactComponent as Accept } from "./Icons/check.svg";
 import { ReactComponent as Reject } from "./Icons/x.svg";
 import { fetchFriendReqs } from "../../API/userApi";
+import UserContext from "../../UserContext";
 
-const ReqList = ({ activeUser }) => {
+const ReqList = () => {
+  const activeUser = useContext(UserContext);
+  const { setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [reqList, setReqList] = useState([]);
+  const [reqList, setReqList] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       return await fetchFriendReqs(activeUser);
     }
     setReqList(fetchData());
-    setIsLoading(false);
+    if(reqList != null ) {
+      setIsLoading(false);
+    }
   }, []);
 
   function handleClick({ user }) {
     navigate(`/User/${user.username}`, { user: user });
   }
 
-  const acceptReq = () => {
+  const acceptReq = ({ user }) => {
     // add friend to activeUser friends list + delete request from list
   };
 
-  const rejectReq = () => {
+  const rejectReq = ({ user }) => {
     // delete request from list
   };
 
