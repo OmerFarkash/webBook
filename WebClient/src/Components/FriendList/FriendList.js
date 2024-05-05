@@ -1,14 +1,24 @@
 import "./friendList.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchFriends } from "../../API/userApi";
 
 const FriendList = ({ activeUser, user }) => {
   const navigate = useNavigate();
+  const [friendList, setFriendList] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [friendList, setFriendList] = useState([]);
-    let list = fetchFriends(activeUser.token, user.username);
-    setFriendList(list);
+
+    useEffect(() => {
+      async function fetchData() {
+        return await fetchFriends(activeUser.token, user.username);
+      }
+      setFriendList(fetchData());
+      if (friendList != null) {
+        setIsLoading(false);
+      }
+    }, []);
+
 
   function handleClick({ user }) {
     navigate(`/User/${user.username}`, { user: user });
@@ -33,9 +43,9 @@ const FriendList = ({ activeUser, user }) => {
         <Friend />
         <Friend />
         <Friend />
-        {friendList.map((user) => (
+        {!isLoading && friendList.map((user) => 
           <Friend user={user} />
-        ))}
+        )}
       </div>
     </div>
   );

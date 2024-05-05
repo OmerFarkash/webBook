@@ -10,13 +10,14 @@ import FriendList from "../../Components/FriendList/FriendList.js";
 import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
 import { editUser } from "../../API/userApi.js";
 
-const Profile = ({ user, activeUser }) => {
+const Profile = ({user}) => {
+  const activeUser = useContext(UserContext);
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState({ activeUser });
 
   useEffect(() => {
-    if (activeUser.token === null) {
+    if (activeUser.token == "") {
       navigate("/");
     }
   }, [activeUser, navigate]);
@@ -109,7 +110,7 @@ const Profile = ({ user, activeUser }) => {
               </div>
             </div>
             <div className="Friends">
-              <FriendList activeUser={activeUser} user={user} />
+              {(activeUser.activeUser.friends.length > 0)? <FriendList activeUser={activeUser} user={user} /> : <></>}
             </div>
           </div>
         </div>

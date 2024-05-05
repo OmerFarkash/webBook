@@ -13,16 +13,28 @@ import { ReactComponent as Games } from "./Icons/games.svg";
 import { ReactComponent as Logout } from "./Icons/logOut.svg";
 import { Link } from "react-router-dom";
 import { defaultUser } from "../../API/userApi";
+import { useState, useContext } from "react";
+import UserContext from "../../UserContext.js";
 
-const LeftBar = ({ activeUser, setActiveUser }) => {
+const LeftBar = () => {
+  const activeUser = useContext(UserContext);
+  const { setActiveUser } = useContext(UserContext);
+  const user = activeUser.activeUser;
+  const username = user.username;
+  console.log(activeUser.activeUser.username);
+  
+  const handleLogout = () => {
+    setActiveUser(defaultUser);
+  };
+
   return (
     <div className="leftBar">
       <div className="container">
         <Link
           style={{ textDecoration: "none" }}
           to={{
-            pathname: `/User/${activeUser.username}`,
-            user: { activeUser },
+            pathname: `/User/${username}`,
+            user: { user },
           }}
         >
           <div className="item">
@@ -61,15 +73,9 @@ const LeftBar = ({ activeUser, setActiveUser }) => {
         <div className="item">
           <Games /> Games
         </div>
-        <Link
-          style={{ textDecoration: "none" }}
-          to="/"
-          onClick={setActiveUser(defaultUser)}
-        >
-          <div className="item">
-            <Logout /> Logout
-          </div>
-        </Link>
+        <div className="item" onClick={handleLogout}>
+          <Logout /> Logout
+        </div>
       </div>
     </div>
   );
