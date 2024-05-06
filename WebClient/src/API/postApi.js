@@ -2,18 +2,16 @@
 const server = "localhost:12345";
 
 async function fetchPosts(token) {
-  const res = await fetch(`http://${server}/api/posts`, {
+  const res = await fetch(`http://${server}/api/posts/`, {
     method: "GET",
     headers: {
       accept: "text/plain",
       Authorization: `${token}`,
     },
   });
-
   if (!res.ok) return null;
   let result = await res.text();
-  console.log(result)
-  return (result);
+  return JSON.parse(result);
 }
 
 async function fetchPost(token, username, id) {

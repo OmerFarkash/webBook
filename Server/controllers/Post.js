@@ -18,8 +18,7 @@ const getUserPosts = async (req, res) => {
     const wantToSee = req.params.id;
 
     try {
-        const posts = await postService.getUserPosts(jwt, wantToSee);
-        return res.status(200).send(posts);
+        return res.json(await postService.getUserPosts(jwt, wantToSee));
     }
     catch (error) {
         return res.status(404).send("Posts not exists");
@@ -85,7 +84,7 @@ const getFeed = async (req, res) => {
     const jwt = req.headers['authorization']
     try {
         const posts = await postService.getFeed(jwt);
-        return res.status(200).send(posts);
+        return res.json(posts);
     }
     catch (error) {
         return res.status(404).send("Posts not exists");

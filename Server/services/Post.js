@@ -37,12 +37,13 @@ const createPost = async (username, jwt, desc, postPic, date) => {
 
 // return all the user's posts - if the user is a friend or the user itself
 const getUserPosts = async (jwt, wantToSee) => {
-    const user = await User.findOne({androidToken: jwt});
+    const user = await User.findOne({"androidToken" : jwt});
+    const userToWatch = await User.findOne({username: wantToSee});
     try {
         if (user.friends.includes(wantToSee) || user.username === wantToSee) {
             var posts = [];
-            for (let i = 0; i < user.posts.length; i++) {
-                posts[i] = await Post.findById(user.posts[i]);
+            for (let i = 0; i < userToWatch.posts.length; i++) {
+                posts.push(await Post.findById(userToWatch.posts[i]));
                 if (posts.length == 25) 
                     break;
             }
@@ -117,20 +118,22 @@ const likePost = async (jwt, postId) => {
 }
 
 const getFeed = async (jwt) => {
-    const user = await User.findOne({androidToken: jwt});
+    const user = await User.findOne({"androidToken" : jwt});
     var friendsPosts = [];
     var otherPosts = [];
+    const posts = await Post.find();
 
-    // if Post is not valid for the list of all posts i need to find a different way to get all the posts
-    for (let i = 0; i < Post.length; i++) {
-        if ((user.username === Post[i].name) || (user.friends.includes(Post[i].name))) {
-            friendsPosts.push(Post[i]);
+    for (let i = 0; i < posts.length; i++) {
+        const currentPost = posts[i];
+        const currentPostUser = currentPost.name;
+        if ((user.username === currentPostUser) || (user.friends.includes(currentPostUser))) {
+            friendsPosts.push(currentPost);
             friendsPosts = friendsPosts.sort((a, b) => b.date - a.date);
             if (friendsPosts.length > 20) 
                 friendsPosts.pop();
         }
         else {
-            otherPosts.push(Post[i]);
+            otherPosts.push(currentPost);
             otherPosts = otherPosts.sort((a, b) => b.date - a.date);
             if (otherPosts.length > 5) 
                 otherPosts.pop();
@@ -139,7 +142,6 @@ const getFeed = async (jwt) => {
     var feed = friendsPosts.concat(otherPosts);
     feed = feed.sort((a, b) => b.date - a.date);
     return JSON.stringify(feed);
-
 }
 
 module.exports = {createPost, getUserPosts, replacePost, editPost, deletePost, likePost, getFeed};
