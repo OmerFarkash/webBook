@@ -14,9 +14,9 @@ async function fetchPosts(token) {
   return JSON.parse(result);
 }
 
-async function fetchPost(token, username, id) {
+async function fetchProfilePosts(token, username) {
   const res = await fetch(
-    `http://${server}/api/users/${username}/posts/${id}`,
+    `http://${server}/api/users/${username}/posts`,
     {
       method: "GET",
       headers: {
@@ -28,7 +28,7 @@ async function fetchPost(token, username, id) {
 
   if (!res.ok) return null;
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function deletePost(token, post) {
@@ -120,7 +120,7 @@ async function likePost(token, post) {
 
 export {
   fetchPosts,
-  fetchPost,
+  fetchProfilePosts,
   deletePost,
   editPost,
   postPost,

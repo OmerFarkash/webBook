@@ -9,7 +9,8 @@ import ReqList from "../../Components/ReqList/ReqList.js";
 import FriendList from "../../Components/FriendList/FriendList.js";
 import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
 import { editUser } from "../../API/userApi.js";
-import Post from "../../../../Server/models/Post.js";
+import { fetchProfilePosts } from "../../API/postApi.js";
+import Post from "../../Components/Post/Post.js";
 
 const Profile = ({user}) => {
   const activeUser = useContext(UserContext);
@@ -29,14 +30,10 @@ const Profile = ({user}) => {
 
   useEffect(() => {
     async function fetchData() {
-      let postList = await fetchProfilePosts(activeUser.activeUser.token);
-      setPosts(postList);
+      let postList = await fetchProfilePosts(activeUser.activeUser.token, user.username);
+      setPosts(JSON.parse(postList));
     }
-    fetchData()
-    console.log(posts);
-    if (posts.length) {
-      setIsLoading(false);
-    }
+    fetchData();
   }, [posts]);
 
   const handleEditSubmit = (e) => {
