@@ -9,6 +9,7 @@ import ReqList from "../../Components/ReqList/ReqList.js";
 import FriendList from "../../Components/FriendList/FriendList.js";
 import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
 import { editUser } from "../../API/userApi.js";
+import Post from "../../../../Server/models/Post.js";
 
 const Profile = ({user}) => {
   const activeUser = useContext(UserContext);
@@ -17,6 +18,7 @@ const Profile = ({user}) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(activeUser.activeUser);
+  const [posts, setPosts] = useState([]);
   console.log(activeUser.activeUser.username , user.username)
 
   useEffect(() => {
@@ -24,6 +26,18 @@ const Profile = ({user}) => {
       navigate("/");
     }
   }, [activeUser, navigate]);
+
+  useEffect(() => {
+    async function fetchData() {
+      let postList = await fetchProfilePosts(activeUser.activeUser.token);
+      setPosts(postList);
+    }
+    fetchData()
+    console.log(posts);
+    if (posts.length) {
+      setIsLoading(false);
+    }
+  }, [posts]);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -116,6 +130,15 @@ const Profile = ({user}) => {
             </div>
             <div className="Friends">
               {(activeUser.activeUser.friends.length > 0)? <FriendList activeUser={activeUser} user={user} /> : <></>}
+            </div>
+            <div classname="Posts">
+              {posts.map((post) => (
+            <Post
+              key={post.id}
+              post={post}
+              activeUser={activeUser.activeUser}
+            />
+          ))}
             </div>
           </div>
         </div>
