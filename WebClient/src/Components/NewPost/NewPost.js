@@ -1,4 +1,4 @@
-import { createPost, postPost } from "../../API/postApi";
+import { createPost, fetchPosts, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
@@ -25,14 +25,12 @@ const NewPost = ({ setPosts, postsList, activeUser, socket }) => {
   };
 
   //create and post new post
-  const handleNewPost = (e) => {
+  const handleNewPost = async (e) => {
     e.preventDefault();
     let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
     let newPost = createPost(activeUser, values.desc, postPic);
     if (values.desc || values.postPic) {
-      postPost(activeUser, newPost); // need to define socket in Feed or Home
-      setPosts(...postsList, newPost); // not sure if needed
-      console.log("secce")
+      await postPost(activeUser, newPost);
     } else {
       alert("Post can't be empty!");
     }

@@ -8,18 +8,20 @@ import UserContext from "../../UserContext.js";
 const Feed = () => {
   const activeUser = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      return await fetchPosts(activeUser.activeUser.token);
+      let postslist = await fetchPosts(activeUser.activeUser.token);
+      setPosts(JSON.parse(postslist));
     }
-    setPosts(fetchData());
-    if (posts != null) {
+    fetchData()
+    
+    if (posts.length > 0) {
       setIsLoading(false);
     }
-    console.log(posts);
-  }, []);
+    
+  }, [posts]);
 
   return (
     <div className="feed">

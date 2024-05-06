@@ -197,7 +197,6 @@ const deleteFriend = async (jwt, username, friend) => {
 
 const getFriendReqs = async (jwt) => {
     const user = await User.findOne({ "androidToken": jwt });
-    console.log(user);
 
     if (user === null) {
         throw new Error('User not exists');
