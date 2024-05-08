@@ -103,7 +103,7 @@ function createPost(user, desc, pic) {
 
 async function likePost(token, post) {
   const res = await fetch(
-    `http://${server}/api/users/${post.name}/posts/${post.id}/likes`,
+    `http://${server}/api/posts/${post._id}/likes`,
     {
       method: "POST",
       headers: {
@@ -111,7 +111,6 @@ async function likePost(token, post) {
         Authorization: `${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ token }),
     }
   );
 

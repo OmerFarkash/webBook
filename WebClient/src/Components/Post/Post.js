@@ -108,7 +108,7 @@ const Post = ({ post, activeUser, socket }) => {
         </div>
         <div className="info">
           <div className="item" onClick={handleLike}>
-            {isLiked ? <Liked /> : <NotLiked />} Like
+            {isLiked ? <Liked /> : <NotLiked />} Like: {post.likes.length}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentsIcon /> Comment
