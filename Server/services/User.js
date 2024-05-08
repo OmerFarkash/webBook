@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const TokenService = require('../services/Token');
 const PostServices = require('../services/Post');
+const Post = require('../models/Post');
 
 // works
 const validUser = async (username, jwt) => {
@@ -79,33 +80,35 @@ const deleteUser = async (jwt, username) => {
 }
 
 // works
-const updateUser = async (username, jwt, newName, newProfilePic) => {
-    const user = await validUser(username, jwt);
+const editUser = async (username, jwt, newName, newProfilePic) => {
+    var user = await validUser(username, jwt);
     user.name = newName;
     user.profilePic = newProfilePic;
+    await user.save();
+    var user2 = await User.findOne({ username: username });
 
     for (let i = 0 ; i < user.posts.length ; i++) {
-        var post = await PostServices.getPost(user.posts[i]);
+        var post = await Post.findById(user.posts[i]);
+        console.log(post);
         post.name = newName;
         await post.save();
     }
 
-    await user.save();
-    return JSON.stringify(user);
+    return (user2);
 }
 
-// works
-const editUser = async (username, jwt, newUsername, newProfilePic) => {
-    const user = await validUser(username, jwt);
+// // works
+// const editUser = async (username, jwt, newUsername, newProfilePic) => {
+//     const user = await validUser(username, jwt);
     
-    if (newUsername !== user.username && newUsername != "")
-        user.username = newUsername;
-    if (newProfilePic !== user.profilePic && newProfilePic != "")
-        user.profilePic = newProfilePic;
+//     if (newUsername !== user.username && newUsername != "")
+//         user.username = newUsername;
+//     if (newProfilePic !== user.profilePic && newProfilePic != "")
+//         user.profilePic = newProfilePic;
     
-    await user.save();
-    return JSON.stringify(user);
-}
+//     await user.save();
+//     return JSON.stringify(user);
+// }
 
 // works
 const addFriend = async (jwt, username, friend) => {
@@ -211,4 +214,4 @@ const getFriendReqs = async (jwt) => {
     }
 }
 
-module.exports = { createUser, getUser, editUser, deleteUser, updateUser, addFriend, getFriends, askFriend, deleteFriend, getFriendReqs};
+module.exports = { createUser, getUser, editUser, deleteUser, addFriend, getFriends, askFriend, deleteFriend, getFriendReqs};

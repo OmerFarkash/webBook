@@ -12,7 +12,6 @@ const Login = () => {
 
   const setUserByToken = async (token, username) => {
     const user = await fetchUser(token, username);
-    console.log(user);
     if (user == null) {
       return;
     }

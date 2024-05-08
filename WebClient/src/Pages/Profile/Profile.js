@@ -20,7 +20,6 @@ const Profile = ({user}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(activeUser.activeUser);
   const [posts, setPosts] = useState([]);
-  console.log(activeUser.activeUser.username , user.username)
 
   useEffect(() => {
     if (activeUser.activeUser.token == "") {
@@ -38,7 +37,6 @@ const Profile = ({user}) => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    console.log(editedUser)
     editUser(editedUser);
     setActiveUser(editedUser);
     setIsEditing(false);

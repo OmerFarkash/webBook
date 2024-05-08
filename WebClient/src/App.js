@@ -13,7 +13,6 @@ function App() {
   const [isDark, setIsDark] = useState(false);
   const user = useContext(UserContext);
   const [activeUser, setActiveUser] = useState(user);
-  console.log(activeUser.username);
 
   return (
     <div className="App" data-theme={isDark ? "dark" : "light"}>

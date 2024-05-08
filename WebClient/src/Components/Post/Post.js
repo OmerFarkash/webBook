@@ -16,18 +16,15 @@ const Post = ({ post, activeUser, socket }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState({ post });
+  const [editedPost, setEditedPost] = useState(post);
   const [username, setUsername] = useState(post.username);
-
-  useEffect(() => {
-    setEditedPost({ post });
-  }, [post]);
 
 
   //handeling the submition of the edited post
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    editPost(activeUser.token, editedPost, socket); //need to define socket in Feed or Home
+    console.log(editedPost)
+    editPost(activeUser.token, editedPost); //need to define socket in Feed or Home
     setIsEditing(false);
   };
 
