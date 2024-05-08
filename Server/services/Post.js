@@ -26,7 +26,7 @@ const postOwner = async (username, postId, jwt) => {
 // create a new post and save it to the database for current user
 const createPost = async (username, jwt, desc, postPic, date) => {
     const user = await validUser(username, jwt);
-    const newPost = new Post({name: user.name, profilePic: user.profilePic, desc: desc});
+    const newPost = new Post({name: user.name, profilePic: user.profilePic, desc: desc, username: username});
     if (postPic != null) newPost.postPic = postPic;
     if (date) newPost.date = date;
     await newPost.save();

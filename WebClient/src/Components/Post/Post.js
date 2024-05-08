@@ -9,6 +9,7 @@ import ShareMenu from "../ShareMenu/ShareMenu";
 import { ReactComponent as Edit } from "./Icons/pencil.svg";
 import { ReactComponent as Trash } from "./Icons/trash.svg";
 import { likePost, editPost, deletePost } from "../../API/postApi";
+import { Link } from "react-router-dom";
 
 const Post = ({ post, activeUser, socket }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -16,10 +17,12 @@ const Post = ({ post, activeUser, socket }) => {
   const [shareOpen, setShareOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState({ post });
+  const [username, setUsername] = useState(post.username);
 
   useEffect(() => {
     setEditedPost({ post });
   }, [post]);
+
 
   //handeling the submition of the edited post
   const handleEditSubmit = (e) => {
@@ -54,7 +57,6 @@ const Post = ({ post, activeUser, socket }) => {
       await deletePost(activeUser.token, post);
     }
   }
-
   
   return (
     <div className="post" id={post.id}>
@@ -63,7 +65,19 @@ const Post = ({ post, activeUser, socket }) => {
           <div className="userInfo">
             <img src={post.profilePic} alt="" />
             <div className="details">
-              <span className="name">{post.name}</span>
+            <div className="author">
+            <Link
+            style={{ textDecoration: "none" }}
+            to={{
+              pathname: `/User/${username}`,
+              user: { username }
+            }}
+          >
+            <div className="user">
+              <p>{post.name}</p>
+            </div>
+            </Link>
+            </div>
               <span className="date">{post.date}</span>
             </div>
           </div>

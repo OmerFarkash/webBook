@@ -93,6 +93,7 @@ function createPost(user, desc, pic) {
   return {
     name: user.name,
     profilePic: user.profilePic,
+    username: user.username,
     date: "",
     desc: desc,
     postPic: pic,
