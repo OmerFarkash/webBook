@@ -27,6 +27,10 @@ const Post = new Schema({
     postPic: {
         type: String
     },
+    username: {
+        type: String,
+        required: true
+    },
     // works
     likes: {
         type: [String],

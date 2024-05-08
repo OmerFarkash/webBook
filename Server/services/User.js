@@ -84,6 +84,12 @@ const updateUser = async (username, jwt, newName, newProfilePic) => {
     user.name = newName;
     user.profilePic = newProfilePic;
 
+    for (let i = 0 ; i < user.posts.length ; i++) {
+        var post = await PostServices.getPost(user.posts[i]);
+        post.name = newName;
+        await post.save();
+    }
+
     await user.save();
     return JSON.stringify(user);
 }
