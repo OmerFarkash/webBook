@@ -16,7 +16,7 @@ const validUser = async (username, jwt) => {
 const postOwner = async (username, postId, jwt) => {
     const user = await validUser(username, jwt);
     const post = await Post.findById(postId);
-    if (post.name !== username) {
+    if (post.username !== username) {
         throw new Error('not authorized to edit this post');
     }
     return user;
@@ -47,6 +47,7 @@ const getUserPosts = async (jwt, wantToSee) => {
                 if (posts.length == 25) 
                     break;
             }
+            posts = posts.sort((a, b) => b.date - a.date);
             return JSON.stringify(posts); 
         }
         else {

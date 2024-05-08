@@ -31,7 +31,7 @@ async function fetchUser(token, username) {
 
 async function editUser(editedUser) {
   const res = await fetch(`http://${server}/api/users/${editedUser.username}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       accept: "*/*",
       Authorization: `${editedUser.token}`,

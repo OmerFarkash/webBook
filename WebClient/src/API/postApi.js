@@ -32,7 +32,7 @@ async function fetchProfilePosts(token, username) {
 }
 
 async function deletePost(token, post) {
-  await fetch(`http://${server}/api/users/${post.name}/posts/${post.id}`, {
+  await fetch(`http://${server}/api/users/${post.username}/posts/${post._id}`, {
     method: "DELETE",
     headers: {
       accept: "text/plain",
@@ -41,9 +41,9 @@ async function deletePost(token, post) {
   });
 }
 
-async function editPost(token, post, socket) {
+async function editPost(token, post) {
   const res = await fetch(
-    `http://${server}/api/users/${post.username}/posts/${post.id}`,
+    `http://${server}/api/users/${post.username}/posts/${post._id}`,
     {
       method: "PUT",
       headers: {
@@ -51,7 +51,10 @@ async function editPost(token, post, socket) {
         Authorization: `${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...post }),
+      body: JSON.stringify({
+        "desc": post.desc,
+        "postPic": post.postPic,
+      }),
     }
   );
 
@@ -59,8 +62,6 @@ async function editPost(token, post, socket) {
   if (res.ok) {
     msg = JSON.parse(await res.text());
   }
-
-  socket.emit("post", { user: post.username, post: post });
 
   return msg;
 }

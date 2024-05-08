@@ -38,34 +38,33 @@ const deleteUser = async (req, res) => {
 };
 
 // works
-const updateUser = async (req, res) => {
+const editUser = async (req, res) => {
   const jwt = req.headers["authorization"];
   const username = req.body.id;
   const newName = req.body.newName;
   const newProfilePic = req.body.newProfilePic;
   try {
-    return res.json(
-      await userServices.updateUser(username, jwt, newName, newProfilePic)
-    );
+    const result = await userServices.editUser(username, jwt, newName, newProfilePic);
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(404).send("User not exists");
   }
 };
 
-// works
-const editUser = async (req, res) => {
-  const jwt = req.headers["authorization"];
-  const username = req.body.id;
-  const newUsername = req.body.username;
-  const newProfilePic = req.body.profilePic;
-  try {
-    return res.json(
-      await userServices.editUser(username, jwt, newUsername, newProfilePic)
-    );
-  } catch (error) {
-    return res.status(404).send("User not exists");
-  }
-};
+// // works
+// const editUser = async (req, res) => {
+//   const jwt = req.headers["authorization"];
+//   const username = req.body.id;
+//   const newUsername = req.body.username;
+//   const newProfilePic = req.body.profilePic;
+//   try {
+//     return res.json(
+//       await userServices.editUser(username, jwt, newUsername, newProfilePic)
+//     );
+//   } catch (error) {
+//     return res.status(404).send("User not exists");
+//   }
+// };
 
 // works
 const addFriend = async (req, res) => {
@@ -132,7 +131,7 @@ module.exports = {
   getUser,
   editUser,
   deleteUser,
-  updateUser,
+  
   addFriend,
   getFriends,
   askFriend,

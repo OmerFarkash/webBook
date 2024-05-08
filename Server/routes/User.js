@@ -27,8 +27,8 @@ router.delete('/:id/posts/:pid', TokenController.verifyToken, postController.del
 // Route to get a specific user by ID (username) - works
 router.get('/:id', TokenController.verifyToken, UserController.getUser);
 
-// Route to update fully a user by ID (username) - works
-router.put('/:id', TokenController.verifyToken, UserController.updateUser);
+// // Route to update fully a user by ID (username) - works
+// router.put('/:id', TokenController.verifyToken, UserController.updateUser);
 
 // Route to update a user by ID (username) - works
 router.patch('/:id', TokenController.verifyToken, UserController.editUser);
