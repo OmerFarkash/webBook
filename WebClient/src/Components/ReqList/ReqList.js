@@ -21,27 +21,35 @@ const ReqList = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const list = await fetchFriendReqs(activeUser.activeUser);
-      setReqList(list);
+      let list = await fetchFriendReqs(activeUser.activeUser);
+      setReqList(JSON.parse(list));
     }
     fetchData();
+
     if (reqList.length > 0) {
       setIsLoading(false);
     }
-  }, []);
+  }, [reqList.length]);
 
   const FriendReq = ({ username }) => {
+    const [user, setUser] = useState({});
+    useEffect(() => {
     async function fetchData() {
-      return await fetchUser(activeUser.token, username);
+      let reqUser = await fetchUser(activeUser.activeUser.token, username);
+      setUser(reqUser);
     }
-    const user = fetchData();
+    fetchData();
+  }, [reqList.length]);
 
     const acceptReq = () => {
       acceptFriendReq(activeUser.activeUser, username);
+      alert("Friend added");
     };
 
     const rejectReq = () => {
       deleteFriendReq(activeUser.activeUser, username);
+      alert("Request Deleted");
+
     };
 
     const handleProfile = async () => {

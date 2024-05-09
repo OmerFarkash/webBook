@@ -103,14 +103,13 @@ async function postFriendReq(token, username) {
       "Content-Type": "application/json",
     },
   });
-  if (!res.ok) return null;
+  if (!res.ok) return "not found";
   let result = await res.text();
   return JSON.stringify(result);
 }
 
-async function acceptFriendReq(activeUser, friend) {
+async function acceptFriendReq(activeUser, friendUsername) {
   let activeUsername = activeUser.username;
-  let friendUsername = friend.username;
   const res = await fetch(
     `http://${server}/api/users/${activeUsername}/friends/${friendUsername}`,
     {
@@ -129,9 +128,8 @@ async function acceptFriendReq(activeUser, friend) {
   return JSON.parse(result);
 }
 
-async function deleteFriendReq(activeUser, friend) {
+async function deleteFriendReq(activeUser, friendUsername) {
   let activeUsername = activeUser.username;
-  let friendUsername = friend.username;
   const res = await fetch(
     `http://${server}/api/users/${activeUsername}/friends/${friendUsername}`,
     {
