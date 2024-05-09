@@ -16,35 +16,31 @@ import { defaultUser } from "../../API/userApi";
 import { useContext } from "react";
 import UserContext from "../../UserContext.js";
 import { useNavigate } from "react-router-dom";
-
+import ProfileContext from "../../ProfileContext.js";
 
 const LeftBar = () => {
   const activeUser = useContext(UserContext);
   const { setActiveUser } = useContext(UserContext);
+  const { setProfileUser } = useContext(ProfileContext);
   const user = activeUser.activeUser;
-  const username = user.username;
   const navigate = useNavigate();
 
-  
+  const handleProfile = () => {
+    setProfileUser(user);
+    navigate("/User");
+  };
+
   const handleLogout = () => {
     setActiveUser(defaultUser);
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="leftBar">
       <div className="container">
-        <Link
-          style={{ textDecoration: "none" }}
-          to={{
-            pathname: `/User/${username}`,
-            user: { user },
-          }}
-        >
-          <div className="item">
-            <Profile /> Profile
-          </div>
-        </Link>
+        <div className="item" onClick={handleProfile}>
+          <Profile /> Profile
+        </div>
         <Link style={{ textDecoration: "none" }} to="/">
           <div className="item">
             <Home /> Home

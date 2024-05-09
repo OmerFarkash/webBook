@@ -2,34 +2,38 @@ import "./profile.css";
 import LeftBar from "../../Components/LeftBar/LeftBar.js";
 import NavBar from "../../Components/NavBar/NavBar.js";
 import UserContext from "../../UserContext.js";
-import React, { useEffect, useContext, useState} from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReqList from "../../Components/ReqList/ReqList.js";
 import FriendList from "../../Components/FriendList/FriendList.js";
 import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
-import { editUser } from "../../API/userApi.js";
+import { deleteFriendReq, editUser, postFriendReq } from "../../API/userApi.js";
 import { fetchProfilePosts } from "../../API/postApi.js";
 import Post from "../../Components/Post/Post.js";
+import ProfileContext from "../../ProfileContext.js";
 
-const Profile = ({user}) => {
+const Profile = () => {
   const activeUser = useContext(UserContext);
   const { setActiveUser } = useContext(UserContext);
-
+  const profileUser = useContext(ProfileContext);
+  const user = profileUser.profileUser;
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(activeUser.activeUser);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (activeUser.activeUser.token == "") {
+    if (activeUser.activeUser.token === "") {
       navigate("/");
     }
   }, [activeUser, navigate]);
 
   useEffect(() => {
     async function fetchData() {
-      let postList = await fetchProfilePosts(activeUser.activeUser.token, user.username);
+      let postList = await fetchProfilePosts(
+        activeUser.activeUser.token,
+        user.username
+      );
       setPosts(JSON.parse(postList));
     }
     fetchData();
@@ -46,39 +50,44 @@ const Profile = ({user}) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-
     reader.onloadend = () => {
       setEditedUser({ ...editedUser, profilePic: reader.result });
     };
-
     if (file) {
       reader.readAsDataURL(file);
     }
   };
 
   const FriendBtn = () => {
-    // if (user.username === activeUser.username) {
-    //   return;
-    // }
-    // //if user is a friend of activeUser
-    // else if (user == friend) {
-    //   return (
-    //     <div>
-    //       {/* onClick={deleteFriendReq(activeUser, user)} */}
-    //       <button id="friendReqBtn" >Remove to friends</button>
-    //     </div>
-    //   );
-    // }
-    // //if user is not a friend
-    // else {
-    //   return (
-    //     <div>
-    //       {/* onClick={PostFriendReq(activeUser.token, user)} */}
-    //       <button id="friendReqBtn" >Add to friends</button>
-    //     </div>
-    //   );
-    // }
-    return <button id="friendReqBtn">Add to friends</button>;
+
+    const handleFriendReq = async () => {
+      await deleteFriendReq(activeUser, user)
+    }
+
+    const handleDeleteReq = async () => {
+      await postFriendReq(activeUser.token, user)
+    }
+
+    const friends = activeUser.activeUser.friends;
+    if (user.username === activeUser.activeUser.username) {
+      return <></>;
+    }
+    //if user is a friend of activeUser
+    else if (friends.includes(user.username)) {
+      return (
+        <div>
+          <button id="friendReqBtn" onClick={handleFriendReq}>Remove to friends</button>
+        </div>
+      );
+    }
+    //if user is not a friend
+    else {
+      return (
+        <div>
+          <button id="friendReqBtn" onClick={handleDeleteReq}>Add to friends</button>
+        </div>
+      );
+    }
   };
 
   return (
@@ -115,25 +124,30 @@ const Profile = ({user}) => {
                   </>
                 )}
 
-                {activeUser.activeUser.username === user.username && !isEditing && (
-                  <div className="item">
-                    <Edit onClick={() => setIsEditing(true)} />
-                  </div>
-                )}
+                {activeUser.activeUser.username === user.username &&
+                  !isEditing && (
+                    <div className="item">
+                      <Edit onClick={() => setIsEditing(true)} />
+                    </div>
+                  )}
                 <FriendBtn />
               </div>
             </div>
             <div className="Friends">
-              {(activeUser.activeUser.friends.length > 0)? <FriendList activeUser={activeUser} user={user} /> : <></>}
+              {activeUser.activeUser.friends.length > 0 ? (
+                <FriendList activeUser={activeUser} user={user} />
+              ) : (
+                <></>
+              )}
             </div>
             <div classname="Posts">
               {posts.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-              activeUser={activeUser.activeUser}
-            />
-          ))}
+                <Post
+                  key={post.id}
+                  post={post}
+                  activeUser={activeUser.activeUser}
+                />
+              ))}
             </div>
           </div>
         </div>

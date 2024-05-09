@@ -1,5 +1,5 @@
 import "./post.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ReactComponent as Liked } from "./Icons/liked.svg";
 import { ReactComponent as NotLiked } from "./Icons/notLiked.svg";
 import { ReactComponent as ShareIcon } from "./Icons/share.svg";
@@ -9,16 +9,18 @@ import ShareMenu from "../ShareMenu/ShareMenu";
 import { ReactComponent as Edit } from "./Icons/pencil.svg";
 import { ReactComponent as Trash } from "./Icons/trash.svg";
 import { likePost, editPost, deletePost } from "../../API/postApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ProfileContext from "../../ProfileContext";
+import { fetchUser } from "../../API/userApi";
 
 const Post = ({ post, activeUser, socket }) => {
-  const [commentOpen, setCommentOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState(post);
   const [username, setUsername] = useState(post.username);
-
+  const { setProfileUser } = useContext(ProfileContext);
+  const navigate = useNavigate();
 
   //handeling the submition of the edited post
   const handleEditSubmit = (e) => {
@@ -54,6 +56,13 @@ const Post = ({ post, activeUser, socket }) => {
       await deletePost(activeUser.token, post);
     }
   }
+
+  async function handleProfile() {
+    const username = post.username;
+    const user = await fetchUser(activeUser.token, username);
+    setProfileUser(user);
+    navigate("/User");
+  };
   
   return (
     <div className="post" id={post.id}>
@@ -63,17 +72,9 @@ const Post = ({ post, activeUser, socket }) => {
             <img src={post.profilePic} alt="" />
             <div className="details">
             <div className="author">
-            <Link
-            style={{ textDecoration: "none" }}
-            to={{
-              pathname: `/User/${username}`,
-              user: { username }
-            }}
-          >
-            <div className="user">
+            <div className="user" onClick={handleProfile}>
               <p>{post.name}</p>
             </div>
-            </Link>
             </div>
               <span className="date">{post.date}</span>
             </div>
@@ -110,7 +111,7 @@ const Post = ({ post, activeUser, socket }) => {
           <div className="item" onClick={handleLike}>
             {isLiked ? <Liked /> : <NotLiked />} Like: {post.likes.length}
           </div>
-          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
+          <div className="item">
             <CommentsIcon /> Comment
           </div>
           <div className="item" onMouseEnter={() => setShareOpen(!shareOpen)}>
@@ -118,7 +119,6 @@ const Post = ({ post, activeUser, socket }) => {
           </div>
           {shareOpen && <ShareMenu />}
         </div>
-        {commentOpen && <Comments id={post.id} />}
       </div>
     </div>
   );

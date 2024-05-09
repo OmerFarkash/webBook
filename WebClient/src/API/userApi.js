@@ -77,7 +77,7 @@ async function fetchFriendReqs(activeUser) {
 
   if (!res.ok) return "not found";
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function postFriendReq(token, username) {
@@ -88,11 +88,10 @@ async function postFriendReq(token, username) {
       Authorization: `${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username }),
   });
   if (!res.ok) return null;
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function acceptFriendReq(activeUser, friend) {
@@ -113,7 +112,7 @@ async function acceptFriendReq(activeUser, friend) {
 
   if (!res.ok) return null;
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function deleteFriendReq(activeUser, friend) {
@@ -128,7 +127,6 @@ async function deleteFriendReq(activeUser, friend) {
         Authorization: `${activeUser.token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ activeUsername, friendUsername }),
     }
   );
 

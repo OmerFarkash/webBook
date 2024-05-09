@@ -3,44 +3,58 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ReactComponent as Accept } from "./Icons/check.svg";
 import { ReactComponent as Reject } from "./Icons/x.svg";
-import { acceptFriendReq, deleteFriendReq, fetchFriendReqs } from "../../API/userApi";
+import {
+  acceptFriendReq,
+  deleteFriendReq,
+  fetchFriendReqs,
+  fetchUser,
+} from "../../API/userApi";
 import UserContext from "../../UserContext";
+import ProfileContext from "../../ProfileContext";
 
 const ReqList = () => {
   const activeUser = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [reqList, setReqList] = useState(null);
+  const [reqList, setReqList] = useState([]);
+  const { setProfileUser } = useContext(ProfileContext);
 
   useEffect(() => {
     async function fetchData() {
-      return await fetchFriendReqs(activeUser.activeUser);
+      const list = await fetchFriendReqs(activeUser.activeUser);
+      setReqList(list);
     }
-    setReqList(fetchData());
-    if(reqList != null ) {
+    fetchData();
+    if (reqList.length > 0) {
       setIsLoading(false);
     }
   }, []);
 
-  function handleClick({ user }) {
-    navigate(`/User/${user.username}`, { user: user });
-  }
+  const FriendReq = ({ username }) => {
+    async function fetchData() {
+      return await fetchUser(activeUser.token, username);
+    }
+    const user = fetchData();
 
-  const acceptReq = ({ user }) => {
-    acceptFriendReq(activeUser.activeUser, user);
-  };
+    const acceptReq = () => {
+      acceptFriendReq(activeUser.activeUser, username);
+    };
 
-  const rejectReq = ({ user }) => {
-    deleteFriendReq(activeUser.activeUser, user);
-  };
+    const rejectReq = () => {
+      deleteFriendReq(activeUser.activeUser, username);
+    };
 
-  const FriendReq = ({ user }) => {
+    const handleProfile = async () => {
+      setProfileUser(user);
+      navigate("/User");
+    };
+
     return (
       <div className="FriendReq">
         <div className="container">
-          <div className="user" onClick={handleClick({ user })}>
-            <img src="{user.profilePic}" alt="" />
-            <span className="name">user.name</span>
+          <div className="user" onClick={handleProfile}>
+            <img src={user.profilePic} alt="" />
+            <span className="name">{user.name}</span>
           </div>
           <div className="options">
             <button onClick={acceptReq}>
@@ -58,7 +72,8 @@ const ReqList = () => {
   return (
     <div className="ReqList">
       <div className="container">
-        {!isLoading && reqList.map((user) => <FriendReq user={user} />)}
+        {!isLoading &&
+          reqList.map((username) => <FriendReq username={username} />)}
       </div>
     </div>
   );
