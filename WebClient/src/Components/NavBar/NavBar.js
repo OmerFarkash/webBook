@@ -2,13 +2,21 @@ import "./navBar.css";
 import { ReactComponent as SearchIcon } from "./Icons/search.svg";
 import { useContext } from "react";
 import UserContext from "../../UserContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ProfileContext from "../../ProfileContext";
 
 const NavBar = () => {
   const activeUser = useContext(UserContext);
+  const navigate = useNavigate();
+  const { setProfileUser } = useContext(ProfileContext);
   const user = activeUser.activeUser;
   const profilePic = user.profilePic;
   const name = user.name;
+
+  const handleProfile = () => {
+    setProfileUser(user);
+    navigate("/User");
+  };
 
   return (
     <div className="navBar">
@@ -22,18 +30,10 @@ const NavBar = () => {
         </div>
         <div className="right">
           {activeUser && (
-            <Link
-            style={{ textDecoration: "none" }}
-            to={{
-              pathname: `/User/${user.username}`,
-              user: { user },
-            }}
-          >
-            <div className="user">
+            <div className="user" onClick={handleProfile}>
               <img src={profilePic} alt="User Profile" />
               <p>{name}</p>
             </div>
-            </Link>
           )}
         </div>
       </div>
