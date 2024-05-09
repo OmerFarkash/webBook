@@ -74,12 +74,12 @@ const Profile = () => {
   }
 
   const FriendBtn = () => {
-    const handleFriendReq = async () => {
-      await deleteFriendReq(activeUser, user);
+    const handleDeleteReq = async () => {
+      return await deleteFriendReq(activeUser.activeUser.token, user.username);
     };
 
-    const handleDeleteReq = async () => {
-      await postFriendReq(activeUser.token, user);
+    const handleSendReq = async () => {
+      return await postFriendReq(activeUser.activeUser.token, user.username);
     };
 
     const friends = activeUser.activeUser.friends;
@@ -90,7 +90,7 @@ const Profile = () => {
     else if (friends.includes(user.username)) {
       return (
         <div>
-          <button id="friendReqBtn" onClick={handleFriendReq}>
+          <button id="friendReqBtn" onClick={handleDeleteReq}>
             Remove to friends
           </button>
         </div>
@@ -100,7 +100,7 @@ const Profile = () => {
     else {
       return (
         <div>
-          <button id="friendReqBtn" onClick={handleDeleteReq}>
+          <button id="friendReqBtn" onClick={handleSendReq}>
             Add to friends
           </button>
         </div>

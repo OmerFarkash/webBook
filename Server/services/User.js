@@ -166,6 +166,11 @@ const askFriend = async (jwt, friend) => {
     }
     if (user.friends.includes(friend) || friendUser.friends.includes(user.username)) {
         throw new Error('Already friends');
+    
+    }
+    if ( user.friendRequestsSent.includes(friend) || friendUser.friendRequestsSent.includes.apply(user.username)) {
+        throw new Error('Already sent request');
+    
     }
     user.friendRequestsSent.push(friend);
     await user.save();
