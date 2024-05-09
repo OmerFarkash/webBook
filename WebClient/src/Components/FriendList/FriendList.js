@@ -43,9 +43,6 @@ const FriendList = ({ activeUser, user }) => {
   return (
     <div className="FriendList">
       <div className="container">
-        <Friend />
-        <Friend />
-        <Friend />
         {!isLoading &&
           friendList.map((username) => <Friend username={username} />)}
       </div>

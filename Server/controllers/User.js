@@ -39,7 +39,7 @@ const deleteUser = async (req, res) => {
 
 // works
 const editUser = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   const username = req.body.id;
   const newName = req.body.newName;
   const newProfilePic = req.body.newProfilePic;
@@ -53,7 +53,7 @@ const editUser = async (req, res) => {
 
 // // works
 // const editUser = async (req, res) => {
-//   const jwt = req.headers["authorization"];
+//   const jwt = req.headers["Authorization"];
 //   const username = req.body.id;
 //   const newUsername = req.body.username;
 //   const newProfilePic = req.body.profilePic;
@@ -68,7 +68,7 @@ const editUser = async (req, res) => {
 
 // works
 const addFriend = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   const username = req.params.id;
   const friend = req.params.fid;
   try {
@@ -81,7 +81,7 @@ const addFriend = async (req, res) => {
 
 // works
 const getFriends = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   const username = req.params.id;
   try {
     const friends = await userServices.getFriends(jwt, username);
@@ -93,7 +93,7 @@ const getFriends = async (req, res) => {
 
 // works
 const askFriend = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   const friend = req.params.id;
   try {
     await userServices.askFriend(jwt, friend);
@@ -105,7 +105,7 @@ const askFriend = async (req, res) => {
 
 // works
 const deleteFriend = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   const username = req.params.id;
   const friend = req.params.fid;
   try {
@@ -117,7 +117,7 @@ const deleteFriend = async (req, res) => {
 };
 
 const getFriendReqs = async (req, res) => {
-  const jwt = req.headers["authorization"];
+  const jwt = req.headers["Authorization"];
   try {
     const reqs = await userServices.getFriendReqs(jwt);
     return res.json(reqs);

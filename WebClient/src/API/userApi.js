@@ -49,6 +49,20 @@ async function editUser(editedUser) {
   return JSON.parse(result);
 }
 
+async function deleteUser(user) {
+  const res = await fetch(`http://${server}/api/users/${user.username}`, {
+    method: "DELETE",
+    headers: {
+      accept: "*/*",
+      Authorization: `${user.token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) return null;
+  let result = await res.text();
+  return JSON.stringify(result);
+}
+
 async function fetchFriends(token, username) {
   const res = await fetch(`http://${server}/api/users/${username}/friends`, {
     method: "GET",
@@ -91,7 +105,7 @@ async function postFriendReq(token, username) {
   });
   if (!res.ok) return null;
   let result = await res.text();
-  return JSON.parse(result);
+  return JSON.stringify(result);
 }
 
 async function acceptFriendReq(activeUser, friend) {
@@ -127,6 +141,7 @@ async function deleteFriendReq(activeUser, friend) {
         Authorization: `${activeUser.token}`,
         "Content-Type": "application/json",
       },
+
     }
   );
 
@@ -148,6 +163,7 @@ export {
   fetchToken,
   fetchUser,
   editUser,
+  deleteUser,
   fetchFriends,
   fetchFriendReqs,
   postFriendReq,

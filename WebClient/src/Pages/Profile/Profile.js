@@ -7,7 +7,13 @@ import { useNavigate } from "react-router-dom";
 import ReqList from "../../Components/ReqList/ReqList.js";
 import FriendList from "../../Components/FriendList/FriendList.js";
 import { ReactComponent as Edit } from "../../Components/Post/Icons/pencil.svg";
-import { deleteFriendReq, editUser, postFriendReq } from "../../API/userApi.js";
+import { ReactComponent as Delete } from "../../Components/Post/Icons/trash.svg";
+import {
+  deleteFriendReq,
+  deleteUser,
+  editUser,
+  postFriendReq,
+} from "../../API/userApi.js";
 import { fetchProfilePosts } from "../../API/postApi.js";
 import Post from "../../Components/Post/Post.js";
 import ProfileContext from "../../ProfileContext.js";
@@ -29,7 +35,8 @@ const Profile = () => {
   }, [activeUser, navigate]);
 
   useEffect(() => {
-    async function fetchData() {
+    if((activeUser.activeUser.friends.includes(user.username) || activeUser.activeUser.username === user.username)){
+      async function fetchData() {
       let postList = await fetchProfilePosts(
         activeUser.activeUser.token,
         user.username
@@ -37,7 +44,9 @@ const Profile = () => {
       setPosts(JSON.parse(postList));
     }
     fetchData();
-  }, [posts]);
+    }
+    
+  }, [posts.length]);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -58,15 +67,20 @@ const Profile = () => {
     }
   };
 
-  const FriendBtn = () => {
-
-    const handleFriendReq = async () => {
-      await deleteFriendReq(activeUser, user)
+  async function handleDelete() {
+    if (window.confirm("Are you sure?") === true) {
+      await deleteUser(activeUser.activeUser);
     }
+  }
+
+  const FriendBtn = () => {
+    const handleFriendReq = async () => {
+      await deleteFriendReq(activeUser, user);
+    };
 
     const handleDeleteReq = async () => {
-      await postFriendReq(activeUser.token, user)
-    }
+      await postFriendReq(activeUser.token, user);
+    };
 
     const friends = activeUser.activeUser.friends;
     if (user.username === activeUser.activeUser.username) {
@@ -76,7 +90,9 @@ const Profile = () => {
     else if (friends.includes(user.username)) {
       return (
         <div>
-          <button id="friendReqBtn" onClick={handleFriendReq}>Remove to friends</button>
+          <button id="friendReqBtn" onClick={handleFriendReq}>
+            Remove to friends
+          </button>
         </div>
       );
     }
@@ -84,7 +100,9 @@ const Profile = () => {
     else {
       return (
         <div>
-          <button id="friendReqBtn" onClick={handleDeleteReq}>Add to friends</button>
+          <button id="friendReqBtn" onClick={handleDeleteReq}>
+            Add to friends
+          </button>
         </div>
       );
     }
@@ -98,41 +116,44 @@ const Profile = () => {
       <div className="profile">
         <div className="page">
           <div className="container">
-            <div className="user">
-              <div className="userInfo">
-                {isEditing ? (
-                  <form onSubmit={handleEditSubmit}>
-                    <input
-                      value={editedUser.name}
-                      onChange={(e) =>
-                        setEditedUser({ ...editedUser, name: e.target.value })
-                      }
-                    />
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                    />
-                    <button type="submit">Save</button>
-                  </form>
-                ) : (
-                  <>
-                    <img src={user.profilePic} alt="" />
-                    <div className="details">
-                      <span className="name">{user.name}</span>
-                    </div>
-                  </>
-                )}
-
-                {activeUser.activeUser.username === user.username &&
-                  !isEditing && (
+          {activeUser.activeUser.username === user.username &&
+                !isEditing && (
+                  <div classname="profileMenu">
                     <div className="item">
                       <Edit onClick={() => setIsEditing(true)} />
                     </div>
-                  )}
-                <FriendBtn />
-              </div>
+                    <div className="item">
+                      <Delete onClick={handleDelete} />
+                    </div>
+                  </div>
+                )}
+            <div className="userInfo">
+              {isEditing ? (
+                <form onSubmit={handleEditSubmit}>
+                  <input
+                    value={editedUser.name}
+                    onChange={(e) =>
+                      setEditedUser({ ...editedUser, name: e.target.value })
+                    }
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                  <button type="submit">Save</button>
+                </form>
+              ) : (
+                <>
+                  <img className="ProfilePic" src={user.profilePic} alt="" />
+                  <div className="details">
+                    <span className="name">{user.name}</span>
+                  </div>
+                </>
+              )}
+              <FriendBtn />
             </div>
+            
             <div className="Friends">
               {activeUser.activeUser.friends.length > 0 ? (
                 <FriendList activeUser={activeUser} user={user} />
