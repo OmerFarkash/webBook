@@ -16,12 +16,10 @@ const Feed = () => {
       setPosts(JSON.parse(postslist));
     }
     fetchData()
-    
     if (posts.length > 0) {
       setIsLoading(false);
     }
-    
-  }, [posts]);
+  }, [posts.length]);
 
   return (
     <div className="feed">
@@ -35,11 +33,13 @@ const Feed = () => {
           <div>No posts yet...</div>
         ) : (
           posts.map((post) => (
+            <div className="Post">
             <Post
               key={post.id}
               post={post}
               activeUser={activeUser.activeUser}
             />
+            </div>
           ))
         )}
       </div>

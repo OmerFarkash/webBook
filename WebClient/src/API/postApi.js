@@ -98,6 +98,7 @@ function createPost(user, desc, pic) {
     date: "",
     desc: desc,
     postPic: pic,
+    likes:[],
   };
 }
 

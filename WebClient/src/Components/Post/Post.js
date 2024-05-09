@@ -13,8 +13,10 @@ import { Link, useNavigate } from "react-router-dom";
 import ProfileContext from "../../ProfileContext";
 import { fetchUser } from "../../API/userApi";
 
-const Post = ({ post, activeUser, socket }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const Post = ({ post, activeUser }) => {
+  const [isLiked, setIsLiked] = useState(
+    post.likes.includes(activeUser.username)
+  );
   const [shareOpen, setShareOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState(post);
@@ -25,7 +27,7 @@ const Post = ({ post, activeUser, socket }) => {
   //handeling the submition of the edited post
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    console.log(editedPost)
+    console.log(editedPost);
     editPost(activeUser.token, editedPost); //need to define socket in Feed or Home
     setIsEditing(false);
   };
@@ -45,7 +47,7 @@ const Post = ({ post, activeUser, socket }) => {
   };
 
   //like post
-  async function handleLike(){
+  async function handleLike() {
     setIsLiked(!isLiked);
     await likePost(activeUser.token, post);
   }
@@ -62,8 +64,8 @@ const Post = ({ post, activeUser, socket }) => {
     const user = await fetchUser(activeUser.token, username);
     setProfileUser(user);
     navigate("/User");
-  };
-  
+  }
+
   return (
     <div className="post" id={post.id}>
       <div className="container">
@@ -71,11 +73,9 @@ const Post = ({ post, activeUser, socket }) => {
           <div className="userInfo">
             <img src={post.profilePic} alt="" />
             <div className="details">
-            <div className="author">
-            <div className="user" onClick={handleProfile}>
-              <p>{post.name}</p>
-            </div>
-            </div>
+              <div className="user" onClick={handleProfile}>
+                {post.name}
+              </div>
               <span className="date">{post.date}</span>
             </div>
           </div>
@@ -96,7 +96,9 @@ const Post = ({ post, activeUser, socket }) => {
               <input
                 value={editedPost.desc}
                 onChange={(e) =>
-                  setEditedPost({ ...editedPost, desc: e.target.value })}/>
+                  setEditedPost({ ...editedPost, desc: e.target.value })
+                }
+              />
               <input type="file" accept="image/*" onChange={handleFileChange} />
               <button type="submit">Save</button>
             </form>

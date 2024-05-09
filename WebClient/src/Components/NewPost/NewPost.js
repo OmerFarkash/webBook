@@ -31,6 +31,7 @@ const NewPost = ({ setPosts, postsList, activeUser, socket }) => {
     let newPost = createPost(activeUser, values.desc, postPic);
     if (values.desc || values.postPic) {
       await postPost(activeUser, newPost);
+      setPosts([...postsList, newPost])
     } else {
       alert("Post can't be empty!");
     }
