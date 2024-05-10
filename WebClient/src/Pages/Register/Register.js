@@ -1,18 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./register.css";
 import RegInput from "../../Components/RegIn/RegInput.js";
-import usersExsist from "../../data/Users.json";
 import { Link, useNavigate } from "react-router-dom";
 import RegInputs from "../../data/RegInputs.json";
 
 const Register = () => {
-  // const [users, setUsers] = useState(usersExsist);
   const navigate = useNavigate();
   const inputs = RegInputs;
-
-  // useEffect(() => {
-  //   setUsers(usersExsist);
-  // }, []);
 
   const [values, setValues] = useState({
     name: "",

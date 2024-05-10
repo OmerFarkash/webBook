@@ -38,9 +38,9 @@ async function editUser(editedUser) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "id": editedUser.username,
-      "newName": editedUser.name,
-      "newProfilePic": editedUser.profilePic,
+      id: editedUser.username,
+      newName: editedUser.name,
+      newProfilePic: editedUser.profilePic,
     }),
   });
 
@@ -125,11 +125,12 @@ async function acceptFriendReq(activeUser, friendUsername) {
 
   if (!res.ok) return null;
   let result = await res.text();
-  return JSON.parse(result);
+  return result;
 }
 
 async function deleteFriendReq(activeUser, friendUsername) {
   let activeUsername = activeUser.username;
+  console.log(activeUsername, friendUsername);
   const res = await fetch(
     `http://${server}/api/users/${activeUsername}/friends/${friendUsername}`,
     {
@@ -139,7 +140,6 @@ async function deleteFriendReq(activeUser, friendUsername) {
         Authorization: `${activeUser.token}`,
         "Content-Type": "application/json",
       },
-
     }
   );
 
@@ -155,6 +155,7 @@ const defaultUser = {
   token: "",
   friends: [""],
   posts: [""],
+  friendRequestsSent: [""],
 };
 
 export {

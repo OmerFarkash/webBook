@@ -12,6 +12,7 @@ import {
   deleteFriendReq,
   deleteUser,
   editUser,
+  fetchUser,
   postFriendReq,
 } from "../../API/userApi.js";
 import { fetchProfilePosts } from "../../API/postApi.js";
@@ -35,18 +36,20 @@ const Profile = () => {
   }, [activeUser, navigate]);
 
   useEffect(() => {
-    if((activeUser.activeUser.friends.includes(user.username) || activeUser.activeUser.username === user.username)){
+    if (
+      activeUser.activeUser.friends.includes(user.username) ||
+      activeUser.activeUser.username === user.username
+    ) {
       async function fetchData() {
-      let postList = await fetchProfilePosts(
-        activeUser.activeUser.token,
-        user.username
-      );
-      setPosts(JSON.parse(postList));
+        let postList = await fetchProfilePosts(
+          activeUser.activeUser.token,
+          user.username
+        );
+        setPosts(JSON.parse(postList));
+      }
+      fetchData();
     }
-    fetchData();
-    }
-    
-  }, [posts.length]);
+  }, [posts.length, user]);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -75,14 +78,26 @@ const Profile = () => {
 
   const FriendBtn = () => {
     const handleDeleteReq = async () => {
-      return await deleteFriendReq(activeUser.activeUser.token, user.username);
+      await deleteFriendReq(activeUser.activeUser, user.username);
+      const updated = await fetchUser(
+        activeUser.activeUser.token,
+        activeUser.activeUser.username
+      );
+      setActiveUser(updated);
     };
 
     const handleSendReq = async () => {
-      return await postFriendReq(activeUser.activeUser.token, user.username);
+      await postFriendReq(activeUser.activeUser.token, user.username);
+      const updated = await fetchUser(
+        activeUser.activeUser.token,
+        activeUser.activeUser.username
+      );
+      setActiveUser(updated);
     };
 
     const friends = activeUser.activeUser.friends;
+    const reqSent = activeUser.activeUser.friendRequestsSent;
+
     if (user.username === activeUser.activeUser.username) {
       return <></>;
     }
@@ -93,6 +108,14 @@ const Profile = () => {
           <button id="friendReqBtn" onClick={handleDeleteReq}>
             Remove to friends
           </button>
+        </div>
+      );
+    }
+    //if request already sent
+    else if (reqSent.includes(user.username)) {
+      return (
+        <div>
+          <button id="friendReqBtn">Request Sent</button>
         </div>
       );
     }
@@ -116,17 +139,16 @@ const Profile = () => {
       <div className="profile">
         <div className="page">
           <div className="container">
-          {activeUser.activeUser.username === user.username &&
-                !isEditing && (
-                  <div classname="profileMenu">
-                    <div className="item">
-                      <Edit onClick={() => setIsEditing(true)} />
-                    </div>
-                    <div className="item">
-                      <Delete onClick={handleDelete} />
-                    </div>
-                  </div>
-                )}
+            {activeUser.activeUser.username === user.username && !isEditing && (
+              <div classname="profileMenu">
+                <div className="item">
+                  <Edit onClick={() => setIsEditing(true)} />
+                </div>
+                <div className="item">
+                  <Delete onClick={handleDelete} />
+                </div>
+              </div>
+            )}
             <div className="userInfo">
               {isEditing ? (
                 <form onSubmit={handleEditSubmit}>
@@ -153,7 +175,7 @@ const Profile = () => {
               )}
               <FriendBtn />
             </div>
-            
+
             <div className="Friends">
               {activeUser.activeUser.friends.length > 0 ? (
                 <FriendList activeUser={activeUser} user={user} />
