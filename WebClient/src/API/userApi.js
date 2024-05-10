@@ -72,9 +72,9 @@ async function fetchFriends(token, username) {
     },
   });
 
-  if (!res.ok) return "";
+  if (!res.ok) return "not found";
   let result = await res.text();
-  return result;
+  return JSON.parse(result);
 }
 
 async function fetchFriendReqs(activeUser) {

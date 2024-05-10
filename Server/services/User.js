@@ -151,7 +151,7 @@ const getFriends = async (jwt, username) => {
     if (user.friends.includes(username)) {
         return JSON.stringify(friend.friends);
     }
-    if (user === friend) {
+    if (user.username === username) {
         return JSON.stringify(user.friends);
     }
     throw new Error('Not friends');

@@ -70,16 +70,27 @@
           }
         }
       }
-      .Friends {
-      align-self: self-end;
-    }
+      .Extras {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        align-items: start;
+      justify-content: space-between;
+      border-radius: 10px;
 
-    .Posts {
-      display: flex;
-      width:70%;
-    }
-    }
 
-    
+        background-color:  var(--background-color);
+
+        .Posts{
+          border-radius: 10px;
+          background: var(--foreground-color);
+          width: 100%;
+          margin:15px;
+
+
+        }
+      }
+    }
   }
 }

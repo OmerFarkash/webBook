@@ -175,22 +175,23 @@ const Profile = () => {
               )}
               <FriendBtn />
             </div>
-
-            <div className="Friends">
-              {activeUser.activeUser.friends.length > 0 ? (
-                <FriendList activeUser={activeUser} user={user} />
-              ) : (
-                <></>
-              )}
-            </div>
-            <div classname="Posts">
-              {posts.map((post) => (
-                <Post
-                  key={post.id}
-                  post={post}
-                  activeUser={activeUser.activeUser}
-                />
-              ))}
+            <div className="Extras">
+              <div className="Friends">
+                {activeUser.activeUser.friends.length > 0 ? (
+                  <FriendList activeUser={activeUser.activeUser} user={user} />
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className="Posts">
+                {posts.map((post) => (
+                  <Post
+                    key={post.id}
+                    post={post}
+                    activeUser={activeUser.activeUser}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
