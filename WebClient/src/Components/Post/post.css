@@ -1,6 +1,7 @@
 .post {
   display: flex;
-  width: 70%;
+  width: 100%;
+
 
   .container {
     padding: 20px;
