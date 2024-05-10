@@ -18,6 +18,7 @@ import {
 import { fetchProfilePosts } from "../../API/postApi.js";
 import Post from "../../Components/Post/Post.js";
 import ProfileContext from "../../ProfileContext.js";
+import { defaultUser } from "../../API/userApi.js";
 
 const Profile = () => {
   const activeUser = useContext(UserContext);
@@ -72,6 +73,8 @@ const Profile = () => {
 
   async function handleDelete() {
     if (window.confirm("Are you sure?") === true) {
+      setActiveUser(defaultUser)
+      navigate("/");
       await deleteUser(activeUser.activeUser);
     }
   }
@@ -106,7 +109,7 @@ const Profile = () => {
       return (
         <div>
           <button id="friendReqBtn" onClick={handleDeleteReq}>
-            Remove to friends
+            Remove from friends
           </button>
         </div>
       );
