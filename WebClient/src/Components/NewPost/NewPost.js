@@ -2,10 +2,10 @@ import { createPost, fetchPosts, postPost } from "../../API/postApi";
 import "./newPost.css";
 import { useState } from "react";
 
-const NewPost = ({ setPosts, postsList, activeUser, socket }) => {
+const NewPost = ({ setPosts, postsList, activeUser }) => {
   const [values, setValues] = useState({
     desc: "",
-    postPic: null,
+    postPic: "",
   });
 
   const input = {
@@ -27,9 +27,9 @@ const NewPost = ({ setPosts, postsList, activeUser, socket }) => {
   //create and post new post
   const handleNewPost = async (e) => {
     e.preventDefault();
-    let postPic = values.postPic ? URL.createObjectURL(values.postPic) : null;
+    let postPic = values.postPic ? URL.createObjectURL(values.postPic) : "";
     let newPost = createPost(activeUser, values.desc, postPic);
-    if (values.desc || values.postPic) {
+    if (values.desc != "" || values.postPic != "") {
       await postPost(activeUser, newPost);
       setPosts([...postsList, newPost])
     } else {

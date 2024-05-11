@@ -55,12 +55,11 @@ async function deleteUser(user) {
     headers: {
       accept: "*/*",
       Authorization: `${user.token}`,
-      "Content-Type": "application/json",
     },
   });
   if (!res.ok) return null;
   let result = await res.text();
-  return JSON.stringify(result);
+  return result;
 }
 
 async function fetchFriends(token, username) {
@@ -72,7 +71,7 @@ async function fetchFriends(token, username) {
     },
   });
 
-  if (!res.ok) return "not found";
+  if (!res.ok) return null;
   let result = await res.text();
   return JSON.parse(result);
 }
@@ -89,7 +88,7 @@ async function fetchFriendReqs(activeUser) {
     }
   );
 
-  if (!res.ok) return "not found";
+  if (!res.ok) return null;
   let result = await res.text();
   return JSON.parse(result);
 }
@@ -100,12 +99,11 @@ async function postFriendReq(token, username) {
     headers: {
       accept: "*/*",
       Authorization: `${token}`,
-      "Content-Type": "application/json",
     },
   });
-  if (!res.ok) return "not found";
+  if (!res.ok) return;
   let result = await res.text();
-  return JSON.stringify(result);
+  return result;
 }
 
 async function acceptFriendReq(activeUser, friendUsername) {
@@ -123,14 +121,13 @@ async function acceptFriendReq(activeUser, friendUsername) {
     }
   );
 
-  if (!res.ok) return null;
+  if (!res.ok) return;
   let result = await res.text();
   return result;
 }
 
 async function deleteFriendReq(activeUser, friendUsername) {
   let activeUsername = activeUser.username;
-  console.log(activeUsername, friendUsername);
   const res = await fetch(
     `http://${server}/api/users/${activeUsername}/friends/${friendUsername}`,
     {
@@ -138,12 +135,10 @@ async function deleteFriendReq(activeUser, friendUsername) {
       headers: {
         accept: "*/*",
         Authorization: `${activeUser.token}`,
-        "Content-Type": "application/json",
       },
     }
   );
-
-  if (!res.ok) return null;
+  if (!res.ok) return;
   let result = await res.text();
   return result;
 }

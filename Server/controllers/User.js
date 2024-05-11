@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     );
     return res.status(201).json(user);
   } catch (error) {
-    return res.json(error);
+    return res.status(409).json(error);
   }
 };
 // works
@@ -131,7 +131,6 @@ module.exports = {
   getUser,
   editUser,
   deleteUser,
-  
   addFriend,
   getFriends,
   askFriend,

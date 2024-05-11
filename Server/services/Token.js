@@ -18,6 +18,7 @@ const createToken = async (username, password, androidToken) => {
     await User.findOneAndUpdate({ username }, { androidToken: token });
     return token;
 }
+
 const verifyToken = (token) => {
     try {
         const data = jwt.verify(token, secretKey);

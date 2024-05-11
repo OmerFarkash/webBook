@@ -15,16 +15,13 @@ async function fetchPosts(token) {
 }
 
 async function fetchProfilePosts(token, username) {
-  const res = await fetch(
-    `http://${server}/api/users/${username}/posts`,
-    {
-      method: "GET",
-      headers: {
-        accept: "text/plain",
-        Authorization: `${token}`,
-      },
-    }
-  );
+  const res = await fetch(`http://${server}/api/users/${username}/posts`, {
+    method: "GET",
+    headers: {
+      accept: "text/plain",
+      Authorization: `${token}`,
+    },
+  });
 
   if (!res.ok) return null;
   let result = await res.text();
@@ -45,7 +42,7 @@ async function editPost(token, post) {
   const res = await fetch(
     `http://${server}/api/users/${post.username}/posts/${post._id}`,
     {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         accept: "text/plain",
         Authorization: `${token}`,
@@ -58,12 +55,9 @@ async function editPost(token, post) {
     }
   );
 
-  let msg = null;
-  if (res.ok) {
-    msg = JSON.parse(await res.text());
-  }
-
-  return msg;
+  if (!res.ok) return null;
+  let result = await res.text();
+  return JSON.parse(result);
 }
 
 async function postPost(user, post) {
@@ -80,14 +74,9 @@ async function postPost(user, post) {
     }
   );
 
-  let msg = null;
-  if (res.ok) {
-    msg = JSON.parse(await res.text());
-  }
-
-  // socket.emit("post", { user: user, post: post });
-
-  return msg;
+  if (!res.ok) return null;
+  let result = await res.text();
+  return JSON.parse(result);
 }
 
 function createPost(user, desc, pic) {
@@ -98,22 +87,19 @@ function createPost(user, desc, pic) {
     date: "",
     desc: desc,
     postPic: pic,
-    likes:[],
+    likes: [],
   };
 }
 
 async function likePost(token, post) {
-  const res = await fetch(
-    `http://${server}/api/posts/${post._id}/likes`,
-    {
-      method: "POST",
-      headers: {
-        accept: "text/plain",
-        Authorization: `${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`http://${server}/api/posts/${post._id}/likes`, {
+    method: "POST",
+    headers: {
+      accept: "text/plain",
+      Authorization: `${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) return null;
   let result = await res.text();
