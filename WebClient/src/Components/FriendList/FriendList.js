@@ -26,7 +26,7 @@ const FriendList = ({ activeUser }) => {
         setIsLoading(false);
       }
     }
-  }, [friendList.length, user]);
+  }, [friendList.length, user.username]);
 
   const Friend = ({ username }) => {
     const [friend, setFriend] = useState({});

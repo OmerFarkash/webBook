@@ -50,52 +50,56 @@ const Profile = () => {
       }
       fetchData();
     }
-  }, [posts.length, user]);
+  }, [posts.length, user.username]);
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    editUser(editedUser);
+    await editUser(editedUser);
     setActiveUser(editedUser);
     setIsEditing(false);
   };
 
   //showing the image while in editing mode
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setEditedUser({ ...editedUser, profilePic: reader.result });
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    setEditedUser({ ...editedUser, profilePic: URL.createObjectURL(e.target.files[0]) });
   };
 
   async function handleDelete() {
     if (window.confirm("Are you sure?") === true) {
-      setActiveUser(defaultUser)
+      setActiveUser(defaultUser);
       navigate("/");
       await deleteUser(activeUser.activeUser);
     }
   }
 
   const FriendBtn = () => {
-    const handleDeleteReq = async () => {
-      await deleteFriendReq(activeUser.activeUser, user.username);
+
+    const updateActiveUser = async () => {
       const updated = await fetchUser(
         activeUser.activeUser.token,
         activeUser.activeUser.username
       );
-      setActiveUser(updated);
+      setActiveUser({
+        name: updated.name,
+        username: updated.username,
+        profilePic: updated.profilePic,
+        token: updated.androidToken,
+        friends: updated.friends,
+        posts: updated.posts,
+        friendRequestsSent: updated.friendRequestsSent,
+      });
+    }
+
+    const handleDeleteFriend = async () => {
+      await deleteFriendReq(activeUser.activeUser, user.username); 
+      updateActiveUser();     
+      alert("Friend Removed");
     };
 
     const handleSendReq = async () => {
       await postFriendReq(activeUser.activeUser.token, user.username);
-      const updated = await fetchUser(
-        activeUser.activeUser.token,
-        activeUser.activeUser.username
-      );
-      setActiveUser(updated);
+      updateActiveUser();
+      alert("Request Sent");
     };
 
     const friends = activeUser.activeUser.friends;
@@ -108,7 +112,7 @@ const Profile = () => {
     else if (friends.includes(user.username)) {
       return (
         <div>
-          <button id="friendReqBtn" onClick={handleDeleteReq}>
+          <button id="friendReqBtn" onClick={handleDeleteFriend}>
             Remove from friends
           </button>
         </div>

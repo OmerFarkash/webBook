@@ -128,7 +128,7 @@ const getFeed = async (jwt) => {
 
   for (let i = 0; i < posts.length; i++) {
     const currentPost = posts[i];
-    const currentPostUser = currentPost.name;
+    const currentPostUser = currentPost.username;
     if (
       user.username === currentPostUser ||
       user.friends.includes(currentPostUser)

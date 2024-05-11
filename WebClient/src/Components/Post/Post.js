@@ -20,30 +20,19 @@ const Post = ({ post, activeUser }) => {
   const [shareOpen, setShareOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState(post);
-  const [username, setUsername] = useState(post.username);
   const { setProfileUser } = useContext(ProfileContext);
   const navigate = useNavigate();
 
   //handeling the submition of the edited post
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    console.log(editedPost);
-    editPost(activeUser.token, editedPost); //need to define socket in Feed or Home
+    await editPost(activeUser.token, editedPost); 
     setIsEditing(false);
   };
 
   //showing the image while in editing mode
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setEditedPost({ ...editedPost, postPic: reader.result });
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    setEditedPost({ ...editedPost, postPic: URL.createObjectURL(e.target.files[0]) });
   };
 
   //like post
@@ -79,13 +68,13 @@ const Post = ({ post, activeUser }) => {
               <span className="date">{post.date}</span>
             </div>
           </div>
-          {activeUser?.name === post.name && !isEditing && (
+          {activeUser?.username === post.username && !isEditing && (
             <div className="postMenu">
               <div className="item">
                 <Edit onClick={() => setIsEditing(true)} />
               </div>
               <div className="item">
-                <Trash onClick={() => handleDelete()} />
+                <Trash onClick={() => handleDelete} />
               </div>
             </div>
           )}
@@ -105,7 +94,7 @@ const Post = ({ post, activeUser }) => {
           ) : (
             <>
               {post.desc}
-              {post.postPic && <img src={post.postPic} alt="" />}
+              {post.postPic != "" && <img src={post.postPic} alt="" />}
             </>
           )}
         </div>

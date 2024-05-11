@@ -14,6 +14,7 @@ import ProfileContext from "../../ProfileContext";
 
 const ReqList = () => {
   const activeUser = useContext(UserContext);
+  const { setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [reqList, setReqList] = useState([]);
@@ -34,22 +35,39 @@ const ReqList = () => {
   const FriendReq = ({ username }) => {
     const [user, setUser] = useState({});
     useEffect(() => {
-    async function fetchData() {
-      let reqUser = await fetchUser(activeUser.activeUser.token, username);
-      setUser(reqUser);
-    }
-    fetchData();
-  }, [reqList.length]);
+      async function fetchData() {
+        let reqUser = await fetchUser(activeUser.activeUser.token, username);
+        setUser(reqUser);
+      }
+      fetchData();
+    }, [reqList.length, activeUser.activeUser.friends]);
 
-    const acceptReq = () => {
-      acceptFriendReq(activeUser.activeUser, username);
+    const updateActiveUser = async () => {
+      const updated = await fetchUser(
+        activeUser.activeUser.token,
+        activeUser.activeUser.username
+      );
+      setActiveUser({
+        name: updated.name,
+        username: updated.username,
+        profilePic: updated.profilePic,
+        token: updated.androidToken,
+        friends: updated.friends,
+        posts: updated.posts,
+        friendRequestsSent: updated.friendRequestsSent,
+      });
+    }
+
+    const acceptReq = async () => {
+      await acceptFriendReq(activeUser.activeUser, username);
+      updateActiveUser();
       alert("Friend added");
     };
 
-    const rejectReq = () => {
-      deleteFriendReq(activeUser.activeUser, username);
+    const rejectReq = async () => {
+      await deleteFriendReq(activeUser.activeUser, username);
+      updateActiveUser();
       alert("Request Deleted");
-
     };
 
     const handleProfile = async () => {

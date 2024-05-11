@@ -17,6 +17,7 @@ const createUser = async (name, username, password, profilePic) => {
     const user = await User.findOne({ username: username });
     
     if (user !== null) {
+    
         throw new Error('User already exists');
     }
     var newUser = new User({ name: name, username: username, profilePic: profilePic, androidToken: "" });
@@ -89,8 +90,8 @@ const editUser = async (username, jwt, newName, newProfilePic) => {
 
     for (let i = 0 ; i < user.posts.length ; i++) {
         var post = await Post.findById(user.posts[i]);
-        console.log(post);
         post.name = newName;
+        post.profilePic = newProfilePic;
         await post.save();
     }
 

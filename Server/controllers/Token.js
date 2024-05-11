@@ -27,7 +27,7 @@ const createToken = async (req, res) => {
 };
 
 const verifyToken = async (req, res, next) => {
-  let token = req.headers["authorization"].replaceAll('"', "");
+  const token = req.headers["authorization"].replaceAll('"', "");
   if (token == null) {
     return res.status(403).send("Token required");
   }
@@ -35,7 +35,7 @@ const verifyToken = async (req, res, next) => {
     req.username = tokenService.verifyToken(token).username;
     next();
   } catch (error) {
-    return res.send("Invalid token");
+    return res.status(401).send("Invalid token");
   }
 };
 
