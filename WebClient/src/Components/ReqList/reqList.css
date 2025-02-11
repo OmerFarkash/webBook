@@ -1,0 +1,53 @@
+.FriendReq {
+  height: fit-content;
+  display: flex;
+  background-color: var(--foreground-color);
+  border-radius: 20px;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    span {
+      color: var(--primary-text-color);
+      cursor: pointer;
+    }
+
+    .options {
+      button {
+        padding: 5px;
+        margin-left: 10px;
+        border: none;
+        background-color: var(--login-btn-color);
+        color: var(--background-color);
+        cursor: pointer;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+.ReqList {
+  height: fit-content;
+  display: flex;
+  position: fixed;
+  background-color: var(--leftBar-bg);
+  border-radius: 20px;
+  top: 100px;
+  right: 10px;
+
+  .container {
+    width: 290px;
+    .item {
+      margin: 10px;
+    }
+  }
+}

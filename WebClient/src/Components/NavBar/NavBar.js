@@ -1,0 +1,44 @@
+import "./navBar.css";
+import { ReactComponent as SearchIcon } from "./Icons/search.svg";
+import { useContext } from "react";
+import UserContext from "../../UserContext";
+import { useNavigate } from "react-router-dom";
+import ProfileContext from "../../ProfileContext";
+
+const NavBar = () => {
+  const activeUser = useContext(UserContext);
+  const navigate = useNavigate();
+  const { setProfileUser } = useContext(ProfileContext);
+  const user = activeUser.activeUser;
+  const profilePic = user.profilePic;
+  const name = user.name;
+
+  const handleProfile = () => {
+    setProfileUser(user);
+    navigate("/User");
+  };
+
+  return (
+    <div className="navBar">
+      <div className="container">
+        <div className="left">
+          <p>WEB BOOK</p>
+          <div className="search">
+            <SearchIcon />
+            <input type="text" placeholder="Search..." />
+          </div>
+        </div>
+        <div className="right">
+          {activeUser && (
+            <div className="user" onClick={handleProfile}>
+              <img src={profilePic} alt="User Profile" />
+              <p>{name}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NavBar;

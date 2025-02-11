@@ -1,0 +1,11 @@
+.Home {
+  width: 100%;
+  min-height: 100vh;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  background-image: var(--home-bg);
+  background-size:cover;
+  background-attachment: fixed;
+  transition: background-image 0.25s ease-in-out;
+}
